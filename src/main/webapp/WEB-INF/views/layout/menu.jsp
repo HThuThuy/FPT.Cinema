@@ -2,62 +2,56 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 
-<!-- Nav bar bình thường -->
-<div class="layout has-sidebar fixed-sidebar fixed-header">
-	<aside id="sidebar" class="sidebar break-point-sm has-bg-image">
-		<a id="btn-collapse" class="sidebar-collapser"><i
-			class="ri-arrow-left-s-line"></i></a>
-		<div class="sidebar-layout">
-			<div class="sidebar-header">
-				<div class="pro-sidebar-logo">
-					<div>D</div>
-					<h5>DASH BOARD</h5>
-				</div>
-			</div>
-			<div class="sidebar-content">
-				<nav class="menu open-current-submenu">
-					<ul>
-						<li class="menu-header"><span> MENU</span></li>
-						<li class="menu-item sub-menu"><a href="#"> <span
-								class="menu-icon"> <i class="ri-vip-diamond-fill"></i>
-							</span> <span class="menu-title">Quản lý Nhập Viện</span> <span
-								class="menu-suffix"> <span class="badge primary">Hot</span>
-							</span>
-						</a>
-							<div class="sub-menu-list">
-								<ul>
-									<li class="menu-item"><span class="menu-title"> <a
-											class="nav-link"
-											href="${pageContext.request.contextPath}/nhapVien/create">Thêm
-												mới Thông Tin </a>
-									</span></li>
-									<li class="menu-item"><span class="menu-title"> <a
-											class="nav-link"
-											href="${pageContext.request.contextPath}/nhapVien/list">Danh
-												sách Thông tin</a>
-									</span></li>
-								</ul>
-							</div></li>
+<!-- ***** Preloader Start ***** -->
+<div id="js-preloader" class="js-preloader">
+	<div class="preloader-inner">
+		<span class="dot"></span>
+		<div class="dots">
+			<span></span> <span></span> <span></span>
+		</div>
+	</div>
+</div>
+<!-- ***** Preloader End ***** -->
 
-
-						<li class="menu-header" style="padding-top: 20px"><span>
-								DỊCH VỤ KHÁC </span></li>
-						<li class="menu-item"><a class="nav-link"
-							href="${pageContext.request.contextPath}/asc"> <span
-								class="menu-icon"> <i
-									class="fa-solid fa-magnifying-glass"></i>
-							</span> <span class="menu-title">
-							
-							Tra cứu giá vàng</span>
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 menu">
+				<nav class="main-nav">
+					<!-- ***** Logo Start ***** -->
+					<a href="index.html" class="logo"> <img
+						src="${pageContext.request.contextPath}/resources/img/logo.png"
+						alt="">
+					</a>
+					<!-- ***** Logo End ***** -->
+					<!-- ***** Search End ***** -->
+					<div class="search-input">
+						<form id="search" action="#">
+							<input type="text" placeholder="Tìm tên phim, diễn viên"
+								id='searchText' name="searchKeyword" onkeypress="handle" /> <i
+								class="fa fa-search"></i>
+						</form>
+					</div>
+					<!-- ***** Search End ***** -->
+					<!-- ***** Menu Start ***** -->
+					<ul class="nav d-flex justify-content-center">
+						<li><a href="index.html" class="active">MUA VÉ</a></li>
+						<li><a href="browse.html">PHIM</a></li>
+						<li><a href="booking.html">RẠP/GIÁ VÉ</a></li>
+						<li><a href="streams.html">KHUYẾN MÃI</a></li>
+						<li><a href="#" id="member-tab">THÀNH VIÊN <img
+								src="${pageContext.request.contextPath}/resources/img/profile-header.jpg"
+								alt="">
 						</a></li>
-
-
 					</ul>
+
+
+
+					<!-- ***** Menu End ***** -->
 				</nav>
 			</div>
-			<div class="sidebar-footer">
-				<div class="footer-box">FinalTest - TraNLC</div>
-			</div>
 		</div>
-	</aside>
-</div>
+	</div>
+</header>
+<!-- ***** Header Area End ***** -->
