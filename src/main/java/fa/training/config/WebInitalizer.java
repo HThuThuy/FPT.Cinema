@@ -1,10 +1,3 @@
-/*
- * (C) Copyright 2023 JavaFull_23_03. All Rights Reserved.
- *
- * @author THANH TRAN
- * @date Jul 6, 2023
- * @version 1.0
- */
 package fa.training.config;
 
 import javax.servlet.Filter;

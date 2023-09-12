@@ -22,10 +22,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 @Configuration
 @ComponentScan(basePackages = { "fa.training" })
@@ -35,24 +35,30 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableJpaRepositories(basePackages = { "fa.training.repository" })
 public class MVCconfig implements WebMvcConfigurer {
 
+	/**
+	 * Configure TilesConfigurer.
+	 */
 	@Bean
-	public InternalResourceViewResolver getInternalResourceViewResolver() {
-		InternalResourceViewResolver resourceView = new InternalResourceViewResolver();
-		resourceView.setViewClass(JstlView.class);
-		resourceView.setPrefix("/WEB-INF/views/");
-		resourceView.setSuffix(".jsp");
-		return resourceView;
+	public TilesConfigurer tilesConfigurer() {
+		TilesConfigurer tilesConfigurer = new TilesConfigurer();
+		tilesConfigurer.setDefinitions(new String[] { "/WEB-INF/views/**/tiles.xml" });
+		tilesConfigurer.setCheckRefresh(true);
+
+		return tilesConfigurer;
 	}
 
-	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("index");
+	/**
+	 * Configure ViewResolvers to deliver preferred views.
+	 */
+	public void configureViewResolvers(ViewResolverRegistry registry) {
+		TilesViewResolver viewResolver = new TilesViewResolver();
+		registry.viewResolver(viewResolver);
 	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		System.out.println("WebMvcConfig - addResourceHandlers");
-		registry.addResourceHandler("/lib/**").addResourceLocations("/lib/");
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
 
 	@Override
@@ -89,13 +95,10 @@ public class MVCconfig implements WebMvcConfigurer {
 		properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
 		properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
 		properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
-//		<property name="hibernate.enable_lazy_load_no_trans" value="true" />
-		properties.put("hibernate.enable_lazy_load_no_trans", true);
-
 		return properties;
 	}
 
-	@Bean
+	@Bean("hibernateTransactionManager")
 	public HibernateTransactionManager getTransactionManager() {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory(sessionFactory().getObject());
@@ -127,4 +130,5 @@ public class MVCconfig implements WebMvcConfigurer {
 		obj.setEntityManagerFactory(entityManagerFactory);
 		return obj;
 	}
+
 }
