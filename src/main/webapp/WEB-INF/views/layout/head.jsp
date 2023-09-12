@@ -21,6 +21,8 @@
   <%-- <link href="<c:url value="/resources/css/normalize.css" />" rel="stylesheet"> --%>
   <%-- <link href="<c:url value="/resources/css/font-awesome_5.15.2_css_all.min.css" />" rel="stylesheet"> --%>
   
+  <link href="<c:url value="/resources/css/Thuy_detailMovie.css" />" rel="stylesheet">
+  
 
  
 

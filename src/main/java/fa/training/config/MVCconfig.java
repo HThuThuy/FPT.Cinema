@@ -24,6 +24,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
@@ -34,6 +36,14 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = { "fa.training.repository" })
 public class MVCconfig implements WebMvcConfigurer {
+	@Bean
+	public InternalResourceViewResolver getInternalResourceViewResolver() {
+		InternalResourceViewResolver resourceView = new InternalResourceViewResolver();
+		resourceView.setViewClass(JstlView.class);
+		resourceView.setPrefix("/WEB-INF/views/");
+		resourceView.setSuffix(".jsp");
+		return resourceView;
+	}
 
 	/**
 	 * Configure TilesConfigurer.

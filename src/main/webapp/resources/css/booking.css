@@ -111,10 +111,58 @@
 .layout__seat__icon {
     width: 40%
 }
-
+.row.payment {
+    margin-top: 40px;
+    border: 1px solid;
+}
 
 /* 
 ---------------------------------------------
 Ticket
 --------------------------------------------- 
 */
+.background_outside {
+    margin: 20px 0px;
+    position: relative;
+    padding: 3px;
+    background: linear-gradient(
+      60deg,
+      #f79533,
+      #f37055,
+      #ef4e7b,
+      #a166ab,
+      #5073b8,
+      #1098ad,
+      #07b39b,
+      #6fba82
+    );
+    border-radius: 3px;
+    z-index: 1;
+    animation: animatedgradient 3s ease alternate infinite;
+    background-size: 300% 300%;
+  }
+  
+  @keyframes animatedgradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  .background_inside {
+    background: #222;
+    color: white;
+    padding: 2rem;
+    line-height: 2;
+  }
+  .layout__seat--selected {
+    background-color: red; /* Màu khác */
+  }
+  .middle-seat {
+    background-color: rgb(93, 57, 164); /* Màu khác */
+  }
+    

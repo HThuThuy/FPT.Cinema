@@ -1,0 +1,353 @@
+@charset "ISO-8859-1";
+
+/* 
+---------------------------------------------
+Profile Style
+--------------------------------------------- 
+*/
+
+.main-profile {
+  border-radius: 23px;
+  padding: 30px;
+  background-color: #1f2122;
+}
+
+.main-profile .main-info span {
+  font-size: 14px;
+  color: #fff;
+  background-color: #e75e8d;
+  padding: 8px 20px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  margin-bottom: 15px;
+}
+
+.main-profile .main-info h4 {
+  margin-bottom: 20px;
+}
+
+.main-profile .main-info .main-border-button {
+  margin-top: 25px;
+}
+
+.main-profile ul {
+  border-radius: 23px;
+  padding: 30px;
+  background-color: #27292a;
+}
+
+.main-profile ul li {
+  width: 100%;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #666;
+}
+
+.main-profile ul li span {
+  float: right;
+  font-weight: 500;
+  color: #ec6090;
+}
+
+.main-profile ul li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.clips {
+  margin-top: 30px;
+  border-top: 2px solid #27292a;
+}
+
+.clips .heading-section {
+  margin-top: 30px;
+}
+
+.clips .item  {
+  border-radius: 23px;
+  padding: 30px 15px;
+  background-color: #27292a;
+  margin-bottom: 30px;
+}
+
+.clips .item .thumb {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.clips .item .thumb a {
+  position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-23px, -23px);
+    width: 46px;
+    height: 46px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    line-height: 46px;
+    color: #ec6090;
+}
+
+.clips .item h4 {
+  font-size: 15px;
+  display: inline-block;
+}
+
+.clips .item span i {
+  color: #ec6090;
+}
+
+.clips .item span {
+  float: right;
+  color: #fff;
+  font-size: 14px;
+}
+
+.clips .main-button {
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* 
+---------------------------------------------
+Responsive Style
+--------------------------------------------- 
+*/
+
+body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 767px) {
+  body .page-content {
+    padding: 0px 30px;
+  }
+  .main-banner {
+    text-align: center;
+  }
+  .main-banner h4 {
+    font-size: 35px;
+  }
+  .gaming-library .item ul li,
+  .gaming-library .item ul li:first-child,
+  .gaming-library .item ul li:last-child {
+    width: 100% !important;
+    text-align: center !important;
+  }
+  .gaming-library .item ul li {
+    margin-top: 30px;
+  }
+  .top-downloaded ul li .download i {
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+  }
+  .top-downloaded ul li img {
+    margin-right: 10px;
+  }
+  .top-downloaded ul li span {
+    font-size: 14px;
+  }
+  .top-streamers ul li .main-button {
+    float: none;
+    margin-top: 10px;
+  }
+  .top-streamers ul li .main-button a {
+    width: 100%;
+    text-align: center;
+  }
+  .top-streamers,
+  .top-downloaded {
+    max-height: 100%;
+    min-height: 100%;
+  }
+  .most-popular .item .inner-item {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .background-header {
+  display: inline-block;
+  }
+  .header-area .main-nav #search {
+    display: none;
+  }
+  .heading-section h4 {
+    font-size: 20px;
+  }
+  .gaming-library .item ul li {
+    width: 48% !important;
+  }
+  .gaming-library .item ul li:last-child {
+    text-align: left;
+  }
+  .featured-games {
+    margin-bottom: 60px;
+  }
+  .start-stream .item {
+    margin: 15px 0px;
+  }
+  .feature-banner .thumb {
+    margin-top: 30px;
+  }
+  .main-profile .main-info {
+    margin: 45px 0px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .header-area .main-nav .nav li {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  .header-area .main-nav .logo {
+    margin-right: 30px;
+    border-right: none;
+  }
+  .gaming-library .item ul li {
+    width: 16%;
+  }
+}
+
+.show_time_boder{
+  border: 1px solid palevioletred;
+  padding: 4px;
+  margin: 8px;
+  border-radius: 4px;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+body {
+	font-family: 'Lato', sans-serif;
+background: #0f0c29;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	color: #FFF;
+}
+
+
+
+
+.layout {
+    -ms-transform-origin: center top 0px;
+    transform-origin: center top 0px
+}
+
+.layout__seat {
+    border: solid 2px #fff;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    font-size: 13px;
+    height: 40px;
+    width: 60px;
+    cursor: pointer;
+    outline: 0
+}
+
+.layout__seat:focus:not(.layout__seat--unavailable),.layout__seat:hover:not(.layout__seat--unavailable) {
+    transition: .125s;
+    border: solid 2px #00a8e1
+}
+
+.layout__seat:focus:not(.layout__seat--unavailable) svg,.layout__seat:hover:not(.layout__seat--unavailable) svg {
+    fill: #00a8e1;
+    transition: .125s
+}
+
+.layout__seat.layout__seat--unavailable {
+    background-color: #aaa;
+    border: solid 2px #aaa;
+    cursor: default
+}
+
+.layout__seat.layout__seat--selected {
+    background: #e51937;
+    border-color: #e51937;
+    color: white;
+    transition: .125s
+}
+
+.layout__seat.layout__seat--selected:hover {
+    background-color: #941023;
+    border-color: #941023
+}
+
+.layout__seat.layout__seat--premiere {
+    border: 2px solid #c4942f;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    margin-top: -10px
+}
+
+.layout__seat.layout__seat--premiere:hover {
+    border: 2px solid #c4942f
+}
+
+.layout__seat.layout__seat--love-seat-left {
+    margin-left: 3px;
+    margin-right: -3px
+}
+
+.layout__seat.layout__seat--love-seat-right {
+    margin-left: -3px;
+    margin-right: 3px
+}
+
+.layout__seat--empty-space {
+    visibility: hidden
+}
+
+.layout__grid {
+    list-style: none;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 0
+}
+
+.layout__row {
+    margin: 16px;
+    outline: 0
+}
+
+.layout__row:focus .layout__seat:not(.layout__seat--unavailable) {
+    border: solid 2px #00a8e1
+}
+
+.layout__row__columns {
+    list-style: none;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0
+}
+
+.layout__column {
+    margin: 0 4px
+}
+
+.layout__seat__icon {
+    width: 40%
+}

@@ -274,7 +274,7 @@
 											<div class="text">
 												<p>Slide description 4</p>
 											</div>
-											<a href="#" class="btn"> <span class="btn-inner">ĐẶT
+											<a href="${pageContext.request.contextPath}/ticket/showtime" class="btn"> <span class="btn-inner" >ĐẶT
 													VÉ</span>
 											</a>
 										</div>
