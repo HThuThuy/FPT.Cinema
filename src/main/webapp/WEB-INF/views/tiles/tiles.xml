@@ -21,6 +21,44 @@
 			value="/WEB-INF/views/{1}/{2}.jsp" />
 	</definition>
 
+	<!-- admin definition -->
+	<definition name="admin.definition"
+		template="/WEB-INF/views/layout2.jsp">
+		<put-attribute name="head2"
+			value="/WEB-INF/views/layout2/head2.jsp" />
+		<put-attribute name="menu2"
+			value="/WEB-INF/views/layout2/menu2.jsp" />
+		<put-attribute name="footer2"
+			value="/WEB-INF/views/layout2/footer2.jsp" />
+		<put-attribute name="body2" value="" />
+	</definition>
+
+
+	<definition name="admin/*" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+
+	<definition name="admin/quanLySuatChieu" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/admin/quanLySuatChieu.jsp" />
+	</definition> 
+	
+	<definition name="admin/quanLyPhim" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/admin/quanLyPhim.jsp" />
+	</definition> 
+	
+	<definition name="admin/quanLyRap" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/admin/quanLyRap.jsp" />
+	</definition> 
+	
+	<definition name="admin/thongKe" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/admin/thongKe.jsp" />
+	</definition> 
+
 	<!-- <definition name="errorPage" template="/WEB-INF/views/errorPage.jsp"> 
 		<put-attribute name="content" value="" /> </definition> <definition name="error/*" 
 		extends="errorPage"> <put-attribute name="content" value="/WEB-INF/views/error/{1}.jsp" 

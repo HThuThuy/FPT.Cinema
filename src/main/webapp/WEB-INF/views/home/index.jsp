@@ -256,7 +256,7 @@
 											<div class="text">
 												<p>Slide description 3</p>
 											</div>
-											<a href="#" class="btn"> <span class="btn-inner">ĐẶT
+											<a href="${pageContext.request.contextPath}/admin/quanLySuatChieu" class="btn"> <span class="btn-inner">ĐẶT
 													VÉ</span>
 											</a>
 										</div>
