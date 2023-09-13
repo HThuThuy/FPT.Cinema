@@ -97,7 +97,7 @@ color: white;
                                                         </td>
                                                         <td>10,000</td>
                                                         <td>
-                                                            <div class="total-price"><br>
+                                                            <div class="total-price">
                                                                 <span id="price">0</span>
                                                             </div>
                                                         </td>
@@ -118,7 +118,7 @@ color: white;
                                                         </td>
                                                         <td>15,000</td>
                                                         <td>
-                                                            <div class="total-price"><br>
+                                                            <div class="total-price">
                                                                 <span id="price">0</span>
                                                             </div>
                                                         </td>
