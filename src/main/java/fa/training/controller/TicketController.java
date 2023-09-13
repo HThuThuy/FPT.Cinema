@@ -12,5 +12,9 @@ public class TicketController {
 	public String ticket() {
 		return "ticket/detailMovie";
 	}
+	@GetMapping(value= {"/bill"})
+	public String bill() {
+		return "ticket/bill";
+	}
 }
 

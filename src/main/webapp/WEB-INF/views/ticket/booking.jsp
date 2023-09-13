@@ -762,7 +762,7 @@
                   </div>
                   <div class="col-lg-12">
                     <div class="main-border-button">
-                      <a href="ticket.html">Thanh toán!</a>
+                      <a href="${pageContext.request.contextPath}/ticket/bill">Thanh toán!</a>
                     </div>
                   </div>
                 </div>
