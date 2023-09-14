@@ -5,11 +5,16 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "SEAT")
 public class Seat {
@@ -27,5 +32,15 @@ public class Seat {
 	String seatPositon;
 
 	String seatType;
+	
+	String seatStatus;
+
+	@Override
+	public String toString() {
+		return "Seat [seatId=" + seatId + ", room=" + room + ", seatPositon=" + seatPositon + ", seatType=" + seatType
+				+ ", seatStatus=" + seatStatus + "]";
+	}
+	
+	
 
 }

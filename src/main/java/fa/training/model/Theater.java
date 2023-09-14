@@ -35,11 +35,11 @@ public class Theater {
 	@Column(columnDefinition = "Varchar(10)")
 	String theaterId;
 
-	@Column(columnDefinition = "Nvarchar(20)")
+	@Column(columnDefinition = "Nvarchar(30)")
 //	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String theaterName;
 
-	@Column(columnDefinition = "Nvarchar(10)")
+	@Column(columnDefinition = "Nvarchar(30)")
 //	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String city;
 
@@ -48,5 +48,12 @@ public class Theater {
 	
 	@OneToMany(mappedBy = "theater",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	Set<Showtime> showtimeTheater;
+
+	@Override
+	public String toString() {
+		return "Theater [theaterId=" + theaterId + ", theaterName=" + theaterName + ", city=" + city + "]";
+	}
+	
+	
 	
 }

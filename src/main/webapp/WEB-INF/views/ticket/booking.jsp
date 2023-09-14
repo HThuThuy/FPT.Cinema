@@ -39,9 +39,7 @@
                                 <br>
                                 Ngày khởi chiếu: 25/8/2023
                               </p>
-                              <div class="main-border-button">
-                                <a href="booking.html">Dịch vụ</a>
-                              </div>
+                            
                             </div>
                           </div>
                           <div class="col-lg-4 align-self-center">
@@ -762,7 +760,7 @@
                   </div>
                   <div class="col-lg-12">
                     <div class="main-border-button">
-                      <a href="${pageContext.request.contextPath}/ticket/bill">Thanh toán!</a>
+                      <a href="${pageContext.request.contextPath}/ticket/bill">Tiếp theo!</a>
                     </div>
                   </div>
                 </div>
