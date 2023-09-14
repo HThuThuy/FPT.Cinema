@@ -24,7 +24,7 @@
             <li><a href="${pageContext.request.contextPath}/admin/quanLyPhim"><i class="fa fa-film fa-fw"></i>Quản lý phim</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/quanLyRap"><i class="fa fa-masks-theater"></i>Quản lý rạp</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/thongKe"><i class="fa fa-bar-chart fa-fw"></i>Thống kê</a></li>
-            <li><a href="login.html"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
+            <li><a href="${pageContext.request.contextPath}/"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
           </ul>  
         </nav>
       </div>

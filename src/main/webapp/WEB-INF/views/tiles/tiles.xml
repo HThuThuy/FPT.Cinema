@@ -44,14 +44,29 @@
 			value="/WEB-INF/views/admin/quanLySuatChieu.jsp" />
 	</definition> 
 	
+	<definition name="admin/addSuatChieu" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/admin/addSuatChieu.jsp" />
+	</definition> 
+	
 	<definition name="admin/quanLyPhim" extends="admin.definition">
 		<put-attribute name="body2"
 			value="/WEB-INF/views/admin/quanLyPhim.jsp" />
 	</definition> 
 	
+	<definition name="admin/addPhim" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/admin/addPhim.jsp" />
+	</definition> 
+	
 	<definition name="admin/quanLyRap" extends="admin.definition">
 		<put-attribute name="body2"
 			value="/WEB-INF/views/admin/quanLyRap.jsp" />
+	</definition> 
+	
+	<definition name="admin/addRap" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/admin/addRap.jsp" />
 	</definition> 
 	
 	<definition name="admin/thongKe" extends="admin.definition">

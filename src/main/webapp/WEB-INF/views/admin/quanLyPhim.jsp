@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <div class="templatemo-content col-1 light-gray-bg">
 
@@ -10,16 +11,36 @@
 		<div class="row"
 			style="display: flex; justify-content: center; align-items: center;">
 
-			<div class="col-lg-3 col-md-6">
+			<div class="col-lg-6 col-md-6">
+				<form:form class="row"
+					action="${pageContext.request.contextPath}/admin/searchPhim"
+					method="get">
+
+					<div class="col-lg-6 col-md-6">
+						<input type="hidden" name="page" value="${1}" /> <input
+							id="nameCustomer" type="text" name="searchName"
+							class="form-control ml-1" value="${searchName}"
+							placeholder="Nhập tên phim">
+					</div>
+
+					<div class="col-lg-3 col-md-3">
+						<button type="submit" class="btn">Search</button>
+					</div>
+
+				</form:form>
+			</div>
+			
+			<!-- <div class="col-lg-3 col-md-6">
 				<input type="text" id="divSearch" class="form-control "
 					placeholder="Nhập tên phim" />
 			</div>
 			<div class="col-lg-3 col-md-6">
 				<a class="btn  " href="MovieAdminInsertServlet?action=Show">Search</a>
-			</div>
+			</div> -->
+			
 			<div class="col-lg-3 col-md-6"></div>
 			<div class="col-lg-3 col-md-6">
-				<a class="btn " href="addphim.html">Thêm phim mới</a>
+				<a class="btn " href="${pageContext.request.contextPath}/admin/addPhim">Thêm phim mới</a>
 			</div>
 		</div>
 		<div class="templatemo-content-widget no-padding">

@@ -8,9 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = { "/admin" })
 public class AdminThongKeController {
+	
 	@GetMapping(value = { "/thongKe" })
 	public String admin() {
 		return "admin/thongKe";
+	}
+	
+	@GetMapping(value = { "/thongKeDuLieu" })
+	public String admin3() {
+		return "admin/addSuatChieu";
 	}
 }
 

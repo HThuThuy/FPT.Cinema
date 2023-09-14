@@ -9,9 +9,6 @@
           <div class="row">
             
             <div class="col-lg-3 col-md-6">
-              <a class="btn  " href="addrap.html">Thêm rạp mới</a>
-            </div>
-            <div class="col-lg-3 col-md-6">
               
             </div>
             <div class="col-lg-3 col-md-6">
@@ -19,6 +16,9 @@
             </div>
             <div class="col-lg-3 col-md-6">
               
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <a class="btn" href="${pageContext.request.contextPath}/admin/addRap">Thêm rạp mới</a>
             </div>
           </div>
           <div class="templatemo-content-widget no-padding">
