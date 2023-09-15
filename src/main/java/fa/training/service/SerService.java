@@ -12,6 +12,7 @@ import fa.training.repository.ServiceRepository;
 
 @Service
 public class SerService {
+	
 
 	@Autowired
 	ServiceRepository repo;
@@ -39,6 +40,8 @@ public class SerService {
 	public void deleteById(Integer serviceId) {
 		repo.deleteById(serviceId);
 	}
+	
+	
 	
 	
 
