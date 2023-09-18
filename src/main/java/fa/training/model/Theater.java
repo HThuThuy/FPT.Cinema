@@ -53,6 +53,13 @@ public class Theater {
 	public String toString() {
 		return "Theater [theaterId=" + theaterId + ", theaterName=" + theaterName + ", city=" + city + "]";
 	}
+
+	public Theater(String theaterId, String theaterName, String city) {
+		super();
+		this.theaterId = theaterId;
+		this.theaterName = theaterName;
+		this.city = city;
+	}
 	
 	
 	

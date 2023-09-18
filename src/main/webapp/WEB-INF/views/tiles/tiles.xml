@@ -73,6 +73,16 @@
 		<put-attribute name="body2"
 			value="/WEB-INF/views/admin/thongKe.jsp" />
 	</definition> 
+	
+	<definition name="admin/thongKe2" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/admin/thongKe2.jsp" />
+	</definition> 
+	
+	<definition name="admin/thongKe3" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/admin/thongKe3.jsp" />
+	</definition> 
 
 	<!-- <definition name="errorPage" template="/WEB-INF/views/errorPage.jsp"> 
 		<put-attribute name="content" value="" /> </definition> <definition name="error/*" 

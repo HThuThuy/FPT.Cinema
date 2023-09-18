@@ -2,10 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-  <div class="templatemo-content col-1 light-gray-bg"> 
+  <div class="templatemo-content col-1 black-bg"> 
         <div class="templatemo-content-container">
-          <h3 style="font-size: 35px; margin: 20px 0 30px;">QUẢN LÝ RẠP</h3>`
+          <h3 style="font-size: 35px; margin: 10px 10px 10px 5px;">QUẢN LÝ RẠP</h3>`
           <div class="row">
             
             <div class="col-lg-3 col-md-6">
@@ -35,70 +36,28 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1.</td>
-                    <td>MV1</td>
-                    <td>Smith</td>
-                    <td>hai kich</td>
-                    <td><a href="" class="templatemo-edit-btn">Edit</a></td>
-                    <td><a href="" class="templatemo-link">Delete</a></td>
-                  </tr>
-                  <tr>
-                    <td>2.</td>
-                    <td>MV1</td>
-                    <td>Smith</td>
-                    <td>hai kich</td>
-                    <td><a href="" class="templatemo-edit-btn">Edit</a></td>
-                    <td><a href="" class="templatemo-link">Delete</a></td>
-                  </tr>
-                  <tr>
-                    <td>3.</td>
-                    <td>MV1</td>
-                    <td>Smith</td>
-                    <td>hai kich</td>
-                    <td><a href="" class="templatemo-edit-btn">Edit</a></td>
-                    <td><a href="" class="templatemo-link">Delete</a></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>MV1</td>
-                    <td>Smith</td>
-                    <td>hai kich</td>
-                    <td><a href="" class="templatemo-edit-btn">Edit</a></td>
-                    <td><a href="" class="templatemo-link">Delete</a></td>
-                  </tr>
-                  <tr>
-                    <td>5.</td>
-                    <td>MV1</td>
-                    <td>Smith</td>
-                    <td>hai kich</td>
-                    <td><a href="" class="templatemo-edit-btn">Edit</a></td>
-                    <td><a href="" class="templatemo-link">Delete</a></td>
-                  </tr>  
-                   <tr>
-                    <td>6.</td>
-                    <td>MV1</td>
-                    <td>Smith</td>
-                    <td>hai kich</td>
-                    <td><a href="" class="templatemo-edit-btn">Edit</a></td>
-                    <td><a href="" class="templatemo-link">Delete</a></td>
-                  </tr>  
-                   <tr>
-                    <td>7.</td>
-                    <td>MV1</td>
-                    <td>Smith</td>
-                    <td>hai kich</td>
-                    <td><a href="" class="templatemo-edit-btn">Edit</a></td>
-                    <td><a href="" class="templatemo-link">Delete</a></td>
-                  </tr>  
-                   <tr>
-                    <td>8.</td>
-                    <td>MV1</td>
-                    <td>Smith</td>
-                    <td>hai kich</td>
-                    <td><a href="" class="templatemo-edit-btn">Edit</a></td>
-                    <td><a href="" class="templatemo-link">Delete</a></td>
-                  </tr>  
+
+					<c:forEach items="${rapList}" var="item" varStatus="status">
+						<tr>
+							<td class="text-center">${status.count}</td>
+							<td>${item.theaterId}</td>
+							<td>${item.theaterName}</td>
+							<td>${item.city}</td>							
+							<td><a
+								href="${pageContext.request.contextPath}/admin/${item.theaterId}">
+									<button class="btn btn-outline-secondary color-icon">
+										<i class="fa-solid fa-pen-to-square"></i>
+									</button>
+							</a></td>
+							<td>
+								<button type="button" class="btn btn-outline-secondary"
+									data-bs-toggle="modal" data-bs-target="#exampleModal"
+									onclick="showModalDelete('${item.theaterId}', '${item.theaterName}')">
+									<i class="fa-solid fa-trash"></i>
+								</button>
+							</td>
+						</tr>
+					</c:forEach>
                   
                 </tbody>
               </table>    
