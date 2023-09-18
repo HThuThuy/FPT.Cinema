@@ -65,4 +65,11 @@ public class Movie {
 	@OneToMany(mappedBy = "movie",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	Set<Showtime> showtimeList;
 
+	public Movie(String movieName) {
+		super();
+		this.movieName = movieName;
+	}
+	
+	
+
 }

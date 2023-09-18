@@ -5,198 +5,19 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 
-
 <!-- ***** Login Start ***** -->
-<div class="modal fade" id="loginModal" tabindex="-1"
-	aria-labelledby="loginModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<ul class="nav nav-tabs" id="myTab" role="tablist">
-					<li class="nav-item" role="presentation"><a
-						class="nav-link active" id="login-tab" data-bs-toggle="tab"
-						href="#login" role="tab" aria-controls="login"
-						aria-selected="true" style="color: #ec6090;"><h4>ĐĂNG
-								NHẬP</h4></a></li>
-					<li class="nav-item" role="presentation"><a class="nav-link"
-						id="register-tab" data-bs-toggle="tab" href="#register" role="tab"
-						aria-controls="register" aria-selected="false"
-						style="color: #ec6090;"><h4>ĐĂNG KÝ</h4></a></li>
-				</ul>
-			</div>
-			<div class="modal-body">
-				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active" id="login" role="tabpanel"
-						aria-labelledby="login-tab">
-						<!-- Login form -->
-						<form>
-							<div>
-								<h6 style="color: rgb(155, 155, 155);">Vui lòng đăng nhập
-									trước khi mua vé để tích lũy điểm, cơ hội nhận thêm nhiều ưu
-									đãi từ chương trình thành viên FPT Cinema</h6>
-							</div>
-
-							<div class="mb-1">
-								<label for="username" class="form-label"></label> <input
-									type="text" class="form-control" id="username"
-									placeholder="Email">
-							</div>
-							<div class="mb-4">
-								<label for="password" class="form-label"></label> <input
-									type="password" class="form-control" id="password"
-									placeholder="Mật khẩu">
-							</div>
-							<div class="mb-3">
-								<a href="#" data-bs-toggle="modal"
-									data-bs-target="#forgotPasswordModal"
-									style="color: rgb(155, 155, 155);">Quên mật khẩu?</a>
-							</div>
-						</form>
-					</div>
-					<div class="tab-pane fade" id="register" role="tabpanel"
-						aria-labelledby="register-tab">
-						<!-- Register form -->
-						<form>
-							<div class="mb-2">
-								<input type="text" class="form-control" id="fullname"
-									placeholder="Họ tên">
-							</div>
-							<div class="mb-2"
-								style="display: flex; justify-content: space-between;">
-								<div class="col-6" style="padding-right: 2%;">
-									<label for="phone" class="form-label"></label> <input
-										type="tel" class="form-control" id="phone"
-										placeholder="Số điện thoại">
-								</div>
-								<div class="col-6" style="padding-left: 2%;">
-									<label for="gender" class="form-label"></label> <select
-										class="form-select" id="gender" aria-placeholder="Giới tính">
-										<option selected>Chọn giới tính</option>
-										<option value="male">Nam</option>
-										<option value="female">Nữ</option>
-										<option value="other">Khác</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="mb-2">
-								<label for="email" class="form-label"></label> <input
-									type="email" class="form-control" id="email"
-									placeholder="Email">
-							</div>
-							<div class="mb-2"
-								style="display: flex; justify-content: space-between;">
-
-								<div class="col-6" style="padding-right: 2%;">
-									<label for="password" class="form-label"></label> <input
-										type="password" class="form-control" id="register-password"
-										placeholder="Mật khẩu">
-								</div>
-								<div class="col-6" style="padding-left: 2%;">
-									<label for="confirm-password" class="form-label"></label> <input
-										type="password" class="form-control" id="confirm-password"
-										placeholder="Xác nhận mật khẩu">
-								</div>
-							</div>
-							<div class="mb-2">
-								<label for="birthdate" class="form-label"></label> <input
-									type="text" class="form-control" id="birthdate"
-									placeholder="Chọn ngày sinh">
-							</div>
-						</form>
-
-
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer"
-				style="display: flex; justify-content: center;">
-				<button type="button" class="btn"
-					style="background-color: pink; border-color: pink; color: black;">Xác Nhận</button>
-			</div>
-		</div>
-	</div>
-</div>
+<jsp:include page="loginAndRegisterModal.jsp" />
 <!-- ***** Login End ***** -->
 
 <!-- ***** Forgot Password Start ***** -->
-<div class="modal fade" id="forgotPasswordModal" tabindex="-1"
-	aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-					<li class="nav-item" role="presentation"><a class="nav-link"
-						id="register-tab" data-bs-toggle="tab" href="#register" role="tab"
-						aria-controls="register" aria-selected="false"
-						style="color: #ec6090;"><h4>QUÊN MẬT KHẨU</h4></a></li>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
-					aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<form id="forgotPasswordForm">
-					<div class="mb-2">
-						<h6 style="color: rgb(155, 155, 155);">Vui cung cấp email
-							đăng nhập, chúng tôi sẽ gởi mã OPT kích hoạt về email cho bạn.</h6>
-					</div>
-
-					<div class="mb-2">
-						<label for="email" class="form-label"></label> <input type="email"
-							class="form-control" id="email" placeholder="Email">
-					</div>
-					<div class="mb-5">
-						<label for="otp" class="form-label"></label> <input type="text"
-							class="form-control" id="otp" placeholder="OTP nhận từ email">
-					</div>
-					<div class="modal-footer"
-						style="display: flex; justify-content: center;">
-						<button type="submit" class="btn btn-primary"
-							style="background-color: pink; border-color: pink; color: black;">Xác
-							nhận</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+<jsp:include page="forgotPasswordModal.jsp" />
 <!-- ***** Forgot Password End ***** -->
 
 <!-- ***** New Password Start ***** -->
-<div class="modal fade" id="resetPasswordModal" tabindex="-1"
-	aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<li class="nav-item" role="presentation"><a class="nav-link"
-						id="register-tab" data-bs-toggle="tab" href="#register" role="tab"
-						aria-controls="register" aria-selected="false"
-						style="color: #ec6090;"><h4>ĐẶT LẠI MẬT KHẨU</h4></a></li>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
-					aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<form id="resetPasswordForm">
-					<div class="mb-3">
-						<label for="new-password" class="form-label"></label> <input
-							type="password" class="form-control" id="new-password"
-							placeholder="Mật khẩu mới">
-					</div>
-					<div class="mb-5">
-						<label for="confirm-password" class="form-label"></label> <input
-							type="password" class="form-control" id="confirm-password"
-							placeholder="Xác nhận mật khẩu mới">
-					</div>
-					<div class="modal-footer"
-						style="display: flex; justify-content: center;">
-						<button type="submit" class="btn btn-primary"
-							style="background-color: pink; border-color: pink; color: black;">Xác
-							nhận</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+<jsp:include page="resetPasswordModal.jsp" />
 <!-- ***** New Password End ***** -->
+
+
 <div class="row filmhot">
 	<div class="col-lg-12 ">
 		<div class="page-content">
@@ -256,8 +77,9 @@
 											<div class="text">
 												<p>Slide description 3</p>
 											</div>
-											<a href="${pageContext.request.contextPath}/admin/quanLySuatChieu" class="btn"> <span class="btn-inner">ĐẶT
-													VÉ</span>
+											<a
+												href="${pageContext.request.contextPath}/admin/quanLySuatChieu"
+												class="btn"> <span class="btn-inner">ĐẶT VÉ</span>
 											</a>
 										</div>
 									</div>
@@ -274,8 +96,8 @@
 											<div class="text">
 												<p>Slide description 4</p>
 											</div>
-											<a href="${pageContext.request.contextPath}/ticket/showtime" class="btn"> <span class="btn-inner" >ĐẶT
-													VÉ</span>
+											<a href="${pageContext.request.contextPath}/ticket/showtime"
+												class="btn"> <span class="btn-inner">ĐẶT VÉ</span>
 											</a>
 										</div>
 									</div>

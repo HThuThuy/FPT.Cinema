@@ -3,11 +3,12 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="templatemo-content col-1 light-gray-bg">
+<div class="templatemo-content col-1 black-bg">
 
 	<div class="templatemo-content-container">
-		<h3 style="font-size: 35px; margin: 20px 0 30px;">QUẢN LÝ PHIM</h3>
+		<h3 style="font-size: 35px; margin: 10px 10px 30px 5px;">QUẢN LÝ PHIM</h3>
 		<div class="row"
 			style="display: flex; justify-content: center; align-items: center;">
 
@@ -15,6 +16,10 @@
 				<form:form class="row"
 					action="${pageContext.request.contextPath}/admin/searchPhim"
 					method="get">
+					
+					<div class="col-lg-1 col-md-1">
+						
+					</div>
 
 					<div class="col-lg-6 col-md-6">
 						<input type="hidden" name="page" value="${1}" /> <input
@@ -28,15 +33,7 @@
 					</div>
 
 				</form:form>
-			</div>
-			
-			<!-- <div class="col-lg-3 col-md-6">
-				<input type="text" id="divSearch" class="form-control "
-					placeholder="Nhập tên phim" />
-			</div>
-			<div class="col-lg-3 col-md-6">
-				<a class="btn  " href="MovieAdminInsertServlet?action=Show">Search</a>
-			</div> -->
+			</div>			
 			
 			<div class="col-lg-3 col-md-6"></div>
 			<div class="col-lg-3 col-md-6">
@@ -49,127 +46,48 @@
 					class="table table-striped table-bordered templatemo-user-table">
 					<thead>
 						<tr>
-							<td><a href="" class="white-text templatemo-sort-by"># <span
-									class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Mã phim <span class="caret"></span>
-							</a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Tên
-									phim <span class="caret"></span>
-							</a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Đạo
-									diễn <span class="caret"></span>
-							</a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Thời
-									lượng<span class="caret"></span>
-							</a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Mô
-									tả <span class="caret"></span>
-							</a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Ngày
-									bắt đầu <span class="caret"></span>
-							</a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Ngày
-									kết thúc <span class="caret"></span>
-							</a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Poster
-									<span class="caret"></span>
-							</a></td>
+							<td><a href="" class="white-text templatemo-sort-by"># <span class="caret"></span></a></td>
+							<td><a href="" class="white-text templatemo-sort-by">Mã phim <span class="caret"></span></a></td>
+							<td><a href="" class="white-text templatemo-sort-by">Tên phim <span class="caret"></span></a></td>
+							<td><a href="" class="white-text templatemo-sort-by">Mô tả <span class="caret"></span></a></td>
+							<td><a href="" class="white-text templatemo-sort-by">Đạo diễn <span class="caret"></span></a></td>
+							<td><a href="" class="white-text templatemo-sort-by">Ngày bắt đầu <span class="caret"></span></a></td>
+							<td><a href="" class="white-text templatemo-sort-by">Ngày kết thúc <span class="caret"></span></a></td>
+							<td><a href="" class="white-text templatemo-sort-by">Thời lượng<span class="caret"></span></a></td>
+							<td><a href="" class="white-text templatemo-sort-by">Poster <span class="caret"></span></a></td>
 							<td>Sửa</td>
 							<td>Xóa</td>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1.</td>
-							<td>MV1</td>
-							<td>Smith</td>
-							<td>hai kich</td>
-							<td>tom</td>
-							<td>tep</td>
-							<td>khong co gi</td>
-							<td>19/02/1999</td>
-							<td>15</td>
-							<td><a href="" class="templatemo-edit-btn">Edit</a></td>
-							<td><a href="" class="templatemo-link">Delete</a></td>
-						</tr>
-						<tr>
-							<td>2.</td>
-							<td>MV1</td>
-							<td>Smith</td>
-							<td>hai kich</td>
-							<td>tom</td>
-							<td>tep</td>
-							<td>khong co gi</td>
-							<td>19/02/1999</td>
-							<td>15</td>
-							<td><a href="" class="templatemo-edit-btn">Edit</a></td>
-							<td><a href="" class="templatemo-link">Delete</a></td>
-						</tr>
-						<tr>
-							<td>3.</td>
-							<td>MV1</td>
-							<td>Smith</td>
-							<td>hai kich</td>
-							<td>tom</td>
-							<td>tep</td>
-							<td>khong co gi</td>
-							<td>19/02/1999</td>
-							<td>15</td>
-							<td><a href="" class="templatemo-edit-btn">Edit</a></td>
-							<td><a href="" class="templatemo-link">Delete</a></td>
-						</tr>
-						<tr>
-							<td>4.</td>
-							<td>MV1</td>
-							<td>Smith</td>
-							<td>hai kich</td>
-							<td>tom</td>
-							<td>tep</td>
-							<td>khong co gi</td>
-							<td>19/02/1999</td>
-							<td>15</td>
-							<td><a href="" class="templatemo-edit-btn">Edit</a></td>
-							<td><a href="" class="templatemo-link">Delete</a></td>
-						</tr>
-						<tr>
-							<td>5.</td>
-							<td>MV1</td>
-							<td>Smith</td>
-							<td>hai kich</td>
-							<td>tom</td>
-							<td>tep</td>
-							<td>khong co gi</td>
-							<td>19/02/1999</td>
-							<td>15</td>
-							<td><a href="" class="templatemo-edit-btn">Edit</a></td>
-							<td><a href="" class="templatemo-link">Delete</a></td>
-						</tr>
-						<tr>
-							<td>6.</td>
-							<td>MV1</td>
-							<td>Smith</td>
-							<td>hai kich</td>
-							<td>tom</td>
-							<td>tep</td>
-							<td>khong co gi</td>
-							<td>19/02/1999</td>
-							<td>15</td>
-							<td><a href="" class="templatemo-edit-btn">Edit</a></td>
-							<td><a href="" class="templatemo-link">Delete</a></td>
-						</tr>
-						<tr>
-							<td>7.</td>
-							<td>MV1</td>
-							<td>Smith</td>
-							<td>hai kich</td>
-							<td>tom</td>
-							<td>tep</td>
-							<td>khong co gi</td>
-							<td>19/02/1999</td>
-							<td>15</td>
-							<td><a href="" class="templatemo-edit-btn">Edit</a></td>
-							<td><a href="" class="templatemo-link">Delete</a></td>
-						</tr>
+
+						<c:forEach items="${phimList}" var="item" varStatus="status">
+							<tr>
+								<td class="text-center">${status.count}</td>
+								<td>${item.movieId}</td>
+								<td>${item.movieName}</td>
+								<td>${item.movieDescription}</td>
+								<td>${item.director}</td>
+								<td>${item.startDate}</td>
+								<td>${item.endDate}</td>
+								<td>${item.duration}</td>
+								<td>${item.posterUrl}</td>
+								<td>
+									<a href="${pageContext.request.contextPath}/admin/${item.movieId}">
+										<button class="btn btn-outline-secondary color-icon">
+											<i class="fa-solid fa-pen-to-square"></i>
+										</button>
+									</a>
+								</td>
+								<td>
+									<button type="button" class="btn btn-outline-secondary"
+										data-bs-toggle="modal" data-bs-target="#exampleModal"
+										onclick="showModalDelete('${item.movieId}', '${item.movieName}')">
+										<i class="fa-solid fa-trash"></i>
+									</button>
+								</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>

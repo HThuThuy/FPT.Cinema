@@ -2,6 +2,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 
+<style>
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+</style>
 <!-- ***** Preloader Start ***** -->
 <div id="js-preloader" class="js-preloader">
 	<div class="preloader-inner">
@@ -40,14 +45,27 @@
 						<li><a href="browse.html">PHIM</a></li>
 						<li><a href="booking.html">RẠP/GIÁ VÉ</a></li>
 						<li><a href="streams.html">KHUYẾN MÃI</a></li>
-						<li><a href="#" id="member-tab">THÀNH VIÊN <img
-								src="${pageContext.request.contextPath}/resources/img/profile-header.jpg"
-								alt="">
-						</a></li>
+						<c:choose>
+							<c:when test="${empty sessionScope.customerName}">
+								<li><a href="#" id="member-tab">ĐĂNG NHẬP <img
+										src="${pageContext.request.contextPath}/resources/img/profile-header.jpg"
+										alt=""></a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									id="member-tab" data-toggle="dropdown">${sessionScope.customerName}
+										<img
+										src="${pageContext.request.contextPath}/resources/img/profile-header.jpg"
+										alt="">
+								</a>
+									<div class="dropdown-menu" aria-labelledby="member-tab">
+										<a class="dropdown-item" href="user_account.html">Tài
+											khoản</a> <a class="dropdown-item"
+											href="${pageContext.request.contextPath}/logout">Thoát</a>
+									</div></li>
+							</c:otherwise>
+						</c:choose>
 					</ul>
-
-
-
 					<!-- ***** Menu End ***** -->
 				</nav>
 			</div>

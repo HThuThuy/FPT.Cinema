@@ -16,6 +16,13 @@ public class CustomerService {
 	@Autowired
 	CustomerRepository repo;
 
+	public String getCustomerName(String cccd) {
+		// Find the customer by cccd
+		Customer customer = repo.findById(cccd).get();
+		// Return the name of the customer
+		return customer != null ? customer.getCustomerName() : null;
+	}
+
 	public List<Customer> getAll() {
 		return repo.findAll();
 	}
@@ -39,7 +46,5 @@ public class CustomerService {
 	public void deleteById(String cccd) {
 		repo.deleteById(cccd);
 	}
-	
-	
 
 }
