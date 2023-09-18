@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import fa.training.model.Users;
 
+
 public interface UserRepository extends JpaRepository<Users, String> {
+	
 	Users findByAccount(String account);
 
 	Users findByAccountAndPassword(String account, String password);

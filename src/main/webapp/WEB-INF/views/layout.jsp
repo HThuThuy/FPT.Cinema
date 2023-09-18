@@ -19,6 +19,6 @@
 	<tiles:insertAttribute name="body" />
 	<!-- Footer Insert -->
 	<tiles:insertAttribute name="footer" />
-
+	
 </body>
 </html>

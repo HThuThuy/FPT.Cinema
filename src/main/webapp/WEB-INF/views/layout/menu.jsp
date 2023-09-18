@@ -4,7 +4,7 @@
 
 <style>
 .dropdown:hover .dropdown-menu {
-    display: block;
+	display: block;
 }
 </style>
 <!-- ***** Preloader Start ***** -->
@@ -60,8 +60,8 @@
 								</a>
 									<div class="dropdown-menu" aria-labelledby="member-tab">
 										<a class="dropdown-item" href="user_account.html">Tài
-											khoản</a> <a class="dropdown-item"
-											href="${pageContext.request.contextPath}/logout">Thoát</a>
+											khoản</a> <a class="dropdown-item" href="#"
+											onclick="logout(); return false;">Thoát</a>
 									</div></li>
 							</c:otherwise>
 						</c:choose>
@@ -72,4 +72,18 @@
 		</div>
 	</div>
 </header>
+
+<script>
+    function logout() {
+        // Send an AJAX request to the server to logout
+        $.ajax({
+            url: "${pageContext.request.contextPath}/logout",
+            method: "POST",
+            success: function() {
+                // Refresh the page or redirect the user
+                location.reload();
+            }
+        });
+    }
+</script>
 <!-- ***** Header Area End ***** -->

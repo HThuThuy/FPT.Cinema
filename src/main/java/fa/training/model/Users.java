@@ -41,4 +41,11 @@ public class Users {
 	@JoinColumn(name = "cccd")
 	Customer customer;
 
+	@Override
+	public String toString() {
+		return "Users [account=" + account + ", password=" + password + ", userRole=" + userRole + ", status=" + status
+				+ ", customer=" + customer + "]";
+	}
+
+	
 }

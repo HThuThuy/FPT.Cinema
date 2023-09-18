@@ -85,7 +85,10 @@
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/TweenMax.min.js"></script>
 		
-
+		<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/validateLogin.js"></script>
+		
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		
 	
 
