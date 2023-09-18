@@ -54,4 +54,15 @@ public class Showtime {
 	@Column(columnDefinition = "Time")
 	LocalTime endTime;
 
+	public Showtime(int showtimeId, Movie movie, Theater theater, LocalTime startTime, LocalTime endTime) {
+		super();
+		this.showtimeId = showtimeId;
+		this.movie = movie;
+		this.theater = theater;
+		this.startTime = startTime;
+		this.endTime = endTime;
+	}
+	
+	
+
 }

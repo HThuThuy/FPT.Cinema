@@ -1,5 +1,9 @@
 package fa.training.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import fa.training.DTO.ShowTimeDTO;
 import fa.training.model.Movie;
+import fa.training.model.Showtime;
 import fa.training.repository.MovieRepository;
 
 @Service
@@ -38,6 +44,14 @@ public class MovieService {
 
 	public void deleteById(String movie) {
 		repo.deleteById(movie);
+	}
+	
+	//LamNH23
+	public List<Movie> getRecordsForCurrentPage(int start, int recordsPerPage) {
+		List<Movie> list = new ArrayList<>();
+		list.add(new Movie("Movie008", "Tên phim", "Mô tả", "Đạo diễn", LocalDate.of(2023, 9, 14), LocalDate.of(2023, 9, 24), LocalTime.of(02, 30),"Url poster",new HashSet<Showtime>()));
+		list.add(new Movie("Movie009", "Tên phim", "Mô tả", "Đạo diễn", LocalDate.of(2023, 9, 14), LocalDate.of(2023, 9, 24), LocalTime.of(02, 30),"Url poster",new HashSet<Showtime>()));
+		return list;
 	}
 	
 	

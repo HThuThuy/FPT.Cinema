@@ -20,6 +20,7 @@
             <li><a href="${pageContext.request.contextPath}/admin/quanLySuatChieu"><i class="fa fa-database fa-fw"></i>Quản lý suất chiếu</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/quanLyPhim"><i class="fa fa-film fa-fw"></i>Quản lý phim</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/quanLyRap"><i class="fa fa-masks-theater"></i>Quản lý rạp</a></li>
+             <li><a href="${pageContext.request.contextPath}/admin/quanlydichvu"><i class="fa fa-masks-theater"></i>Quản lý dịch vụ</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/thongKe"><i class="fa fa-bar-chart fa-fw"></i>Thống kê</a></li>
             <li><a href="#" onclick="logout(); return false;"><i class="fa fa-eject fa-fw"></i>Thoát</a></li>
         </ul>  
