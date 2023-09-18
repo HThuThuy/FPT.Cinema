@@ -321,7 +321,9 @@ span {
 									</div>
 									<div class="col-lg-12">
 										<div class="main-border-button">
-											<a href="ticket.html">Thanh toán!</a>
+											<button id="datVeButton"
+												class="btn btn-warning mx-3 mt-3 mb-3">Thanh toán!</button>
+
 										</div>
 									</div>
 								</div>
@@ -489,4 +491,33 @@ function updateTotalPrice() {
   const totalPriceElement = document.getElementById('totalPrice');
   totalPriceElement.textContent = formatNumber(totalPrice) + ' VND';
 }
+
+
+//Phần thanh toán
+  let paymentInfo = {
+  ticketId: 0,
+  status: '',
+  showtimeTicket: '',
+  customer: '',
+  order:''
+};
+  let totalPrices = 100000;
+document.getElementById('datVeButton').addEventListener('click', () => {
+	let currentDate = new Date();
+	let localDate = currentDate.toLocaleDateString();
+	let localTime = currentDate.toLocaleTimeString();
+
+	paymentInfo.ticketId = 1;
+	paymentInfo.status = 'Booked';
+	paymentInfo.showtimeTicket = '10:00';
+	paymentInfo.customer = 'KH001';
+	paymentInfo.order = 'OD001';
+    console.log(paymentInfo);
+    var jsonString = JSON.stringify(paymentInfo);
+    console.log(jsonString);
+	var url = 'http://localhost:6001/FPT-Cinema/payment/create?param1=' + encodeURIComponent(totalPrices) + '&param2=' + encodeURIComponent(jsonString);
+	console.log(url)
+	  // Redirect đến URL
+	window.location.href = url;
+    });
   </script>
