@@ -8,10 +8,10 @@
 <div class="templatemo-content col-1 light-gray-bg">
 	<div class="templatemo-content-container">
 		<div class="templatemo-content-widget white-bg">
-			<h3 class="margin-bottom-10">Thêm suất chiếu</h3>
+			<h3 class="margin-bottom-10">Thay đổi suất chiếu</h3>
 
 			
-			<form:form action="${pageContext.request.contextPath}/admin/addSuatChieu" method="post" modelAttribute="suatChieu" class="templatemo-login-form">
+			<form:form action="${pageContext.request.contextPath}/admin/${suatChieu.showtimeId}" method="post" modelAttribute="suatChieu" class="templatemo-login-form">
 				<div class="row form-group">
 					<div class="col-lg-12 col-md-12 form-group">
 						<label for="inputmasuatchieu">Mã suất chiếu</label> 
@@ -28,7 +28,7 @@
 						<label class="control-label templatemo-block"> Chọn rạp</label> 
 						<form:select path="theaterId" class="form-control">
 							<c:forEach items="${theaters}" var="item">
-								<option value="${item.theaterId}" ${item.theaterId == record.theaterId ? 'selected' : ''}>${item.theaterName}</option>
+								<option value="${item.theaterId}" ${item.theaterId == suatChieu.theaterId ? 'selected' : ''}>${item.theaterName}</option>
 							</c:forEach>
 						</form:select>
 						<form:errors path="theaterId" cssClass="text-danger" />
@@ -57,7 +57,7 @@
 					</div>
 
 					<div class="form-group text-right">
-						<button type="submit" class="templatemo-blue-button">Thêm mới</button>
+						<button type="submit" class="templatemo-blue-button">Thay đổi</button>
 						<button type="reset" class="templatemo-white-button">Tạo lại</button>
 					</div>
 				</div>

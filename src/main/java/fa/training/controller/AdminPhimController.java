@@ -23,7 +23,7 @@ public class AdminPhimController {
 	
 	@GetMapping(value = { "/quanLyPhim" })
 	public String admin(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
-		int noOfRecords = movieService.getAll().size();
+		int noOfRecords = 30; //movieService.getAll().size();
 		int recordsPerPage = 5;
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		if (page < 1) {
@@ -34,8 +34,8 @@ public class AdminPhimController {
 		int start = page > 0 ? page - 1 : 0;
 		
 		List<Movie> list = movieService.getRecordsForCurrentPage((start) * recordsPerPage, recordsPerPage);
-//		model.addAttribute("noOfPages", noOfPages);
-//		model.addAttribute("currentPage", page);
+		model.addAttribute("noOfPages", noOfPages);
+		model.addAttribute("currentPage", page);
 		model.addAttribute("phimList", list);
 		
 		return "admin/quanLyPhim";

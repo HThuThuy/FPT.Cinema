@@ -24,7 +24,7 @@
 							<input type="hidden" name="page" value="${1}" /> <input
 								id="nameCustomer" type="text" name="searchName"
 								class="form-control ml-1" value="${searchName}"
-								placeholder="Nhập tên suất chiếu">
+								placeholder="Nhập mã suất chiếu">
 						</div>
 	
 						<div class="col-lg-3 col-md-3">
@@ -42,19 +42,18 @@
 		<div class="templatemo-content-widget no-padding">
 			<div class="panel panel-default table-responsive">
 				<table
-					class="table table-striped table-bordered templatemo-user-table">
-					<thead>
+					class="table table-light table-striped table-bordered text-center">
+					<thead>					
 						<tr>
-							<td><a href="" class="white-text templatemo-sort-by"># <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Mã suất chiếu <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Tên phim <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Tên rạp <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Bắt đầu <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Kết thúc <span class="caret"></span></a></td>							
-							<td><a href="" class="white-text templatemo-sort-by">Số ghế đặt <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Số ghế trống <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Doanh thu <span class="caret"></span>
-							</a></td>
+							<th style="background-color: #e75e8d; color: white;">#</th>							
+							<th style="background-color: #e75e8d; color: white;">Mã suất chiếu</th>
+							<th style="background-color: #e75e8d; color: white;">Tên phim</th>
+							<th style="background-color: #e75e8d; color: white;">Têp rạp</th>
+							<th style="background-color: #e75e8d; color: white;">Bắt đầu</th>
+							<th style="background-color: #e75e8d; color: white;">Kết thúc</th>							
+							<th style="background-color: #e75e8d; color: white;">Số ghế đặt</th>
+							<th style="background-color: #e75e8d; color: white;">Số ghế trống</th>
+							<th style="background-color: #e75e8d; color: white;">Doanh thu</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -76,15 +75,42 @@
 				</table>
 			</div>
 		</div>
-		<div class="pagination-wrap">
-			<ul class="pagination">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li class="active"><a href="#">3 <span class="sr-only">(current)</span></a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#" aria-label="Next"> <span aria-hidden="true"><i class="fa fa-play"></i></span></a></li>
-			</ul>
-		</div>
+		
+		<!--Pagination-->
+		<c:if test="${suatchieuList.size() !=0}">
+			<div class="pagination-wrap">
+				<ul class="pagination">
+					<li>
+						<c:if test="${currentPage!=1}">
+							<a href="?page=${currentPage - 1}&searchName=${searchName}"><span aria-hidden="true"><i class="fa-solid fa-caret-left"></i></span></a>
+						</c:if> <c:if test="${currentPage==1}">
+							<a ><span aria-hidden="true"><i class="fa-solid fa-caret-left"></i></span></a>
+						</c:if>
+					</li>
+
+					<c:forEach begin="1" end="${noOfPages}" var="i">
+						<c:choose>
+							<c:when test="${currentPage eq i}">								
+								<li class="active"><a >${i}<span class="sr-only"></span></a></li>
+							</c:when>
+							<c:otherwise>								
+								<li><a href="?page=${i}&searchName=${searchName}"><span aria-hidden="true">${i}</span></a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					
+					<li>
+						<c:if test="${currentPage!=noOfPages}">
+							<a href="?page=${currentPage + 1}&searchName=${searchName}"><span aria-hidden="true"><i class="fa-solid fa-caret-right"></i></span></a>
+						</c:if> 
+						<c:if test="${currentPage==noOfPages}">
+							<a ><span aria-hidden="true"><i class="fa-solid fa-caret-right"></i></span></a>
+						</c:if>
+					</li>
+				</ul>
+			</div>
+		</c:if>
+		
+		
 	</div>
 </div>

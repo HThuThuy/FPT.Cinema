@@ -14,7 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -43,25 +46,38 @@ public class Showtime {
 	@JoinColumn(name = "theaterId")
 	Theater theater;
 	
+	@ManyToOne
+	Room room;
+	
 	@OneToMany(mappedBy = "showtimeTicket", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<TicketInfo> ticketShowTime;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	LocalDate startDate;
 
 	@DateTimeFormat(pattern = "HH:mm")
 	@Column(columnDefinition = "Time")
 	LocalTime startTime;
 
-	@DateTimeFormat(pattern = "HH:mm")
-	@Column(columnDefinition = "Time")
-	LocalTime endTime;
-
-	public Showtime(int showtimeId, Movie movie, Theater theater, LocalTime startTime, LocalTime endTime) {
+	public Showtime(int showtimeId, Movie movie, Theater theater, Room room, LocalDate startDate, LocalTime startTime) {
 		super();
 		this.showtimeId = showtimeId;
 		this.movie = movie;
 		this.theater = theater;
+		this.room = room;
+		this.startDate = startDate;
 		this.startTime = startTime;
-		this.endTime = endTime;
 	}
+
+	@Override
+	public String toString() {
+		return "Showtime [showtimeId=" + showtimeId + ", movie=" + movie.movieId + ", theater=" + theater.theaterId + ", room=" + room.roomId
+				+ ", startDate=" + startDate + ", startTime=" + startTime + "]";
+	}
+
+	
+
+	
 	
 	
 
