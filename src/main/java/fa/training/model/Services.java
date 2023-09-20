@@ -54,5 +54,12 @@ public class Services {
 //	
 	@OneToMany(mappedBy = "services", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<Order> order;
+	@Override
+	public String toString() {
+		return "Services [serviceId=" + serviceId + ", serviceName=" + serviceName + ", serviceDescription="
+				+ serviceDescription + ", servicePrice=" + servicePrice + ", order=" + order + "]";
+	}
+	
+	
 
 }

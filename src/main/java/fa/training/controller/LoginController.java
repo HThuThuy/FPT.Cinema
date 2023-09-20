@@ -36,14 +36,14 @@ public class LoginController {
                 .map(GrantedAuthority::getAuthority)
                 .anyMatch(role -> role.equals("ROLE_ADMIN"));
         if (isAdmin) {
-            session.setAttribute("account", accountName);
+            session.setAttribute("account1", accountName);
             // Get customer name from CustomerService
             String customerName = customerService.getCustomerName(account.getCustomer().getCccd());
             session.setAttribute("customerName", customerName);
             session.setAttribute("loggedInUser", customerService.findById(account.getCustomer().getCccd()));
             return "redirect:/admin/quanLySuatChieu"; // Chuyển hướng admin đến trang quản lý suất chiếu
         } else {
-            session.setAttribute("account", accountName);
+            session.setAttribute("account1", accountName);
             // Get customer name from CustomerService
             String customerName = customerService.getCustomerName(account.getCustomer().getCccd());
             session.setAttribute("customerName", customerName);

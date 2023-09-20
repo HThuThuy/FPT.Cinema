@@ -3,43 +3,6 @@
 <%@ page isELIgnored="false"%>
 
 
-<!-- <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script>
-	$(document).ready(
-			function() {
-				$('#member-tab').on('click', function(e) {
-					e.preventDefault();
-					$('#loginModal').modal('show');
-				});
-
-				$('#login-tab').on(
-						'click',
-						function(e) {
-							// Thay đổi URL khi nhấp vào "Đăng nhập"
-							history.pushState({}, "", window.location.origin
-									+ "/FPT-Cinema/login");
-						});
-
-				$('#register-tab').on(
-						'click',
-						function(e) {
-							// Thay đổi URL khi nhấp vào "Đăng ký"
-							history.pushState({}, "", window.location.origin
-									+ "/FPT-Cinema/register");
-						});
-
-				$('#loginModal').on(
-						'hidden.bs.modal',
-						function(e) {
-							// Đặt lại URL sau khi modal bị ẩn
-							history.pushState({}, "", window.location.origin
-									+ "/FPT-Cinema/");
-						});
-			});
-</script> -->
-
 <div class="modal fade" id="loginModal" tabindex="-1"
 	aria-labelledby="loginModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -80,3 +43,25 @@
 		</div>
 	</div>
 </div>
+
+<script>
+    /* // Thêm sự kiện click cho tab Đăng Ký
+    document.getElementById("register-tab").addEventListener("click", function(event) {
+        // Thay đổi URL trên trình duyệt
+        history.pushState({}, "", "${pageContext.request.contextPath}/register");
+    });
+
+    // Thêm sự kiện click cho tab Đăng Nhập
+    document.getElementById("login-tab").addEventListener("click", function(event) {
+        // Thay đổi URL trên trình duyệt
+        history.pushState({}, "", "${pageContext.request.contextPath}/login");
+    });
+
+    $(document).ready(function() {
+        $('#loginModal').on('hide.bs.modal', function () {
+            console.log('Modal is hiding');
+            history.pushState({}, "", "${pageContext.request.contextPath}/");
+        });
+    });
+ */
+</script>

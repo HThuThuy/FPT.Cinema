@@ -1,5 +1,8 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +20,15 @@ table{
     width: 100%;
 
 
+}
+#img-movie{
+    width: 100%;
+    height: 100%;
+}
+
+#infor{
+    border-bottom: 1px solid rgb(145, 145, 145) ;
+    border-style: dashed;
 }
 th,td{
     color: white;
@@ -49,13 +61,13 @@ h3{
 color: white;
 }
 
+span{
+color: white;
+}
+
 </style>
 </head>
 <body>
-
-
-
-    
 
     <div class="container-fluid">
         <div class="row">
@@ -69,94 +81,76 @@ color: white;
                             </div>
                             <div class="col-lg-12">
                                 <div class="content">
+                                <h2>${sr.getServiceName()}</h2>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <table>
                                                 <thead>
                                                     <tr>
                                                         <th width="20%">Combo</th>
+                                                        <th width="20%">serviceDescription</th>
                                                         <th width="40%">Quantity</th>
                                                         <th width="20%">Price</th>
-                                                        <th width="20%"">Total Price</th>
+                                                        <th width="20%">Total Price</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td> <img src="assets/images/combo1.webp" alt=""
-                                                                class="templatemo-item"> combo1</td>
-                                                        <td>
-                                                            <button type="button" class="minus"><i
-                                                                    class="fas fa-minus-circle fa-lg"
-                                                                    style="color: #ffffff;"></i></button>
-                                                            <input type="number" value="0" id="combo1Quantity"
-                                                                class="combo-quantity" data-price="10000">
-                                                            <button type="button" class="plus"><i
-                                                                    class="fas fa-plus-circle fa-lg"
-                                                                    style="color: #ffffff;"></i></button>
-
-                                                        </td>
-                                                        <td>10,000</td>
-                                                        <td>
-                                                            <div class="total-price">
-                                                                <span id="price">0</span>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td> <img src="assets/images/combo1.webp" alt=""
-                                                                class="templatemo-item"> combo2</td>
-                                                        <td>
-                                                            <button type="button" class="minus"><i
-                                                                    class="fas fa-minus-circle fa-lg"
-                                                                    style="color: #ffffff;"></i></button>
-                                                            <input type="number" value="0" id="combo1Quantity"
-                                                                class="combo-quantity" data-price="15000">
-                                                            <button type="button" class="plus"><i
-                                                                    class="fas fa-plus-circle fa-lg"
-                                                                    style="color: #ffffff;"></i></button>
-
-                                                        </td>
-                                                        <td>15,000</td>
-                                                        <td>
-                                                            <div class="total-price">
-                                                                <span id="price">0</span>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-
-
-                                        </div>
-
-                      
+												<tbody>
+													<c:forEach var="sr" items="${lists}">
+														<tr class="align-middle">
+															<td>${sr.getServiceName()}</td>
+															<td>${sr.serviceDescription}</td>
+															<td>
+																<button type="button" class="minus">
+																	<i class="fas fa-minus-circle fa-lg"
+																		style="color: #ffffff;"></i>
+																</button> <input type="number" value="0" id="combo1Quantity"
+																class="combo-quantity">
+																<button type="button" class="plus">
+																	<i class="fas fa-plus-circle fa-lg"
+																		style="color: #ffffff;"></i>
+																</button>
+															</td>
+															<td>${sr.servicePrice}</td>
+															<td>
+																<div class="total-price">
+																	<span id="price">0</span>
+																</div>
+															</td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+                                      </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                                     <div class="content mt-4">
-                                    <div id="payment-info">
-                                        <h3>Phiếu Thanh Toán</h3>
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Combo</th>
-                                                    <th scope="col">Số Lượng</th>
-                                                    <th scope="col">Tổng Tiền</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="payment-details">
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td colspan="2"><strong>Tổng Tiền:</strong></td>
-                                                    <td id="total-amount">0</td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
+                                          <div class="row">
+                                    <div class="col-lg-5">
+                                      <img src="${pageContext.request.contextPath}/resources/img/movie2.avif">
                                     </div>
+
+                                    <div class="col-lg-7">
+                                      <div class="row"><h3>STAR WARS: ROGUE ONE</h3></div>
+                                      <div id="infor" class="row p-2 mt-4"><span>Rạp: FPT Cinema Đà Nẵng | RẠP 2</span></div>
+                                      <div id="infor" class="row p-2"><span>Suất chiếu: 19:30 | Thứ 2, 15/09/2023</span></div>
+                                      <div id="infor" class="row p-2"><span>Ghế: G2, G3</span></div>
+                                      <div id="infor" class="row p-2 d-flex flex-row">
+                                        <span class="col-2">Combo:</span> 
+                                        <span class="col-10" id="combo"></span>
+                                      </div>
+                                      <div id="infor" class="row p-2 d-flex flex-row">
+                                        <span class="col-2">Tổng:</span> 
+                                        <span class="col-10" id="total" >0</span>
+                                      </div>
+
+
+
+
+                                    </div>
+
+                                  </div>
 
                                 </div>
                              <div class="col-lg-12">
@@ -215,21 +209,23 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function updateTotalPrice(input) {
-    var quantity = parseInt(input.value);
-    var price = parseInt(input.dataset.price);
-    var total = quantity * price;
-    var totalPriceElement = input.parentElement.nextElementSibling.nextElementSibling;
-    totalPriceElement.textContent = total;
-  }
+	  var quantity = parseInt(input.value);
+	  var priceElement = input.parentElement.nextElementSibling;
+	  var price = parseInt(priceElement.textContent.replace(',', ''));
+	  var total = quantity * price;
+	  var totalPriceElement = input.parentElement.nextElementSibling.nextElementSibling;
+	  totalPriceElement.textContent = total;
+	}
 
   function updatePaymentInfo() {
-	    var paymentDetails = document.getElementById('payment-details');
-	    var totalAmountElement = document.getElementById('total-amount');
 	    var combos = document.querySelectorAll('.combo-quantity');
 
-	    paymentDetails.innerHTML = '';
-
+	    var comboDetails = [];  // Mảng chứa thông tin combo (tên và số lượng)
 	    var totalAmount = 0;
+	    var totalElement = document.getElementById('total');
+
+	  
+	   
 
 	    combos.forEach(function(combo) {
 	        var quantity = parseInt(combo.value);
@@ -237,29 +233,23 @@ document.addEventListener("DOMContentLoaded", function () {
 	            var comboName = combo.parentElement.parentElement.querySelector('td:first-child').textContent.trim();
 	            var comboPrice = parseInt(combo.parentElement.nextElementSibling.textContent.replace(',', ''));
 	            var totalComboPrice = quantity * comboPrice;
+
+	            comboDetails.push({name: comboName, quantity: quantity});  // Thêm thông tin combo vào mảng
 	            totalAmount += totalComboPrice;
-
-	            var row = document.createElement('tr');
-	            var td1 = document.createElement('td');
-	            var td2 = document.createElement('td');
-	            var td3 = document.createElement('td');
-
-	            td1.textContent = comboName;
-	            td2.textContent = quantity;
-	            td3.textContent = totalComboPrice.toLocaleString();
-
-	            row.appendChild(td1);
-	            row.appendChild(td2);
-	            row.appendChild(td3);
-
-	            paymentDetails.appendChild(row);
 	        }
 	    });
 
-	    totalAmountElement.textContent = totalAmount.toLocaleString();
-	}
-});
+	    var comboElement = document.getElementById('combo');
 
+	    // Hiển thị tên combo và số lượng
+	    comboElement.innerHTML = comboDetails.map(function(combo) {
+	        return combo.name + ' (' + combo.quantity + ')';
+	    }).join(', ');  // Các combo cách nhau bởi dấu phẩy
+	 
+	    totalElement.textContent = totalAmount.toLocaleString();  // Format tổng tiền
+	}
+
+	});
     </script>
     <script
   src="https://code.jquery.com/jquery-3.7.1.js"

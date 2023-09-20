@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class InsertRegister {
+public class RegisterDTO {
 
 	@Pattern(regexp = "^[a-zA-ZÀ-ỹỲ-ỹĐđ]+(\\s[a-zA-ZÀ-ỹỲ-ỹĐđ]+)+{3,50}$", message = "Họ tên ít nhất phải có 2 từ và dài từ 3-50 kí tự")
 	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
@@ -53,6 +53,15 @@ public class InsertRegister {
 	@Past(message = "Ngày sinh phải nhỏ hơn ngày hiện tại")
 	LocalDate birthDate;
 
-	String address;
+	String cccd;
+
+	@Override
+	public String toString() {
+		return "RegisterDTO [customerName=" + customerName + ", phone=" + phone + ", email=" + email + ", account="
+				+ account + ", password=" + password + ", repassword=" + repassword + ", gender=" + gender
+				+ ", birthDate=" + birthDate + ", cccd=" + cccd + "]";
+	}
+	
+	
 
 }
