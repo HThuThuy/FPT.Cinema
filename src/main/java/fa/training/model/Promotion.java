@@ -64,7 +64,6 @@ public class Promotion {
 	@OneToMany(mappedBy = "promotion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<Order> orderList;
 	
-	String url;
 //
 
 }
