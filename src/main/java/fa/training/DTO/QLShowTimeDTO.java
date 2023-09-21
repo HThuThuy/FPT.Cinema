@@ -30,9 +30,6 @@ public class QLShowTimeDTO {
 	String movieId;
 	
 	@NotBlank(message = "Invalid - string - không empty hoặc chứa toàn khoảng trắng")
-	String theaterId;	
-	
-	@NotBlank(message = "Invalid - string - không empty hoặc chứa toàn khoảng trắng")
 	String roomId;
 	
 	@NotNull(message = "Invalid - anInt - phải not null")
@@ -48,7 +45,7 @@ public class QLShowTimeDTO {
 
 	@Override
 	public String toString() {
-		return "QLShowTimeDTO [showtimeId=" + showtimeId + ", movieId=" + movieId + ", theaterId=" + theaterId
+		return "QLShowTimeDTO [showtimeId=" + showtimeId + ", movieId=" + movieId
 				+ ", roomId=" + roomId + ", startDate=" + startDate + ", startTime=" + startTime + "]";
 	}	
 	

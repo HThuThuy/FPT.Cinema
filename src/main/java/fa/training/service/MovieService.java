@@ -3,6 +3,7 @@ package fa.training.service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -53,6 +54,11 @@ public class MovieService {
 		for(int i = start+1;i<(start+recordsPerPage+1);i++) {
 			list.add(new Movie("Movie "+i, "Tên phim", "Mô tả", "Đạo diễn", LocalDate.of(2023, 9, 14), LocalDate.of(2023, 9, 24), LocalTime.of(02, 30),"Url poster",new HashSet<Showtime>()));
 		}			
+		return list;
+	}
+	
+	public List<Movie> getAllEnable() {
+		List<Movie> list = repo.getAllEnable(new Date (System.currentTimeMillis() ));		
 		return list;
 	}
 	

@@ -1,5 +1,6 @@
 package fa.training.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import fa.training.model.Room;
+import fa.training.model.Theater;
 import fa.training.repository.RoomRepository;
 
 @Service

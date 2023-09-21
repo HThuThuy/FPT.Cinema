@@ -49,19 +49,15 @@ public class Showtime {
 	@OneToMany(mappedBy = "showtimeTicket", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<TicketInfo> ticketShowTime;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	LocalDate startDate;
-
 	@DateTimeFormat(pattern = "HH:mm")
 	@Column(columnDefinition = "Time")
 	LocalTime startTime;
 
-	public Showtime(String showtimeId, Movie movie, Theater theater, Room room, LocalDate startDate, LocalTime startTime) {
+	public Showtime(String showtimeId, Movie movie, Room room, LocalTime startTime) {
 		super();
 		this.showtimeId = showtimeId;
 		this.movie = movie;
 		this.room = room;
-		this.startDate = startDate;
 		this.startTime = startTime;
 	}
 

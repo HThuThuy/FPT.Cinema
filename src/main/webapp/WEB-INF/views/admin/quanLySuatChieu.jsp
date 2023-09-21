@@ -51,8 +51,9 @@
 							<th style="background-color: #e75e8d; color: white;">Tên phim</th>
 							<th style="background-color: #e75e8d; color: white;">Têp rạp</th>
 							<th style="background-color: #e75e8d; color: white;">Têp phòng</th>
-							<th style="background-color: #e75e8d; color: white;">Ngày bắt đầu</th>
-							<th style="background-color: #e75e8d; color: white;">Giờ bắt đầu</th>
+							<th style="background-color: #e75e8d; color: white;">Ngày khởi chiếu</th>
+							<th style="background-color: #e75e8d; color: white;">Ngày kết thúc</th>
+							<th style="background-color: #e75e8d; color: white;">Giờ chiếu</th>
 							<th style="background-color: #e75e8d; color: white;">Sửa</th>
 							<th style="background-color: #e75e8d; color: white;">Xóa</th>
 						</tr>
@@ -63,9 +64,10 @@
 								<td class="text-center">${status.count}</td>
 								<td>${item.showtimeId}</td>
 								<td>${item.movie.movieName}</td>
-								<td>${item.theater.theaterName}</td>
-								<td>${item.movie.movieName}</td>
-								<td>${item.startDate}</td>
+								<td>${item.room.theater.theaterName}</td>
+								<td>${item.room.roomName}</td>
+								<td>${item.movie.startDate}</td>
+								<td>${item.movie.endDate}</td>
 								<td>${item.startTime}</td>
 								<td><a
 									href="${pageContext.request.contextPath}/admin/${item.showtimeId}">
