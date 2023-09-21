@@ -14,41 +14,27 @@
 		<div class="templatemo-content-widget no-padding">
 			<div class="panel panel-default table-responsive">
 				<table
-					class="table table-striped table-bordered templatemo-user-table">
+					class="table table-light table-striped table-bordered text-center">
 					<thead>
 						<tr>
-							<td><a href="" class="white-text templatemo-sort-by"># <span
-									class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Tên
-									rạp <span class="caret"></span>
-							</a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Thành
-									phố <span class="caret"></span>
-							</a></td>							
-							<td><a href="" class="white-text templatemo-sort-by">Doanh
-									thu <span class="caret"></span>
-							</a></td>
-						</tr>
+							<th style="background-color: #e75e8d; color: white;">#</th>							
+							<th style="background-color: #e75e8d; color: white;">Mã rạp</th>
+							<th style="background-color: #e75e8d; color: white;">Têp rạp</th>
+							<th style="background-color: #e75e8d; color: white;">Thành phố</th>
+							<th style="background-color: #e75e8d; color: white;">Doanh thu</th>
+						</tr>						
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>Galaxy</td>
-							<td>Đà Nẵng</td>
-							<td>650.000.000</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>Earth</td>
-							<td>Hà Nội</td>
-							<td>750.000.000</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>Planet</td>
-							<td>Đà Nẵng</td>
-							<td>850.000.000</td>
-						</tr>						
+
+						<c:forEach items="${theaterList}" var="item" varStatus="status">
+							<tr>
+								<td class="text-center">${status.count}</td>
+								<td>${item.theaterId}</td>
+								<td>${item.theaterName}</td>
+								<td>${item.city}</td>
+								<td>${item.doanhThu}</td>
+							</tr>
+						</c:forEach>
 						
 					</tbody>
 				</table>

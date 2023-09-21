@@ -43,21 +43,21 @@
 		<div class="templatemo-content-widget no-padding">
 			<div class="panel panel-default table-responsive">
 				<table
-					class="table table-striped table-bordered templatemo-user-table">
+					class="table table-light table-striped table-bordered text-center">
 					<thead>
 						<tr>
-							<td><a href="" class="white-text templatemo-sort-by"># <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Mã phim <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Tên phim <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Mô tả <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Đạo diễn <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Ngày bắt đầu <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Ngày kết thúc <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Thời lượng<span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Poster <span class="caret"></span></a></td>
-							<td>Sửa</td>
-							<td>Xóa</td>
-						</tr>
+							<th style="background-color: #e75e8d; color: white;">#</th>							
+							<th style="background-color: #e75e8d; color: white;">Mã phim</th>
+							<th style="background-color: #e75e8d; color: white;">Tên phim</th>
+							<th style="background-color: #e75e8d; color: white;">Mô tả</th>
+							<th style="background-color: #e75e8d; color: white;">Đạo diễn</th>
+							<th style="background-color: #e75e8d; color: white;">Ngày bắt đầu</th>
+							<th style="background-color: #e75e8d; color: white;">Ngày kết thúc</th>
+							<th style="background-color: #e75e8d; color: white;">Thời lượng</th>
+							<th style="background-color: #e75e8d; color: white;">Poster</th>
+							<th style="background-color: #e75e8d; color: white;">Sửa</th>
+							<th style="background-color: #e75e8d; color: white;">Xóa</th>
+						</tr>						
 					</thead>
 					<tbody>
 
@@ -94,17 +94,103 @@
 		</div>
 
 
-		<div class="pagination-wrap">
-			<ul class="pagination">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li class="active"><a href="#">3 <span class="sr-only">(current)</span></a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#" aria-label="Next"> <span aria-hidden="true"><i
-							class="fa fa-play"></i></span>
-				</a></li>
-			</ul>
-		</div>
+		<!--Pagination-->
+		<c:if test="${phimList.size() !=0}">
+			<div class="pagination-wrap">
+				<ul class="pagination">
+					<li>
+						<c:if test="${currentPage!=1}">
+							<a href="?page=${currentPage - 1}&searchName=${searchName}"><span aria-hidden="true"><i class="fa-solid fa-caret-left"></i></span></a>
+						</c:if> <c:if test="${currentPage==1}">
+							<a ><span aria-hidden="true"><i class="fa-solid fa-caret-left"></i></span></a>
+						</c:if>
+					</li>
+
+					<c:forEach begin="1" end="${noOfPages}" var="i">
+						<c:choose>
+							<c:when test="${currentPage eq i}">								
+								<li class="active"><a >${i}<span class="sr-only"></span></a></li>
+							</c:when>
+							<c:otherwise>								
+								<li><a href="?page=${i}&searchName=${searchName}"><span aria-hidden="true">${i}</span></a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					
+					<li>
+						<c:if test="${currentPage!=noOfPages}">
+							<a href="?page=${currentPage + 1}&searchName=${searchName}"><span aria-hidden="true"><i class="fa-solid fa-caret-right"></i></span></a>
+						</c:if> 
+						<c:if test="${currentPage==noOfPages}">
+							<a ><span aria-hidden="true"><i class="fa-solid fa-caret-right"></i></span></a>
+						</c:if>
+					</li>
+				</ul>
+			</div>
+		</c:if>
 	</div>
 </div>
+
+<!--thong bao truoc khi delete -->
+	<input value="${message}" id="message" hidden="true">
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form action="${pageContext.request.contextPath}/admin/delete" method="post">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>						
+					</div>
+					<div class="modal-body container-fluid">
+						Chắn chắc xóa suất chiếu mã <span id="delete_modal"></span> 
+						<input hidden="true" id="sendId" name="customerId"><span>?</span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+						<button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xóa</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!--thong bao sau khi delete -->
+	<div class="modal fade" id="modalAlert" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div>
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Alert</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body container-fluid">
+						<p id="modalAlertMes"></p>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+		window.onload = function() {
+			if ($('#message').val() != null && $('#message').val() != "") {
+				$("#modalAlertMes").html($('#message').val());
+				$(document).ready(function() {
+					$('#modalAlert').modal("show")
+				})
+			}
+		}
+	</script>
+
+	<script>
+		function showModalDelete(a) {
+			/* alert("Ha ha "+a) */
+			document.getElementById("delete_modal").innerText = a;
+			document.getElementById("sendId").value = a; 
+		}
+	</script>

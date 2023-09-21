@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import fa.training.DTO.ShowTimeDTO;
 import fa.training.model.Movie;
 import fa.training.model.Showtime;
+import fa.training.model.Theater;
 import fa.training.repository.MovieRepository;
 
 @Service
@@ -49,8 +50,9 @@ public class MovieService {
 	//LamNH23
 	public List<Movie> getRecordsForCurrentPage(int start, int recordsPerPage) {
 		List<Movie> list = new ArrayList<>();
-		list.add(new Movie("Movie008", "Tên phim", "Mô tả", "Đạo diễn", LocalDate.of(2023, 9, 14), LocalDate.of(2023, 9, 24), LocalTime.of(02, 30),"Url poster",new HashSet<Showtime>()));
-		list.add(new Movie("Movie009", "Tên phim", "Mô tả", "Đạo diễn", LocalDate.of(2023, 9, 14), LocalDate.of(2023, 9, 24), LocalTime.of(02, 30),"Url poster",new HashSet<Showtime>()));
+		for(int i = start+1;i<(start+recordsPerPage+1);i++) {
+			list.add(new Movie("Movie "+i, "Tên phim", "Mô tả", "Đạo diễn", LocalDate.of(2023, 9, 14), LocalDate.of(2023, 9, 24), LocalTime.of(02, 30),"Url poster",new HashSet<Showtime>()));
+		}			
 		return list;
 	}
 	

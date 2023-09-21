@@ -58,9 +58,9 @@ public class Promotion {
 //	@NotNull(message = "VUi lòng nhập tỉ lệ khuyến mãi!")
 	int discountPercent;
 	
-	@Column(columnDefinition = "Ntext")
+	@Column(columnDefinition = "text")
 	String url;
-
+	
 	@OneToMany(mappedBy = "promotion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<Order> orderList;
 //

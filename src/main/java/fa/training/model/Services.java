@@ -51,18 +51,17 @@ public class Services {
 //	@NotNull(message = "Xin hãy nhập thông tin vào trường này")
 	@Column(columnDefinition = "int")
 	int servicePrice;
-	
-	@Column(columnDefinition = "Ntext")
+
+	@Column(columnDefinition = "text")
 	String url;
-//	
+
 	@OneToMany(mappedBy = "services", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<Order> order;
+
 	@Override
 	public String toString() {
 		return "Services [serviceId=" + serviceId + ", serviceName=" + serviceName + ", serviceDescription="
 				+ serviceDescription + ", servicePrice=" + servicePrice + ", order=" + order + "]";
 	}
-	
-	
 
 }

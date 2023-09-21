@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -47,5 +48,15 @@ public class Room {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "theaterId")
-	Theater theater;
+	Theater theater;	
+	
+	@OneToMany(mappedBy = "room",cascade = CascadeType.ALL)
+	Set<Showtime> showtimeTheater;
+
+	public Room(String roomName) {
+		super();
+		this.roomName = roomName;
+	}
+	
+	
 }
