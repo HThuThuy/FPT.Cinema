@@ -57,7 +57,10 @@ public class Promotion {
 //	@Range(min = 0, max = 100, message = "Vui lòng nhập tỉ lệ khuyến mãi nằm trong khoảng từ 0 tới 100!")
 //	@NotNull(message = "VUi lòng nhập tỉ lệ khuyến mãi!")
 	int discountPercent;
-
+	
+	@Column(columnDefinition = "text")
+	String url;
+	
 	@OneToMany(mappedBy = "promotion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<Order> orderList;
 	

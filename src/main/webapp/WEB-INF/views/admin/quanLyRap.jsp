@@ -24,16 +24,16 @@
           </div>
           <div class="templatemo-content-widget no-padding">
             <div class="panel panel-default table-responsive">
-              <table class="table table-striped table-bordered templatemo-user-table">
+              <table class="table table-light table-striped table-bordered text-center">
                 <thead>
-                  <tr>
-                    <td><a href="" class="white-text templatemo-sort-by"># <span class="caret"></span></a></td>
-                    <td><a href="" class="white-text templatemo-sort-by">Mã rạp <span class="caret"></span></a></td>
-                    <td><a href="" class="white-text templatemo-sort-by">Tên rạp <span class="caret"></span></a></td>
-                    <td><a href="" class="white-text templatemo-sort-by">Thành phố <span class="caret"></span></a></td>
-                    <td>Sửa</td>                   
-                    <td>Xóa</td>
-                  </tr>
+                	<tr>
+						<th style="background-color: #e75e8d; color: white;">#</th>							
+						<th style="background-color: #e75e8d; color: white;">Mã rạp</th>
+						<th style="background-color: #e75e8d; color: white;">Têp rạp</th>
+						<th style="background-color: #e75e8d; color: white;">Thành phố</th>
+						<th style="background-color: #e75e8d; color: white;">Sửa</th>
+						<th style="background-color: #e75e8d; color: white;">Xóa</th>
+					</tr>                  
                 </thead>
                 <tbody>
 
@@ -65,3 +65,67 @@
           </div> 
         </div>
       </div>
+      
+      <!--thong bao truoc khi delete -->
+	<input value="${message}" id="message" hidden="true">
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form action="${pageContext.request.contextPath}/admin/delete" method="post">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>						
+					</div>
+					<div class="modal-body container-fluid">
+						Chắn chắc xóa suất chiếu mã <span id="delete_modal"></span> 
+						<input hidden="true" id="sendId" name="customerId"><span>?</span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+						<button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xóa</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!--thong bao sau khi delete -->
+	<div class="modal fade" id="modalAlert" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div>
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Alert</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body container-fluid">
+						<p id="modalAlertMes"></p>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+		window.onload = function() {
+			if ($('#message').val() != null && $('#message').val() != "") {
+				$("#modalAlertMes").html($('#message').val());
+				$(document).ready(function() {
+					$('#modalAlert').modal("show")
+				})
+			}
+		}
+	</script>
+
+	<script>
+		function showModalDelete(a) {
+			/* alert("Ha ha "+a) */
+			document.getElementById("delete_modal").innerText = a;
+			document.getElementById("sendId").value = a; 
+		}
+	</script>

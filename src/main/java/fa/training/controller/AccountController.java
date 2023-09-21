@@ -1,5 +1,8 @@
 package fa.training.controller;
 
+import java.util.Map;
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,9 +17,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import fa.training.DTO.RegisterDTO;
-import fa.training.DTO.ResetPassword;
 import fa.training.model.Customer;
 import fa.training.model.Users;
 import fa.training.service.CustomerService;
@@ -87,30 +90,30 @@ public class AccountController {
 	/**
 	 * Project: FPT-Cinema Author : TraNLC Team: 1 Function/Class/JSP : Đổi mật khẩu
 	 */
-	@PostMapping("/resetpass")
-	public String postChangePass(@ModelAttribute("Resetpass") ResetPassword rs, HttpServletRequest request,
-			HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		Users user = userService.findByAccountAndPassword(rs.getAccount(), rs.getOldpassword());
-
-		if (user != null) {
-			if (rs.getOldpassword().equals(rs.getPassword())) {
-				request.setAttribute("loggedInUser", session.getAttribute("loggedInUser"));
-				request.setAttribute("messagePassword", "Mật Khẩu Mới Không Được Trùng Với Mật Khẩu Cũ !");
-				return "/home/resetPasswordModal";
-			}
-			if (!checkRequest(request)) {
-				request.setAttribute("messageAccount", "Bạn Đã Đăng Xuất, Vui Lòng Đăng Nhập Lại Để Đổi Mật Khẩu!");
-				return "/home/login";
-			}
-			userService.updatePass(rs.getAccount(), rs.getPassword());
-			return "redirect:/#";
-		} else {
-			request.setAttribute("loggedInUser", session.getAttribute("loggedInUser"));
-			request.setAttribute("messageAccount", "Thông Tin Tài Khoản Hoặc Mật Khẩu Không Chính Xác!");
-			return "/home/resetPasswordModal";
-		}
-	}
+//	@PostMapping("/resetpass")
+//	public String postChangePass(@ModelAttribute("Resetpass") ResetPassword rs, HttpServletRequest request,
+//			HttpServletResponse response) {
+//		HttpSession session = request.getSession();
+//		Users user = userService.findByAccountAndPassword(rs.getAccount(), rs.getOldpassword());
+//
+//		if (user != null) {
+//			if (rs.getOldpassword().equals(rs.getPassword())) {
+//				request.setAttribute("loggedInUser", session.getAttribute("loggedInUser"));
+//				request.setAttribute("messagePassword", "Mật Khẩu Mới Không Được Trùng Với Mật Khẩu Cũ !");
+//				return "/home/resetPasswordModal";
+//			}
+//			if (!checkRequest(request)) {
+//				request.setAttribute("messageAccount", "Bạn Đã Đăng Xuất, Vui Lòng Đăng Nhập Lại Để Đổi Mật Khẩu!");
+//				return "/home/login";
+//			}
+//			userService.updatePass(rs.getAccount(), rs.getPassword());
+//			return "redirect:/#";
+//		} else {
+//			request.setAttribute("loggedInUser", session.getAttribute("loggedInUser"));
+//			request.setAttribute("messageAccount", "Thông Tin Tài Khoản Hoặc Mật Khẩu Không Chính Xác!");
+//			return "/home/resetPasswordModal";
+//		}
+//	}
 
 	/**
 	 * Project: FPT-Cinema Team: 1 Author : TraNLC Function/Class/JSP : Quên mật
@@ -120,59 +123,6 @@ public class AccountController {
 	public String getForgotPass(Model model) {
 		return "/home/forgotPasswordModal";
 	}
-
-//	/**
-//	 * Project: FPT-Cinema Team: 1 Author : TraNLC Function/Class/JSP : Đăng ký
-//	 */
-//	@GetMapping("/register")
-//	public String showForm(Model model) {
-//	  return "home/register";
-//	}
-
-//	@PostMapping("/register")
-//	public String submit(@ModelAttribute("registerForm") @Valid RegisterDTO ir, BindingResult result,
-//			HttpServletRequest request, HttpServletResponse response, Model model,
-//			RedirectAttributes redirectAttributes) {
-//		if (result.hasErrors()) {
-//			return "register";
-//		}
-//		Users user = new Users();
-//		Customer customer = new Customer();
-//		if ((userService.searchCustomer(ir.getEmail()) == null)
-//				&& (userService.findByAccount(ir.getAccount()) == null)) {
-//			customer.setCustomerName(ir.getCustomerName());
-//			customer.setPhone(ir.getPhone());
-//			customer.setEmail(ir.getEmail());
-//			customer.setGender(ir.getGender());
-//			customer.setAddress(ir.getAddress());
-//			customer.setBirthDate(ir.getBirthDate());
-//			customerService.save(customer);
-//
-//			user.setAccount(ir.getAccount());
-//			user.setPassword(passEncode.encode(ir.getPassword()));
-//			user.setCustomer(customer);
-//			user.setUserRole("USER");
-//			user.setStatus("active");
-//			userService.save(user);
-//			redirectAttributes.addFlashAttribute("accountSuccess",
-//					"Đăng kí thành công!! vui lòng đăng nhập để tiếp tục");
-//			return "redirect:/";
-//		} else {
-//			if ((userService.searchCustomer(ir.getEmail()) != null)) {
-//				request.setAttribute("messageEmail", "Email Này Đã Được Đăng Ký!");
-//			} else {
-//				request.setAttribute("messageEmail", "");
-//			}
-//
-//			if (userService.findByAccount(ir.getAccount()) != null) {
-//				request.setAttribute("messageAccount", "User Đã Tồn Tại Trong Hệ Thống");
-//			} else {
-//				request.setAttribute("messageAccount", "");
-//			}
-//			request.setAttribute("messageAccount", "Đã xảy ra lỗi");
-//			return "register";
-//		}
-//	}
 
 	
 	/**
@@ -188,7 +138,7 @@ public class AccountController {
 	    customer.setEmail(registerDTO.getEmail());
 	    customer.setPhone(registerDTO.getPhone());
 	    customer.setGender(registerDTO.getGender());
-	    customer.setUserType("Regular");
+	    customer.setUserType("Thường");
 
 	    System.out.println("abc-----------" + registerDTO);
 	    customerService.save(customer);
@@ -213,27 +163,114 @@ public class AccountController {
 	 * Project: FPT-Cinema Team: 1 Author : TraNLC Function/Class/JSP : Quên mật
 	 * khẩu
 	 */
-	@PostMapping("/otp")
-	public String quenPass(@ModelAttribute("emailtk") String email, HttpServletRequest request,
-			HttpServletResponse response) {
-		HttpSession sessionOTP = request.getSession();
-		Users user = userService.searchCustomer(email);
-		if (user == null) {
-			request.setAttribute("messageEmail", "Email chưa đăng ký cho tài khoản nào!");
-			return "/home/forgotPasswordModal";
-		} else {
-			System.out.println(user.getAccount());
-			sessionOTP.setAttribute("account", user.getAccount());
-			boolean flag = emailService.sendOtpEmail(email, sessionOTP);
-			if (flag) {
-				sessionOTP.setMaxInactiveInterval(300);
-				return "/home/otp";
-			} else {
-				request.setAttribute("messageEmailcorrect", "Hệ Thống Đang Lỗi, Vui lòng Chờ Ít Phút !");
-				return "/home/forgotPasswordModal";
-			}
-		}
+//	@PostMapping("/otp")
+//	public String quenPass(@ModelAttribute("emailtk") String email, HttpServletRequest request,
+//			HttpServletResponse response) {
+//		HttpSession sessionOTP = request.getSession();
+//		Users user = userService.searchCustomer(email);
+//		if (user == null) {
+//			request.setAttribute("messageEmail", "Email chưa đăng ký cho tài khoản nào!");
+//			return "/home/forgotPasswordModal";
+//		} else {
+//			System.out.println(user.getAccount());
+//			sessionOTP.setAttribute("account", user.getAccount());
+//			boolean flag = emailService.sendOtpEmail(email, sessionOTP);
+//			if (flag) {
+//				sessionOTP.setMaxInactiveInterval(300);
+//				return "/home/otp";
+//			} else {
+//				request.setAttribute("messageEmailcorrect", "Hệ Thống Đang Lỗi, Vui lòng Chờ Ít Phút !");
+//				return "/home/forgotPasswordModal";
+//			}
+//		}
+//	}
+	
+	@PostMapping("/forgotPassword")
+	public String handleForgotPassword(@RequestBody Map<String, String> request, HttpSession session, Model model) {
+	    String email = request.get("email");
+
+	    // Kiểm tra xem email có tồn tại trong hệ thống hay không
+	    // Nếu không tồn tại, bạn có thể trả về một trang lỗi hoặc thông báo
+
+	    // Gửi email với OTP và lưu OTP vào session
+	    boolean emailSent = emailService.sendOtpEmail(email, session);
+
+	    if (emailSent) {
+	        return "redirect:/resetPassword"; // Chuyển hướng đến trang reset mật khẩu
+	    } else {
+	        model.addAttribute("error", "Gửi email không thành công. Vui lòng thử lại sau.");
+	        return "errorPage"; // Trang thông báo lỗi
+	    }
 	}
+	
+//	@PostMapping("/forgotPassword")
+//	public String quenPass(@ModelAttribute("emailtk") String email, HttpServletRequest request,
+//	        HttpServletResponse response) {
+//	    HttpSession sessionOTP = request.getSession();
+//	    
+//	    // Kiểm tra xem email đã được đăng ký hay chưa
+//	    Customer customer = userService.searchCustomer(email);
+//	    if (customer == null) {
+//	        request.setAttribute("messageEmail", "Email chưa đăng ký cho tài khoản nào!");
+//	        return "/taikhoan/quenpass";
+//	    } 
+//	    
+//	    // Lấy thông tin tài khoản người dùng
+//	    Users user = userService.findByAccount(account);
+//	    sessionOTP.setAttribute("taikhoan", user);
+//	    
+//	    // Tạo mã OTP ngẫu nhiên
+//	    Random random = new Random();
+//	    int otp = 100000 + random.nextInt(900000);
+//	    String OTP = String.valueOf(otp);
+//	    
+//	    // Tạo email
+//	    String subject = "OTP From T2Cinema";
+//	    String message = "OTP is " + otp;
+//	    String to = email;
+//	    
+//	    // Gửi email
+//	    boolean flag = this.emailService.sendEmail(subject, message, to);
+//	    
+//	    if (flag) {
+//	        sessionOTP.setAttribute("myOtp", OTP);
+//	        sessionOTP.setMaxInactiveInterval(300);
+//	        return "/taikhoan/otp";
+//	    } else {
+//	        request.setAttribute("messageEmailcorrect", "Hệ Thống Đang Lỗi, Vui lòng Chờ Ít Phút !");
+//	        return "/taikhoan/quenpass";
+//	    }
+//	}
+	
+
+
+    @PostMapping("/verifyOtp")
+    public String verifyOtp(@RequestParam String otp, HttpSession session, Model model) {
+        // Lấy OTP đã lưu trong session
+        String sessionOtp = (String) session.getAttribute("OTP");
+
+        // Kiểm tra xem OTP người dùng nhập vào có khớp không
+        if (sessionOtp != null && sessionOtp.equals(otp)) {
+            // Nếu OTP khớp, chuyển hướng đến trang đổi mật khẩu
+            return "redirect:/changePassword";
+        } else {
+            model.addAttribute("error", "Mã OTP không hợp lệ. Vui lòng thử lại.");
+            return "errorPage"; // Trang thông báo lỗi
+        }
+    }
+
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestParam String newPassword, HttpSession session, Model model) {
+        // Lấy thông tin tài khoản của người dùng (bạn cần implement phần này)
+
+        // Đổi mật khẩu cho tài khoản
+        // ...
+
+        // Đăng xuất người dùng sau khi đổi mật khẩu (nếu cần)
+        session.invalidate();
+
+        return "redirect:/login"; // Chuyển hướng đến trang đăng nhập
+    }
 
 	/**
 	 * Project:FPT-Cinema

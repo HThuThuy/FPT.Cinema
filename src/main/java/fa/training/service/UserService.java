@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import fa.training.model.Customer;
 import fa.training.model.Users;
 import fa.training.repository.UserRepository;
 
@@ -110,9 +111,9 @@ public class UserService {
 		repo.updatePass(account, password);
 	}
 	
-	public Users searchCustomer(String email) {
-		return repo.findByEmail(email);
-	}
+//	public Customer searchCustomer(String email) {
+//		return repo.findByEmail(email);
+//	}
 
 	
 }

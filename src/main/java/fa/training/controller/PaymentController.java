@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fa.training.config.Config;
+import fa.training.config.VNPayConfig;
 import fa.training.service.SeatService;
 import fa.training.service.SerService;
 
@@ -51,11 +51,11 @@ public class PaymentController {
 	public String createPayment(@RequestParam("param1") String soTien, @RequestParam("param2") String orderInfo)
 			throws UnsupportedEncodingException {
 	long amount = Long.parseLong(soTien) * 100;
-		String vnp_TxnRef = Config.getRandomNumber(8);
+		String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
 		Map<String, String> vnp_Params = new HashMap<>();
-		vnp_Params.put("vnp_Version", Config.vnp_Version);
-		vnp_Params.put("vnp_Command", Config.vnp_Command);
-		vnp_Params.put("vnp_TmnCode", Config.vnp_TmnCode);
+		vnp_Params.put("vnp_Version", VNPayConfig.vnp_Version);
+		vnp_Params.put("vnp_Command", VNPayConfig.vnp_Command);
+		vnp_Params.put("vnp_TmnCode", VNPayConfig.vnp_TmnCode);
 		vnp_Params.put("vnp_Amount", String.valueOf(amount));
 		vnp_Params.put("vnp_CurrCode", "VND");
 		vnp_Params.put("vnp_BankCode", "NCB");
@@ -63,8 +63,8 @@ public class PaymentController {
 		vnp_Params.put("vnp_OrderInfo", orderInfo);
 		vnp_Params.put("vnp_OrderType", "other");
 		vnp_Params.put("vnp_Locale", "vn");
-		vnp_Params.put("vnp_ReturnUrl", Config.vnp_Returnurl);
-        vnp_Params.put("vnp_IpAddr", Config.vnp_IpAddr);
+		vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_Returnurl);
+        vnp_Params.put("vnp_IpAddr", VNPayConfig.vnp_IpAddr);
 		try {
 			// Tạo một ObjectMapper
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -116,10 +116,10 @@ public class PaymentController {
 			}
 		}
 		String queryUrl = query.toString();
-		String vnp_SecureHash = Config.hmacSHA512(Config.vnp_HashSecret, hashData.toString());
+		String vnp_SecureHash = VNPayConfig.hmacSHA512(VNPayConfig.vnp_HashSecret, hashData.toString());
 		queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
 		vnp_Params.put("vnp_SecureHash", vnp_SecureHash);
-		String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
+		String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + queryUrl;
 
 	
 

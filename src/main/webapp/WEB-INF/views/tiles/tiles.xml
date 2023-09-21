@@ -49,6 +49,11 @@
 			value="/WEB-INF/views/admin/addSuatChieu.jsp" />
 	</definition> 
 	
+	<definition name="admin/editSuatChieu" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/admin/editSuatChieu.jsp" />
+	</definition> 
+	
 	<definition name="admin/quanLyPhim" extends="admin.definition">
 		<put-attribute name="body2"
 			value="/WEB-INF/views/admin/quanLyPhim.jsp" />

@@ -38,62 +38,73 @@
 				<div class="col-lg-3 col-md-6"></div>
 			</div>	
 		
-		<!-- TABLE -->
 		<!-- TABLE THỐNG KÊ THEO PHIM-->
 		<div class="templatemo-content-widget no-padding">
 			<div class="panel panel-default table-responsive">
 				<table
-					class="table table-striped table-bordered templatemo-user-table">
+					class="table table-light table-striped table-bordered text-center">
 					<thead>
 						<tr>
-							<td><a href="" class="white-text templatemo-sort-by"># <span
-									class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Tên phim <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Bắt đầu <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Kết thúc <span class="caret"></span></a></td>
-							<td><a href="" class="white-text templatemo-sort-by">Doanh thu <span class="caret"></span>
-							</a></td>
-						</tr>
+							<th style="background-color: #e75e8d; color: white;">#</th>							
+							<th style="background-color: #e75e8d; color: white;">Mã phim</th>
+							<th style="background-color: #e75e8d; color: white;">Têp phim</th>
+							<th style="background-color: #e75e8d; color: white;">Bắt đầu</th>
+							<th style="background-color: #e75e8d; color: white;">Kết thúc</th>
+							<th style="background-color: #e75e8d; color: white;">Doanh thu</th>
+						</tr>						
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>Thành phố hoang</td>
-							<td>05/09/2023</td>
-							<td>25/09/2023</td>
-							<td>300.000.000</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>Con đường xưa</td>
-							<td>05/09/2023</td>
-							<td>25/09/2023</td>
-							<td>300.000.000</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>Sa mạc Sahara</td>
-							<td>05/09/2023</td>
-							<td>25/09/2023</td>
-							<td>300.000.000</td>
-						</tr>	
+
+						<c:forEach items="${phimList}" var="item" varStatus="status">
+							<tr>
+								<td class="text-center">${status.count}</td>
+								<td>${item.movieId}</td>
+								<td>${item.movieName}</td>
+								<td>${item.startDate}</td>
+								<td>${item.endDate}</td>
+								<td>${item.doanhThu}</td>
+							</tr>
+						</c:forEach>
 						
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<div class="pagination-wrap">
-			<ul class="pagination">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li class="active"><a href="#">3 <span class="sr-only">(current)</span></a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#" aria-label="Next"> <span aria-hidden="true"><i
-							class="fa fa-play"></i></span>
-				</a></li>
-			</ul>
-		</div>		
+		
+		<!--Pagination-->
+		<c:if test="${phimList.size() !=0}">
+			<div class="pagination-wrap">
+				<ul class="pagination">
+					<li>
+						<c:if test="${currentPage!=1}">
+							<a href="?page=${currentPage - 1}&searchName=${searchName}"><span aria-hidden="true"><i class="fa-solid fa-caret-left"></i></span></a>
+						</c:if> <c:if test="${currentPage==1}">
+							<a ><span aria-hidden="true"><i class="fa-solid fa-caret-left"></i></span></a>
+						</c:if>
+					</li>
+
+					<c:forEach begin="1" end="${noOfPages}" var="i">
+						<c:choose>
+							<c:when test="${currentPage eq i}">								
+								<li class="active"><a >${i}<span class="sr-only"></span></a></li>
+							</c:when>
+							<c:otherwise>								
+								<li><a href="?page=${i}&searchName=${searchName}"><span aria-hidden="true">${i}</span></a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					
+					<li>
+						<c:if test="${currentPage!=noOfPages}">
+							<a href="?page=${currentPage + 1}&searchName=${searchName}"><span aria-hidden="true"><i class="fa-solid fa-caret-right"></i></span></a>
+						</c:if> 
+						<c:if test="${currentPage==noOfPages}">
+							<a ><span aria-hidden="true"><i class="fa-solid fa-caret-right"></i></span></a>
+						</c:if>
+					</li>
+				</ul>
+			</div>
+		</c:if>
 
 	</div>
 </div>
