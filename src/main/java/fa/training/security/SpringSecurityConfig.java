@@ -26,15 +26,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .csrf().disable()
             .authorizeRequests()
-                .antMatchers("/home", "/login", "/logout", "/users/**", "/account").permitAll()
+                .antMatchers("/home", "/").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/users/control/**").hasAnyRole("ADMIN", "USER")
             .and()
             .exceptionHandling().accessDeniedPage("/dang-nhap?error=403")
             .and()
             .formLogin()
-                .loginProcessingUrl("/login") // This should be the same as the form action in your modal
-                .loginPage("/login") // This should be the same as the form action in your modal
                 .usernameParameter("account") // Update the username parameter to match your form
                 .passwordParameter("password") // The password parameter remains the same
                 .defaultSuccessUrl("/role")

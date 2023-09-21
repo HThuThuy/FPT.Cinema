@@ -1798,3 +1798,6 @@ background: linear-gradient(to left, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/
 .layout__seat__icon {
     width: 40%
 }
+.hidden {
+  display: none;
+}
