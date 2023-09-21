@@ -48,7 +48,7 @@ public class Room {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "theaterId")
-	Theater theater;
+	Theater theater;	
 	
 	@OneToMany(mappedBy = "room",cascade = CascadeType.ALL)
 	Set<Showtime> showtimeTheater;

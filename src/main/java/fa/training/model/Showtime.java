@@ -34,18 +34,15 @@ import lombok.Setter;
 @Table(name = "SHOWTIME")
 public class Showtime {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int showtimeId;
+	@Id	
+	String showtimeId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "movieId")
 	Movie movie;
-//	
-	@ManyToOne
-	@JoinColumn(name = "theaterId")
-	Theater theater;
+//		
 	
+	@JoinColumn(name = "roomId")
 	@ManyToOne
 	Room room;
 	
@@ -59,21 +56,15 @@ public class Showtime {
 	@Column(columnDefinition = "Time")
 	LocalTime startTime;
 
-	public Showtime(int showtimeId, Movie movie, Theater theater, Room room, LocalDate startDate, LocalTime startTime) {
+	public Showtime(String showtimeId, Movie movie, Theater theater, Room room, LocalDate startDate, LocalTime startTime) {
 		super();
 		this.showtimeId = showtimeId;
 		this.movie = movie;
-		this.theater = theater;
 		this.room = room;
 		this.startDate = startDate;
 		this.startTime = startTime;
 	}
 
-	@Override
-	public String toString() {
-		return "Showtime [showtimeId=" + showtimeId + ", movie=" + movie.movieId + ", theater=" + theater.theaterId + ", room=" + room.roomId
-				+ ", startDate=" + startDate + ", startTime=" + startTime + "]";
-	}
 
 	
 

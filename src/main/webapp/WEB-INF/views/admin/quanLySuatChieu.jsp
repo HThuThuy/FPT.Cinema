@@ -13,8 +13,7 @@
 
 			<div class="col-lg-6 col-md-6">
 				<form:form class="row"
-					action="${pageContext.request.contextPath}/admin/searchSuatChieu"
-					method="get">
+					action="${pageContext.request.contextPath}/admin/search" method="get">
 					
 					<div class="col-lg-1 col-md-1">
 						

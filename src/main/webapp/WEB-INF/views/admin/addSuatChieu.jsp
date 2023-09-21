@@ -8,19 +8,23 @@
 <div class="templatemo-content col-1 light-gray-bg">
 	<div class="templatemo-content-container">
 		<div class="templatemo-content-widget white-bg">
-			<h3 class="margin-bottom-10">Thêm suất chiếu</h3>
+			<h3 class="margin-bottom-10">${text} suất chiếu</h3>
 
 			
 			<form:form action="${pageContext.request.contextPath}/admin/addSuatChieu" method="post" modelAttribute="suatChieu" class="templatemo-login-form">
 				<div class="row form-group">
 					<div class="col-lg-12 col-md-12 form-group">
 						<label for="inputmasuatchieu">Mã suất chiếu</label> 
-						<form:input path="showtimeId" type="text" class="form-control"/>
+						<form:input path="showtimeId" type="text" class="form-control" readonly="${text2}"/>
 						<form:errors path="showtimeId" cssClass="text-danger" />
 					</div>
 					<div class="col-lg-12 col-md-12 form-group">
-						<label for="inputmasuatchieu">Mã phim</label> 
-						<form:input path="movieId" type="text" class="form-control"/>
+						<label for="inputmasuatchieu">Chọn phim</label> 
+						<form:select path="movieId" class="form-control">
+							<c:forEach items="${movies}" var="item">
+								<option value="${item.movieId}" ${item.movieId == record.movieId ? 'selected' : ''}>${item.movieName}</option>
+							</c:forEach>
+						</form:select>
 						<form:errors path="movieId" cssClass="text-danger" />
 					</div>
 
@@ -37,8 +41,8 @@
 					<div class="col-lg-12 col-md-12 form-group">
 						<label class="control-label templatemo-block"> Chọn phòng</label>
 						<form:select path="roomId" class="form-control">
-							<option value="R001">Nhỏ</option>
-							<option value="R002">Vừa</option>
+							<option value="R003">Nhỏ</option>
+							<option value="R003">Vừa</option>
 							<option value="R003">Lớn</option>
 						</form:select>
 						<form:errors path="roomId" cssClass="text-danger" />
@@ -57,7 +61,7 @@
 					</div>
 
 					<div class="form-group text-right">
-						<button type="submit" class="templatemo-blue-button">Thêm mới</button>
+						<button type="submit" class="templatemo-blue-button">${text}</button>
 						<button type="reset" class="templatemo-white-button">Tạo lại</button>
 					</div>
 				</div>

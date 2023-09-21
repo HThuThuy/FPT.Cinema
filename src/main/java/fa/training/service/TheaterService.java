@@ -50,8 +50,8 @@ public class TheaterService {
 	//LamNH23
 	public List<Theater> getRecordsForCurrentPage(int start, int recordsPerPage) {
 		List<Theater> list = new ArrayList<>();
-		list.add(new Theater("Theater008", "Tên rạp 1", "Thành phố"));
-		list.add(new Theater("Theater009", "Tên rạp 2", "Thành phố"));
+		list.add(new Theater("TT004", "Tên rạp 1", "Thành phố"));
+		list.add(new Theater("TT004", "Tên rạp 2", "Thành phố"));
 		return list;
 	}
 }

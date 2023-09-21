@@ -44,10 +44,7 @@ public class Theater {
 	String city;
 
 	@OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
-	Set<Room> roomList;
-	
-	@OneToMany(mappedBy = "theater",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	Set<Showtime> showtimeTheater;
+	Set<Room> roomList;			
 
 	@Override
 	public String toString() {

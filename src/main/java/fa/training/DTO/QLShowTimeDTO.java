@@ -23,8 +23,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class QLShowTimeDTO {
 	
-	@Positive(message = "Invalid - anInt - phải > 0")
-	int showtimeId;
+	
+	String showtimeId;
 
 	@NotBlank(message = "Invalid - string - không empty hoặc chứa toàn khoảng trắng")
 	String movieId;
