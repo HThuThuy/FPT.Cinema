@@ -62,12 +62,35 @@ public class Movie {
 	
 	String posterUrl;
 	
-	@OneToMany(mappedBy = "movie",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	String movieStatus;
+	
+	@OneToMany(mappedBy = "movie",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	Set<Showtime> showtimeList;
 
 	public Movie(String movieName) {
 		super();
 		this.movieName = movieName;
+	}
+
+	@Override
+	public String toString() {
+		return "Movie [movieId=" + movieId + ", movieName=" + movieName + ", movieDescription=" + movieDescription
+				+ ", director=" + director + ", startDate=" + startDate + ", endDate=" + endDate + ", duration="
+				+ duration + ", posterUrl=" + posterUrl + ", showtimeList=" + showtimeList + "]";
+	}
+
+	public Movie(String movieId, String movieName, String movieDescription, String director, LocalDate startDate,
+			LocalDate endDate, LocalTime duration, String posterUrl, Set<Showtime> showtimeList) {
+		super();
+		this.movieId = movieId;
+		this.movieName = movieName;
+		this.movieDescription = movieDescription;
+		this.director = director;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.duration = duration;
+		this.posterUrl = posterUrl;
+		this.showtimeList = showtimeList;
 	}
 	
 	

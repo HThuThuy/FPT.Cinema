@@ -25,6 +25,12 @@ public class MovieService {
 	public List<Movie> getAll() {
 		return repo.findAll();
 	}
+	public List<Movie> getMovieDangChieu() {
+		return repo.findDangChieu();
+	}
+	public List<Movie> getMovieSapChieu() {
+		return repo.findSapChieu();
+	}
 
 	public Movie findById(String movie) {
 		return repo.findById(movie).orElseThrow(() -> new IllegalArgumentException("Invalid Movie Id: " + movie));

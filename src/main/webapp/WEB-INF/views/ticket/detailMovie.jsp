@@ -81,14 +81,9 @@
 												<div class="col-4">
 
 													<div class="form-group">
-														<!--  <select class="form-control" id="branch" name="branch">
-                                <option value="branch1">Cả nước</option>
-                                <option value="branch1">TP.Hồ Chí Minh</option>
-                                <option value="branch2">TP.Hà Nội</option>
-                                <option value="branch3">TP.Đà Nẵng</option>
-                              </select> -->
 
-														<select class="form-control" id="branch" name="branch">
+														<select class="form-control" id="theaterCity"
+															name="theaterCity" onchange="getSelectedCity()">
 															<option value="all">Cả nước</option>
 															<c:set var="citySet" value="" />
 															<c:forEach items="${listTheater}" var="theater">
@@ -113,15 +108,9 @@
 												<div class="col-4">
 
 													<div class="form-group">
-														<!-- <select class="form-control" id="theater" name="theater">
-															<option value="theater1">Tất cả rạp</option>
-															<option value="theater1">FPT Cinema 1</option>
-															<option value="theater2">FPT Cinema 2</option>
-															<option value="theater3">FPT Cinema 3</option>
-														</select> -->
 														<select class="form-control" id="branch" name="branch">
 															<option value="all">Tất cả rạp</option>
-															<c:forEach items="${listTheater}" var="th">
+															<c:forEach items="${listCity}" var="th">
 																<option value="${th.theaterName}">${th.theaterName}</option>
 															</c:forEach>
 														</select>
@@ -186,3 +175,35 @@
 		</div>
 	</div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+	function getSelectedCity() {
+		console.log('abc');
+		var selectedCity = document.getElementById("theaterCity").value; // Lấy giá trị được chọn từ dropdown
+
+		// Gửi giá trị đến controller bằng Axios
+		axios.get("${pageContext.request.contextPath}/ticket/city", {
+		    params: {
+		        city: selectedCity
+		    }
+		}).then(function(response) {
+    			if (response.status === 200) {
+			        var list = response.data;
+			        let result = '<option value="all">Tất cả rạp</option>';
+			        for (let i = 0; i < list.length; i++) {
+			        	result += '<option value="' + list[i].theaterId + '">' + list[i].theaterName + '</option>';
+			        }
+			        document.getElementById('branch').innerHTML = result;
+			        console.log(list);
+			    } else {
+			        // Xử lý lỗi trạng thái phản hồi
+			        console.log("Lỗi khi gọi API");
+			    }
+		}).catch(function(error) {
+	    // Xử lý lỗi
+	    console.log("Lỗi khi gọi API: " + error);
+		});
+	}
+</script>

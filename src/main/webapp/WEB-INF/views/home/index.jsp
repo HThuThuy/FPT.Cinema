@@ -204,7 +204,7 @@
 												<i class="fa fa-star" aria-hidden="true"></i> 7.2/10
 											</p>
 										</div>
-										<a href="" class="watch-Q">Đặt vé</a>
+										<a href="${pageContext.request.contextPath}/ticket/showtime" class="watch-Q">Đặt vé</a>
 									</div>
 								</div>
 							</div>
