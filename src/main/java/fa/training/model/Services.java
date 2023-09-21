@@ -51,6 +51,9 @@ public class Services {
 //	@NotNull(message = "Xin hãy nhập thông tin vào trường này")
 	@Column(columnDefinition = "int")
 	int servicePrice;
+	
+	@Column(columnDefinition = "Ntext")
+	String url;
 //	
 	@OneToMany(mappedBy = "services", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<Order> order;

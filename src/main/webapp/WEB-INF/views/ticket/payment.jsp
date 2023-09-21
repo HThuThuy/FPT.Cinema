@@ -4,6 +4,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <style>
 #payment-info {
 	text-align: center;
@@ -286,7 +287,7 @@ span {
 										<div class="row">
 											<div class="col-lg-5">
 												<img
-													src="${pageContext.request.contextPath}/resources/img/movie2.avif">
+													src="https://imagizer.imageshack.com/img922/9552/zAIqdi.jpg">
 											</div>
 
 											<div class="col-lg-7">

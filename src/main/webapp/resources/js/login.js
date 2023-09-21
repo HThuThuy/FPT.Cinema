@@ -33,4 +33,10 @@ $(document).ready(function() {
   });
 });
 
-
+/*var xhr = new XMLHttpRequest();
+xhr.addEventListener('readystatechange', function() {
+  if (xhr.status == 401) { 
+    $('#loginModal').modal('show');
+  }
+});
+*/

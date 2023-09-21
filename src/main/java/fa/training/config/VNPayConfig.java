@@ -1,7 +1,7 @@
 /*
- * Project: Cinema WebApp
- * Team: 2
- * Author : Ducnm74
+ * Project: FPT-Cinema
+ * Team: 1
+ * Author : ThuyHTT14
  * Class: Cấu hình thanh toán cho cổng thanh toán VNPay
  */
 
@@ -22,7 +22,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 
-public class Config {
+public class VNPayConfig {
 	public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
 	public static String vnp_Returnurl = "http://localhost:6001/FPT-Cinema/payment/return";
 	public static String vnp_TmnCode = "X1YAEN0D";
@@ -32,6 +32,8 @@ public class Config {
 	public static String vnp_Version = "2.1.0";
 	public static String vnp_Command = "pay";
 	public static String bankCode = "NCB";
+	
+	//thay đổi ip để vào được 
 	public static String vnp_IpAddr = "192.168.48.158";
 	public static String secretKey = "";
 
