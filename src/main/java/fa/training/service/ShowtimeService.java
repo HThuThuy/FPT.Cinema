@@ -64,10 +64,10 @@ public class ShowtimeService {
 	// LamNH23
 	public List<Showtime> getRecordsForCurrentPage2(int start, int recordsPerPage) {
 		List<Showtime> list = new ArrayList<>();
-		for (int i = start + 1; i < (start + recordsPerPage + 1); i++) {
-			list.add(new Showtime("ST"+i, new Movie("tên phim search"), new Theater("abc", "Tên rạp", "TP"),
-					new Room("Tên room"), LocalDate.of(2023, 9, 15), LocalTime.of(02, 30)));
-		}
+//		for (int i = start + 1; i < (start + recordsPerPage + 1); i++) {
+//			list.add(new Showtime("ST"+i, new Movie("tên phim search"), new Theater("abc", "Tên rạp", "TP"),
+//					new Room("Tên room"), LocalDate.of(2023, 9, 15), LocalTime.of(02, 30)));
+//		}
 		return list;
 	}
 

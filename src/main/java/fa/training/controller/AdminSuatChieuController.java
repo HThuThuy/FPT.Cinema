@@ -98,8 +98,10 @@ public class AdminSuatChieuController {
 	
 	@GetMapping(value = { "/addSuatChieu" })
 	public String admin3(Model model) {
-		List<Theater> list = theaterService.getRecordsForCurrentPage(0, 0);
-		model.addAttribute("theaters", list);
+		List<Movie> list = movieService.getAllEnable();
+		model.addAttribute("movies", list);
+		List<Room> list2 = roomService.getAll();
+		model.addAttribute("rooms", list2);
 		model.addAttribute("suatChieu", new QLShowTimeDTO());
 		model.addAttribute("text", "Thêm mới: ");
 		model.addAttribute("text2", false);
@@ -113,17 +115,20 @@ public class AdminSuatChieuController {
 		
 		//check valid
 		if(bindingResult.hasErrors()) {
+			List<Movie> list = movieService.getAllEnable();
+			model.addAttribute("movies", list);
+			List<Room> list2 = roomService.getAll();
+			model.addAttribute("rooms", list2);
 			model.addAttribute("suatChieu", qlShowTimeDTO);
-			List<Theater> list = theaterService.getRecordsForCurrentPage(0, 0);
-			model.addAttribute("theaters", list);
+			model.addAttribute("text", "Thêm mới: ");
+			model.addAttribute("text2", false);
 			return "admin/addSuatChieu";
 		}
 		
 		//thêm mới hoặc updtate data
 		Movie movie = movieService.findById(qlShowTimeDTO.getMovieId());
-		Theater theater = theaterService.findById(qlShowTimeDTO.getTheaterId());
 		Room room = roomService.findById(qlShowTimeDTO.getRoomId());		
-		Showtime showtime = new Showtime(qlShowTimeDTO.getShowtimeId(),movie,theater, room, qlShowTimeDTO.getStartDate(), qlShowTimeDTO.getStartTime());
+		Showtime showtime = new Showtime(qlShowTimeDTO.getShowtimeId(),movie,room, qlShowTimeDTO.getStartTime());
 		showtimeService.save(showtime);
 		
 		return "redirect:/admin/quanLySuatChieu";
@@ -133,7 +138,7 @@ public class AdminSuatChieuController {
 	public String admin5(Model model, @PathVariable("id") String id) {
 		//lấy data
 //		Showtime showtime = showtimeService.findById(id);
-		QLShowTimeDTO qlShowTimeDTO = new QLShowTimeDTO(id,"MV001","Theater008","R003",LocalDate.of(2023, 10, 5),LocalTime.of(12, 02));
+		QLShowTimeDTO qlShowTimeDTO = new QLShowTimeDTO(id,"MV001", "R003",LocalDate.of(2023, 10, 5),LocalTime.of(12, 02));
 //		qlShowTimeDTO.setShowtimeId(showtime.getShowtimeId());
 //		qlShowTimeDTO.setMovieId(showtime.getMovie().getMovieId());
 //		qlShowTimeDTO.setTheaterId(showtime.getTheater().getTheaterId());
