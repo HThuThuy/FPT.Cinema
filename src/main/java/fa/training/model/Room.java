@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Range;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,14 +45,17 @@ public class Room {
 	@Range(min = 0, message = "Số lượng ghế không được nhỏ hơn 0")
 	int seatNumber;
 
-	@OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+	@JsonBackReference //cho AJAX
+	@OneToMany(mappedBy = "room",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<Seat> seatList;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinColumn(name = "theaterId")
 	Theater theater;	
 	
-	@OneToMany(mappedBy = "room",cascade = CascadeType.ALL)
+	@JsonBackReference
+	@OneToMany(mappedBy = "room",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	Set<Showtime> showtimeTheater;
 
 	public Room(String roomName) {

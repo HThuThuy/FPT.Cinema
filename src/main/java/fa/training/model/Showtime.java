@@ -43,7 +43,7 @@ public class Showtime {
 //		
 	
 	@JoinColumn(name = "roomId")
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	Room room;
 	
 	@OneToMany(mappedBy = "showtimeTicket", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -59,6 +59,17 @@ public class Showtime {
 		this.movie = movie;
 		this.room = room;
 		this.startTime = startTime;
+	}
+
+	public Showtime(String showtimeId) {
+		super();
+		this.showtimeId = showtimeId;
+	}
+
+	@Override
+	public String toString() {
+		return "Showtime [showtimeId=" + showtimeId + ", movieId=" + movie.getMovieId() + ", theaterid=" + room.getTheater().getTheaterId() + ", roomid=" + room.getRoomId() + ", startTime=" + startTime
+				+ "]";
 	}
 
 

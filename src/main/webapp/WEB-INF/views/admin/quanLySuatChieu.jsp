@@ -12,7 +12,7 @@
 			style="display: flex; justify-content: center; align-items: center;">
 
 			<div class="col-lg-6 col-md-6">
-				<form:form class="row"
+				<%-- <form:form class="row"
 					action="${pageContext.request.contextPath}/admin/search" method="get">
 					
 					<div class="col-lg-1 col-md-1">
@@ -24,14 +24,14 @@
 						<input
 							id="nameCustomer" type="text" name="searchName"
 							class="form-control ml-1" value="${searchName}"
-							placeholder="Nhập mã suất chiếu">
+							placeholder="Nhập tên phim">
 					</div>
 
 					<div class="col-lg-3 col-md-3">
 						<button type="submit" class="btn">Search</button>
 					</div>
 
-				</form:form>
+				</form:form> --%>
 			</div>
 
 			<div class="col-lg-3 col-md-6"></div>
@@ -47,13 +47,13 @@
 					<thead>
 						<tr>
 							<th style="background-color: #e75e8d; color: white;">#</th>							
-							<th style="background-color: #e75e8d; color: white;">Mã suất chiếu</th>
-							<th style="background-color: #e75e8d; color: white;">Tên phim</th>
-							<th style="background-color: #e75e8d; color: white;">Têp rạp</th>
-							<th style="background-color: #e75e8d; color: white;">Têp phòng</th>
-							<th style="background-color: #e75e8d; color: white;">Ngày khởi chiếu</th>
-							<th style="background-color: #e75e8d; color: white;">Ngày kết thúc</th>
+							<th class="d-none" style="background-color: #e75e8d; color: white;">Mã suất chiếu</th>							
+							<th style="background-color: #e75e8d; color: white;">Tên rạp</th>
+							<th style="background-color: #e75e8d; color: white;">Tên phòng</th>
 							<th style="background-color: #e75e8d; color: white;">Giờ chiếu</th>
+							<th style="background-color: #e75e8d; color: white;">Tên phim</th>
+							<th style="background-color: #e75e8d; color: white;">Ngày khởi chiếu</th>
+							<th style="background-color: #e75e8d; color: white;">Ngày kết thúc</th>							
 							<th style="background-color: #e75e8d; color: white;">Sửa</th>
 							<th style="background-color: #e75e8d; color: white;">Xóa</th>
 						</tr>
@@ -62,13 +62,14 @@
 						<c:forEach items="${suatchieuList}" var="item" varStatus="status">
 							<tr style="font-size: 15px">
 								<td class="text-center">${status.count}</td>
-								<td>${item.showtimeId}</td>
-								<td>${item.movie.movieName}</td>
-								<td>${item.room.theater.theaterName}</td>
+								<td class="d-none">${item.showtimeId}</td>								
+								<td>${item.room.theater.theaterName}</td>								
 								<td>${item.room.roomName}</td>
+								<td>${item.startTime}</td>
+								<td>${item.movie.movieName}</td>
 								<td>${item.movie.startDate}</td>
 								<td>${item.movie.endDate}</td>
-								<td>${item.startTime}</td>
+								
 								<td><a
 									href="${pageContext.request.contextPath}/admin/${item.showtimeId}">
 										<button class="btn btn-outline-secondary color-icon">

@@ -79,6 +79,15 @@
 			value="/WEB-INF/views/admin/thongKe.jsp" />
 	</definition>
 	
+	<definition name="admin/thongKe2" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/admin/thongKe2.jsp" />
+	</definition>
+	<definition name="admin/thongKe3" extends="admin.definition">
+		<put-attribute name="body2"
+			value="/WEB-INF/views/admin/thongKe3.jsp" />
+	</definition>
+	
 	<definition name="admin/quanlydichvu" extends="admin.definition">
 		<put-attribute name="body2"
 			value="/WEB-INF/views/admin/quanlydichvu.jsp" />

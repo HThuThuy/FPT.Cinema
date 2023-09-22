@@ -8,48 +8,27 @@
 <div class="templatemo-content col-1 black-bg">
 	<div class="templatemo-content-container">
 		<div class="templatemo-content-widget white-bg">
-			<h3 class="margin-bottom-10">${text} suất chiếu</h3>
-
+			<h3 class="margin-bottom-10">Thay đổi suất chiếu</h3>
 			
 			<form:form action="${pageContext.request.contextPath}/admin/addSuatChieu" method="post" modelAttribute="suatChieu" class="templatemo-login-form">
 				<div class="row form-group">
-					<div class="col-lg-12 col-md-12 form-group d-none">
-						<label for="inputmasuatchieu">Mã suất chiếu</label> 
-						<form:input path="showtimeId" type="text" class="form-control" readonly="${text2}" value="123456"/>
-						<form:errors path="showtimeId" cssClass="text-danger" />
+					<div class="col-lg-12 col-md-12 form-group d-none">						
+						<form:input path="showtimeId" type="text" class="form-control" readonly="true"/>						
 					</div>					
 					
 					<div class="col-lg-12 col-md-12 form-group">
-						<label class="control-label templatemo-block"> Chọn rạp</label> 
-						<form:select path="theaterId" id="theaterId" class="form-control" onchange="getA()">
-							<option value="">Mời chọn rạp</option>
-							<c:forEach items="${theaters}" var="item">
-								<option value="${item.theaterId}" ${item.theaterId == record.theaterId ? 'selected' : ''}>${item.theaterName}</option>
-							</c:forEach>
-						</form:select>
-						<form:errors path="theaterId" cssClass="text-danger" />
+						<input value="${theaterName}" type="text" class="form-control" readonly="true">
+						<form:input path="theaterId" type="text" class="form-control d-none"/>						
 					</div>	
 
 					<div class="col-lg-12 col-md-12 form-group">
-						<label class="control-label templatemo-block"> Chọn phòng</label> 
-						<form:select path="roomId" id="roomId" class="form-control" onchange="getA2()">
-							<option value="">Mời chọn phòng</option>
-							<c:forEach items="${rooms}" var="item">
-								<option value="${item.roomId}" ${item.roomId == record.roomId ? 'selected' : ''}>${item.roomName}</option>
-							</c:forEach>
-						</form:select>
-						<form:errors path="roomId" cssClass="text-danger" />
+						<input value="${roomName}" type="text" class="form-control" readonly="true">
+						<form:input path="roomId" type="text" class="form-control d-none"/>						
 					</div>
 					
 					<div class="col-lg-12 col-md-12 form-group">
-						<label class="control-label templatemo-block"> Chọn giờ chiếu</label> 
-						<form:select path="startTime" id="startTime"  class="form-control">
-							<option value="">Mời chọn giờ chiếu</option>
-							<c:forEach items="${startTimes}" var="item">
-								<option value="${item}" ${item == record ? 'selected' : ''}>${item}</option>
-							</c:forEach>
-						</form:select>
-						<form:errors path="startTime" cssClass="text-danger" />
+						<input value="${startTime}" type="text" class="form-control" readonly="true">
+						<form:input path="startTime" type="text" class="form-control d-none"/>						
 					</div>
 					
 					<div class="col-lg-12 col-md-12 form-group">
@@ -64,7 +43,7 @@
 					</div>
 
 					<div class="form-group text-right">
-						<button type="submit" class="templatemo-blue-button">${text}</button>
+						<button type="submit" class="templatemo-blue-button">Thay đổi</button>
 						<button type="reset" class="templatemo-white-button">Tạo lại</button>
 					</div>
 				</div>

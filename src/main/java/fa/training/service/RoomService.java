@@ -42,6 +42,11 @@ public class RoomService {
 		repo.deleteById(roomId);
 	}
 	
+	//LamNH23
+	public List<Room> getAllByTheater(String theaterId) {
+		return repo.getAllByTheater(theaterId);
+	}
+	
 	
 
 }

@@ -2,14 +2,19 @@ package fa.training.controller;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
 import org.apache.tiles.autotag.core.runtime.annotation.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fa.training.DTO.QLShowTimeDTO;
@@ -49,6 +55,8 @@ public class AdminSuatChieuController {
 	
 	@Autowired
 	private TheaterService theaterService;
+	
+	
 	
 	@GetMapping(value = { "/quanLySuatChieu" })
 	public String admin(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
@@ -100,10 +108,10 @@ public class AdminSuatChieuController {
 	public String admin3(Model model) {
 		List<Movie> list = movieService.getAllEnable();
 		model.addAttribute("movies", list);
-		List<Room> list2 = roomService.getAll();
-		model.addAttribute("rooms", list2);
+		List<Theater> list2 = theaterService.getAll();
+		model.addAttribute("theaters", list2);
 		model.addAttribute("suatChieu", new QLShowTimeDTO());
-		model.addAttribute("text", "Thêm mới: ");
+		model.addAttribute("text", "Thêm mới");
 		model.addAttribute("text2", false);
 		return "admin/addSuatChieu";
 	}
@@ -117,17 +125,20 @@ public class AdminSuatChieuController {
 		if(bindingResult.hasErrors()) {
 			List<Movie> list = movieService.getAllEnable();
 			model.addAttribute("movies", list);
-			List<Room> list2 = roomService.getAll();
-			model.addAttribute("rooms", list2);
+			List<Theater> list2 = theaterService.getAll();
+			model.addAttribute("theaters", list2);
 			model.addAttribute("suatChieu", qlShowTimeDTO);
-			model.addAttribute("text", "Thêm mới: ");
+			model.addAttribute("text", "Thêm mới ");
 			model.addAttribute("text2", false);
 			return "admin/addSuatChieu";
 		}
 		
 		//thêm mới hoặc updtate data
 		Movie movie = movieService.findById(qlShowTimeDTO.getMovieId());
-		Room room = roomService.findById(qlShowTimeDTO.getRoomId());		
+		Room room = roomService.findById(qlShowTimeDTO.getRoomId());
+		if(qlShowTimeDTO.getShowtimeId().equals("123456")) {
+			qlShowTimeDTO.setShowtimeId(UUID.randomUUID().toString());
+		}		
 		Showtime showtime = new Showtime(qlShowTimeDTO.getShowtimeId(),movie,room, qlShowTimeDTO.getStartTime());
 		showtimeService.save(showtime);
 		
@@ -136,29 +147,61 @@ public class AdminSuatChieuController {
 	
 	@GetMapping("/{id}")
 	public String admin5(Model model, @PathVariable("id") String id) {
-		//lấy data
-//		Showtime showtime = showtimeService.findById(id);
-		QLShowTimeDTO qlShowTimeDTO = new QLShowTimeDTO(id,"MV001", "R003",LocalDate.of(2023, 10, 5),LocalTime.of(12, 02));
-//		qlShowTimeDTO.setShowtimeId(showtime.getShowtimeId());
-//		qlShowTimeDTO.setMovieId(showtime.getMovie().getMovieId());
-//		qlShowTimeDTO.setTheaterId(showtime.getTheater().getTheaterId());
-//		qlShowTimeDTO.setRoomId(showtime.getRoom().getRoomId());
-//		qlShowTimeDTO.setStartTime(showtime.getStartTime());
+//		lấy data
+		Showtime showtime = showtimeService.findById(id);
 		
-		List<Theater> list = theaterService.getRecordsForCurrentPage(0, 0);
-		model.addAttribute("theaters", list);
-		model.addAttribute("suatChieu", qlShowTimeDTO);
-		model.addAttribute("text", "Thay đổi: ");
-		model.addAttribute("text2", true);
-		return "admin/addSuatChieu";
+//		QLShowTimeDTO qlShowTimeDTO = new QLShowTimeDTO(id,"MV001","TT001", "R003",LocalTime.of(12, 02));
+		QLShowTimeDTO qlShowTimeDTO = new QLShowTimeDTO();
+		qlShowTimeDTO.setShowtimeId(showtime.getShowtimeId());		
+		Room room = showtime.getRoom();
+		qlShowTimeDTO.setTheaterId(room.getTheater().getTheaterId());
+		qlShowTimeDTO.setRoomId(room.getRoomId());
+		qlShowTimeDTO.setStartTime(showtime.getStartTime());
+		qlShowTimeDTO.setMovieId(showtime.getMovie().getMovieId());
+		model.addAttribute("suatChieu", qlShowTimeDTO);	
+		
+		model.addAttribute("theaterName", room.getTheater().getTheaterName());		
+		model.addAttribute("roomName", room.getRoomName());
+		model.addAttribute("startTime", showtime.getStartTime());
+		List<Movie> list = movieService.getAllEnable();
+		model.addAttribute("movies", list);		
+				
+		return "admin/editSuatChieu";
 	}	
 	
 	@PostMapping("/delete")
 	public String admin6(@RequestParam String showtimeId,  Model model, RedirectAttributes redirectAttributes) {
 		System.out.print("Xóa Suất chiếu: " + showtimeId);
-		showtimeService.deleteById(showtimeId);
-		redirectAttributes.addFlashAttribute("message", "Xóa thành công !");
+//		showtimeService.deleteById(showtimeId);
+		
+//		Showtime showtime = showtimeService.findById(showtimeId);
+//		Showtime showtime = new Showtime();
+//		showtime.setShowtimeId(showtimeId);
+		showtimeService.deleteST2(Arrays.asList(showtimeId));
+		redirectAttributes.addFlashAttribute("message", "Xóa thành công "+showtimeId);
 		return "redirect:/admin/quanLySuatChieu";
 	}	
+	
+	@ResponseBody	
+	@GetMapping(value = { "/theater" })
+	public ResponseEntity<List<Room>> show(Model model, @RequestParam("theater") String theaterId) {
+		List<Room> list = roomService.getAllByTheater(theaterId);
+		for (Room room : list) {
+			System.out.println("abc" + room.getRoomName());
+		}
+		return new ResponseEntity<List<Room>>(list, HttpStatus.OK);
+	}
+	
+	@ResponseBody	
+	@GetMapping(value = { "/room" })
+	public ResponseEntity<List<String>> show2(Model model, @RequestParam("room") String roomId) {
+		List<String> list1 = new ArrayList<>(Arrays.asList("09:00", "12:00", "15:00","18:00", "21:00"));
+		List<String> list = showtimeService.getTimeByRoom(roomId);
+		list1.removeAll(list);
+		for (String time: list) {
+			System.out.println("Timeeeeeee: " + time);
+		}
+		return new ResponseEntity<List<String>>(list1, HttpStatus.OK);
+	}
 }
 

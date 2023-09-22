@@ -28,8 +28,7 @@ public class ShowtimeService {
 	}
 
 	public Showtime findById(String showtimeId) {
-		return repo.findById(showtimeId)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid Showtime Id: " + showtimeId));
+		return repo.findById(showtimeId).orElseThrow(() -> new IllegalArgumentException("Invalid Showtime Id: " + showtimeId));
 	}
 
 	public boolean existsById(String showtimeId) {
@@ -74,5 +73,18 @@ public class ShowtimeService {
 
 		return 25;
 	}
+	
+	// LamNH23
+		public List<String> getTimeByRoom(String roomId) {			
+			return repo.getTimeByRoom(roomId);
+		}
+		
+		
+		
+		// LamNH23
+		public void deleteST2(Iterable<String> ids) {
+			
+			repo.deleteAllByIdInBatch(ids);
+		}
 
 }

@@ -23,31 +23,32 @@ import lombok.Setter;
 @NoArgsConstructor
 public class QLShowTimeDTO {
 	
+//	@NotBlank(message = "Chưa nhập dữ liệu")
+	String showtimeId;	
 	
-	String showtimeId;
-
-	@NotBlank(message = "Invalid - string - không empty hoặc chứa toàn khoảng trắng")
-	String movieId;
+	@NotBlank(message = "Chưa chọn dữ liệu")
+	String theaterId;
 	
-	@NotBlank(message = "Invalid - string - không empty hoặc chứa toàn khoảng trắng")
+	@NotBlank(message = "Chưa chọn dữ liệu")
 	String roomId;
 	
-	@NotNull(message = "Invalid - anInt - phải not null")
-	@Future(message = "Invalid - date - ngày > ngày hiện tại")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	LocalDate startDate;
-	
-	@NotNull(message = "Invalid - anInt - phải not null")
-	@DateTimeFormat(pattern = "HH:mm")
+	@NotNull(message = "Chưa chọn dữ liệu")
+//	@NotNull(message = "Invalid - anInt - phải not null")
+//	@DateTimeFormat(pattern = "HH:mm")
 	LocalTime startTime;
 	
-	
+	@NotBlank(message = "Chưa chọn dữ liệu")
+	String movieId;
 
 	@Override
 	public String toString() {
-		return "QLShowTimeDTO [showtimeId=" + showtimeId + ", movieId=" + movieId
-				+ ", roomId=" + roomId + ", startDate=" + startDate + ", startTime=" + startTime + "]";
-	}	
+		return "QLShowTimeDTO [showtimeId=" + showtimeId + ", movieId=" + movieId + ", theaterId=" + theaterId
+				+ ", roomId=" + roomId + ", startTime=" + startTime + "]";
+	}
+	
+	
+
+	
 	
 	
 
