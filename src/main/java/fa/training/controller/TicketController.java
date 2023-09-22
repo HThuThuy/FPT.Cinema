@@ -54,11 +54,15 @@ public class TicketController {
 	@ResponseBody	
 	@GetMapping(value = { "/city" })
 	public ResponseEntity<List<Theater>> showCity(Model model, @RequestParam("city") String selectedCity) {
-		List<Theater> listCity = theater.findByCity(selectedCity);
-		for (Theater theater : listCity) {
-			System.out.println("abc" + theater);
-		}
-		return new ResponseEntity<>(listCity, HttpStatus.OK);
+		try {
+			List<Theater> listCity = theater.findByCity(selectedCity);
+			for (Theater theater : listCity) {
+				System.out.println("abc" + theater);
+			}
+			return new ResponseEntity<>(listCity, HttpStatus.OK);
+		} catch(Exception ex) {
+			  return ResponseEntity.status(500).build();
+			}
 	}
 
 	@GetMapping(value = { "/bill" })

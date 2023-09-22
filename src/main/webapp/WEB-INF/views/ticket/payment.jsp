@@ -13,6 +13,7 @@
 table {
 	background: transparent;
 	width: 100%;
+	border-spacing: 10px;
 }
 
 #img-movie {
@@ -28,6 +29,16 @@ table {
 th, td {
 	color: white;
 	text-align: center;
+	padding: 10px;
+}
+
+thead {
+	background-color: #ec6090;
+	margin-top: -50px;
+}
+
+table {
+	margin-top: -50px;
 }
 
 tr {
@@ -53,8 +64,23 @@ h3 {
 	color: white;
 }
 
+.main-border-button {
+	width: 250px;
+}
+
+.col-lg-12.btn-tieptheo {
+	display: flex;
+	justify-content: center;
+}
+
 span {
 	color: white;
+}
+
+.combo-quantity {
+	width: 60px; /* Đặt chiều rộng tùy ý */
+	height: 40px; /* Đặt chiều cao tùy ý */
+	text-align: center; /* Căn giữa nội dung */
 }
 </style>
 <div class="container2">
@@ -216,7 +242,7 @@ span {
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-12">
+								<div class="col-lg-12 btn-tieptheo">
 									<div class="main-border-button">
 										<a href="${pageContext.request.contextPath}/ticket/bill">Tiếp
 											theo!</a>
@@ -234,9 +260,7 @@ span {
 						<div class="page-content">
 							<div class="game-details">
 								<div class="row">
-									<div class="col-lg-12">
-										<h2>SERVICE ORDER</h2>
-									</div>
+									<div class="col-lg-12"></div>
 									<div class="col-lg-12">
 										<div class="content">
 											<h2>${sr.getServiceName()}</h2>
@@ -246,29 +270,30 @@ span {
 														<thead>
 															<tr>
 																<th width="20%">Combo</th>
-																<th width="20%">serviceDescription</th>
-																<th width="40%">Quantity</th>
-																<th width="20%">Price</th>
-																<th width="20%">Total Price</th>
+																<th width="35%"></th>
+																<th width="17%">Số lượng</th>
+																<th width="15%">Giá (VNĐ)</th>
+																<th width="13%">Tổng (VNĐ)</th>
 															</tr>
 														</thead>
 														<tbody>
 															<c:forEach var="sr" items="${lists}">
 																<tr class="align-middle">
-																	<td>${sr.getServiceName()}</td>
-																	<td>${sr.serviceDescription}</td>
+																	<td><img src="${sr.url}" width="100"></td>
+																	<td style="text-align: left;"><b>${sr.serviceName}</b>
+																		<br> ${sr.serviceDescription}</td>
 																	<td>
 																		<button type="button" class="minus">
 																			<i class="fas fa-minus-circle fa-lg"
 																				style="color: #ffffff;"></i>
 																		</button> <input type="number" value="0" id="combo1Quantity"
-																		class="combo-quantity">
+																		class="combo-quantity" min="0" max="999">
 																		<button type="button" class="plus">
 																			<i class="fas fa-plus-circle fa-lg"
 																				style="color: #ffffff;"></i>
 																		</button>
 																	</td>
-																	<td>${sr.servicePrice}</td>
+																	<td data-combo-price="${sr.servicePrice}">${sr.servicePrice}</td>
 																	<td>
 																		<div class="total-price">
 																			<span id="price">0</span>
@@ -283,13 +308,13 @@ span {
 										</div>
 									</div>
 
+
 									<div class="content mt-4">
 										<div class="row">
 											<div class="col-lg-5">
 												<img
 													src="https://imagizer.imageshack.com/img922/9552/zAIqdi.jpg">
 											</div>
-
 											<div class="col-lg-7">
 												<div class="row">
 													<h3>STAR WARS: ROGUE ONE</h3>
@@ -301,7 +326,7 @@ span {
 													<span>Suất chiếu: 19:30 | Thứ 2, 15/09/2023</span>
 												</div>
 												<div id="infor" class="row p-2">
-													<span>Ghế: G2, G3</span>
+													<span id="selectedSeatsForm">Ghế đã chọn: </span>
 												</div>
 												<div id="infor" class="row p-2 d-flex flex-row">
 													<span class="col-2">Combo:</span> <span class="col-10"
@@ -311,20 +336,26 @@ span {
 													<span class="col-2">Tổng:</span> <span class="col-10"
 														id="total">0</span>
 												</div>
-
-
-
-
+												<div id="infor" class="row p-2 d-flex flex-row">
+												    <span class="col-2">Mã giảm giá:</span>
+												    <div class="col-8">
+												        <input type="text" id="discountCode" class="form-control" placeholder="Nhập mã giảm giá">
+												    </div>
+												    <div class="col-2">
+												        <button class="btn btn-primary" id="applyDiscount">Áp dụng</button>
+												    </div>
+												</div>
+												
 											</div>
-
 										</div>
-
 									</div>
-									<div class="col-lg-12">
-										<div class="main-border-button">
-											<button id="datVeButton"
-												class="btn btn-warning mx-3 mt-3 mb-3">Thanh toán!</button>
 
+
+									<div class="col-lg-12 btn-tieptheo">
+										<div class="main-border-button">
+											<a id="datVeButton"
+												>Thanh
+												Toán</a>
 										</div>
 									</div>
 								</div>
@@ -341,7 +372,114 @@ span {
 	</div>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+		// giảm giá
+		
+		document.getElementById('applyDiscount').addEventListener('click', function() {
+    var discountCode = document.getElementById('discountCode').value;
+
+    // Kiểm tra mã giảm giá có hợp lệ hay không
+    if (discountCode === 'MAGIAMGIA123') {
+        // Nếu mã hợp lệ, giảm giá và cập nhật tổng tiền
+        var totalElement = document.getElementById('total');
+        var totalPrice = parseFloat(totalElement.textContent);
+        var discountAmount = 15; // Số tiền giảm giá (đây là ví dụ, bạn có thể thay đổi)
+
+        var newTotalPrice = totalPrice -  (totalPrice*(discountAmount/100));
+        totalElement.textContent = newTotalPrice;
+
+        alert('Mã giảm giá đã được áp dụng!');
+    } else {
+        alert('Mã giảm giá không hợp lệ. Vui lòng kiểm tra lại!');
+    }
+});
+		
+
+
+
+
+    // Lấy tất cả các phần tử ghế trong danh sách
+    const seats = document.querySelectorAll('.layout__seat');
+
+    // Khởi tạo các biến để lưu trữ thông tin ghế đã chọn
+    let selectedSeats = [];
+    let totalPrice = 0;
+    
+    // Lặp qua từng phần tử ghế và gắn sự kiện click
+    seats.forEach((seat) => {
+      seat.addEventListener('click', () => {
+        seat.classList.toggle('layout__seat--selected');
+        // Kiểm tra xem ghế đã được chọn hay chưa
+        if (!selectedSeats.includes(seat)) {
+          // Thêm ghế vào danh sách đã chọn
+          selectedSeats.push(seat);
+          // Tăng tổng số tiền
+          totalPrice += calculateSeatPrice(seat); // Hãy sửa hàm tính giá ghế tương ứng với logic của bạn
+          // Thêm class hoặc hiệu ứng để đánh dấu ghế đã chọn
+          seat.classList.add('selected');
+        } else {
+          // Xóa ghế khỏi danh sách đã chọn
+          selectedSeats = selectedSeats.filter((selectedSeat) => selectedSeat !== seat);
+          // Giảm tổng số tiền
+          totalPrice -= calculateSeatPrice(seat); // Hãy sửa hàm tính giá ghế tương ứng với logic của bạn
+          // Xóa class hoặc hiệu ứng đánh dấu ghế đã chọn
+          seat.classList.remove('selected');
+        }
+
+        // Cập nhật thông tin ghế đã chọn, tổng số ghế và tổng số tiền trên giao diện
+        updateSelectedSeatsInfo();
+        updateTotalPrice();
+      });
+    });
+
+    // Hàm tính giá ghế tương ứng với logic của bạn
+    function calculateSeatPrice(seat) {
+      // Lấy giá ghế dựa trên vị trí của ghế
+      // Ví dụ: ghế ở giữa có giá 90000, còn lại có giá 80000
+      const isMiddleSeat = seat.classList.contains('middle-seat');
+      const price = isMiddleSeat ? 90000 : 80000;
+      return price;
+    }
+
+    // Hàm cập nhật thông tin ghế đã chọn trên giao diện
+    function updateSelectedSeatsInfo() {
+    const selectedSeatsElement = document.getElementById('selectedSeats');
+    const selectedSeatsFormElement = document.getElementById('selectedSeatsForm');
+    const selectedSeatsText = selectedSeats.map((seat) => seat.querySelector('.layout__seat__name').textContent).join(', ');
+
+    selectedSeatsElement.textContent = selectedSeatsText;
+    selectedSeatsFormElement.textContent = 'Ghế đã chọn: ' + selectedSeatsText;
+    
+    // Cập nhật tổng số ghế đã chọn
+    const totalSelectedSeatsElement = document.getElementById('totalSelectedSeats');
+    totalSelectedSeatsElement.textContent = selectedSeats.length;
+}
+
+
+    // Hàm cập nhật tổng số tiền trên giao diện
+    function updateTotalPrice() {
+      const totalPriceElement = document.getElementById('totalPrice');
+      totalPriceElement.textContent = totalPrice.toFixed(2); // Hiển thị tổng số tiền với hai chữ số thập phân
+    }
+
+// Hàm định dạng số thành dạng "80.000"
+function formatNumber(number) {
+  // Sử dụng hàm toLocaleString() để định dạng số và chuyển đổi thành chuỗi
+  const formattedNumber = number.toLocaleString('vi-VN');
+  return formattedNumber;
+}
+
+// Hàm cập nhật tổng số tiền trên giao diện
+function updateTotalPrice() {
+  const totalPriceElement = document.getElementById('totalPrice');
+  totalPriceElement.textContent = formatNumber(totalPrice) + ' VND';
+}
+
+
+//Code Trà viết
+
+
+
+ document.addEventListener("DOMContentLoaded", function () {
 	  var comboQuantities = document.querySelectorAll('.combo-quantity');
 
 	  comboQuantities.forEach(function (input) {
@@ -390,23 +528,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	  function updatePaymentInfo() {
 		    var combos = document.querySelectorAll('.combo-quantity');
-
 		    var comboDetails = [];  // Mảng chứa thông tin combo (tên và số lượng)
 		    var totalAmount = 0;
 		    var totalElement = document.getElementById('total');
-
-		  
-		   
+		 /*    var totalSeatPrice = document.getElementById('totalPrice');
+		    var totalPriceValue = parseFloat(totalSeatPrice.innerHTML); */
+		    /* var totalSeatPrice = totalPriceElement; */
 
 		    combos.forEach(function(combo) {
 		        var quantity = parseInt(combo.value);
-		        if (quantity > 0) {
-		            var comboName = combo.parentElement.parentElement.querySelector('td:first-child').textContent.trim();
+		        if (quantity > 0) {	
+		        	var comboNameElement = combo.parentElement.parentElement.querySelector('td:nth-child(1)');
+		        	var comboNameText = comboNameElement.textContent.trim();
+
+
 		            var comboPrice = parseInt(combo.parentElement.nextElementSibling.textContent.replace(',', ''));
 		            var totalComboPrice = quantity * comboPrice;
-
-		            comboDetails.push({name: comboName, quantity: quantity});  // Thêm thông tin combo vào mảng
-		            totalAmount += totalComboPrice;
+					
+					
+		            comboDetails.push({name: comboNameText, quantity: quantity});  // Thêm thông tin combo vào mảng
+		            totalAmount += totalComboPrice + totalPrice;
 		        }
 		    });
 
@@ -420,78 +561,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		    totalElement.textContent = totalAmount.toLocaleString();  // Format tổng tiền
 		}
 
-		});
-    // Lấy tất cả các phần tử ghế trong danh sách
-    const seats = document.querySelectorAll('.layout__seat');
-
-    // Khởi tạo các biến để lưu trữ thông tin ghế đã chọn
-    let selectedSeats = [];
-    let totalPrice = 0;
-    
-    // Lặp qua từng phần tử ghế và gắn sự kiện click
-    seats.forEach((seat) => {
-      seat.addEventListener('click', () => {
-        seat.classList.toggle('layout__seat--selected');
-        // Kiểm tra xem ghế đã được chọn hay chưa
-        if (!selectedSeats.includes(seat)) {
-          // Thêm ghế vào danh sách đã chọn
-          selectedSeats.push(seat);
-          // Tăng tổng số tiền
-          totalPrice += calculateSeatPrice(seat); // Hãy sửa hàm tính giá ghế tương ứng với logic của bạn
-          // Thêm class hoặc hiệu ứng để đánh dấu ghế đã chọn
-          seat.classList.add('selected');
-        } else {
-          // Xóa ghế khỏi danh sách đã chọn
-          selectedSeats = selectedSeats.filter((selectedSeat) => selectedSeat !== seat);
-          // Giảm tổng số tiền
-          totalPrice -= calculateSeatPrice(seat); // Hãy sửa hàm tính giá ghế tương ứng với logic của bạn
-          // Xóa class hoặc hiệu ứng đánh dấu ghế đã chọn
-          seat.classList.remove('selected');
-        }
-
-        // Cập nhật thông tin ghế đã chọn, tổng số ghế và tổng số tiền trên giao diện
-        updateSelectedSeatsInfo();
-        updateTotalPrice();
-      });
-    });
-
-    // Hàm tính giá ghế tương ứng với logic của bạn
-    function calculateSeatPrice(seat) {
-      // Lấy giá ghế dựa trên vị trí của ghế
-      // Ví dụ: ghế ở giữa có giá 90000, còn lại có giá 80000
-      const isMiddleSeat = seat.classList.contains('middle-seat');
-      const price = isMiddleSeat ? 90000 : 80000;
-      return price;
-    }
-
-    // Hàm cập nhật thông tin ghế đã chọn trên giao diện
-    function updateSelectedSeatsInfo() {
-      const selectedSeatsElement = document.getElementById('selectedSeats');
-      selectedSeatsElement.textContent = selectedSeats.map((seat) => seat.querySelector('.layout__seat__name').textContent).join(', ');
-
-      // Cập nhật tổng số ghế đã chọn
-      const totalSelectedSeatsElement = document.getElementById('totalSelectedSeats');
-      totalSelectedSeatsElement.textContent = selectedSeats.length;
-    }
-
-    // Hàm cập nhật tổng số tiền trên giao diện
-    function updateTotalPrice() {
-      const totalPriceElement = document.getElementById('totalPrice');
-      totalPriceElement.textContent = totalPrice.toFixed(2); // Hiển thị tổng số tiền với hai chữ số thập phân
-    }
-
-// Hàm định dạng số thành dạng "80.000"
-function formatNumber(number) {
-  // Sử dụng hàm toLocaleString() để định dạng số và chuyển đổi thành chuỗi
-  const formattedNumber = number.toLocaleString('vi-VN');
-  return formattedNumber;
-}
-
-// Hàm cập nhật tổng số tiền trên giao diện
-function updateTotalPrice() {
-  const totalPriceElement = document.getElementById('totalPrice');
-  totalPriceElement.textContent = formatNumber(totalPrice) + ' VND';
-}
+		}); 
 
 
 //Phần thanh toán
