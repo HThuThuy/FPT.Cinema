@@ -21,6 +21,8 @@ import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,16 +38,18 @@ public class Showtime {
 
 	@Id	
 	String showtimeId;
-
+	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "movieId")
 	Movie movie;
 //		
-	
+	@JsonBackReference
 	@JoinColumn(name = "roomId")
 	@ManyToOne
 	Room room;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy = "showtimeTicket", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<TicketInfo> ticketShowTime;
 	
@@ -63,6 +67,12 @@ public class Showtime {
 		this.room = room;
 		this.startDate = startDate;
 		this.startTime = startTime;
+	}
+
+	@Override
+	public String toString() {
+		return "Showtime [showtimeId=" + showtimeId + ", movie=" + movie.getMovieId() + ", room=" + room.getRoomId() + ", ticketShowTime="
+				 + ", startDate=" + startDate + ", startTime=" + startTime + "]";
 	}
 
 

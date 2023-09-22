@@ -183,7 +183,7 @@
 				<div class="tab-content" id="myTabContent">
 					<div class="tab-pane fade show active" id="tab-1" role="tabpanel"
 						aria-labelledby="home-tab">
-						<form action="${pageContext.request.contextPath}/ticket/showtime"
+						<form action="${pageContext.request.contextPath}/ticket/showtime?movieID=${dc.movieId}"
 							method="POST">
 							<div class="row justify-content-center" id="Phim-dang-chieu">
 								<c:forEach items="${listMovieDangChieu}" var="dc">
@@ -206,8 +206,10 @@
 														<i class="fa fa-star" aria-hidden="true"></i> 7.2/10
 													</p>
 												</div>
+											
 												<input type="hidden" name="movieID" value="${dc.movieId}">
-												<button type="submit" class="watch-Q">Đặt vé</button>
+											<!-- 	<button type="submit" class="watch-Q">Đặt vé</button> -->
+											<a href="${pageContext.request.contextPath}/ticket/showtime/${dc.movieId}">Đặt vé</a>
 											</div>
 										</div>
 									</div>
@@ -245,8 +247,8 @@
 														<i class="fa fa-star" aria-hidden="true"></i> 7.2/10
 													</p>
 												</div>
-												<input type="hidden" name="movieID" value="${sc.movieId}">
-												<button type="submit" class="watch-Q">Đặt vé</button>
+												 <input type="hidden" name="movieID" value="${sc.movieId}"> 
+												<a href="${pageContext.request.contextPath}/ticket/showtime/${dc.movieId}">Đặt vé</a>
 											</div>
 										</div>
 									</div>
@@ -271,28 +273,26 @@
 				</div>
 
 				<div class="row tab-pane" id="tab-1">
-				<c:forEach items="${listPromotion}" var="pr">
-					<div class="col-lg-3 col-sm-6">
-						<div class="item movie-card">
-							<div class="movie-poster">
-								<img
-									src="${pr.url}"
-									alt="">
-							</div>
-							<div class="movie-details">
-								<div class="sml">
-									<p class="movie-genre">
-										<i class="fa fa-clock-o" aria-hidden="true"></i>${pr.startDate}
-									</p>
-									<p class="movie-rating">
-										<i class="fa fa-clock-o" aria-hidden="true"> </i>${pr.endDate}
-									</p>
+					<c:forEach items="${listPromotion}" var="pr">
+						<div class="col-lg-3 col-sm-6">
+							<div class="item movie-card">
+								<div class="movie-poster">
+									<img src="${pr.url}" alt="">
+								</div>
+								<div class="movie-details">
+									<div class="sml">
+										<p class="movie-genre">
+											<i class="fa fa-clock-o" aria-hidden="true"></i>${pr.startDate}
+										</p>
+										<p class="movie-rating">
+											<i class="fa fa-clock-o" aria-hidden="true"> </i>${pr.endDate}
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
-				</c:forEach>	
+					</c:forEach>
 
 				</div>
 			</div>
@@ -300,12 +300,10 @@
 	</div>
 </div>
 <script>
-	// Lấy thẻ <a> có id là "booking-link"
-	const movieID = document.getElementById('get-movieID');
+	/* const movieID = document.getElementById('get-movieID');
 
-	// Thêm sự kiện "click" cho thẻ <a>
 	movieID.addEventListener('click', function(event) {
-		// Ngăn chặn hành vi mặc định của thẻ <a> (để không chuyển hướng đến trang mới)
+
 		event.preventDefault();
 
 		const getmovieID = document.getElementById('movieID');
@@ -323,5 +321,5 @@
 				// Xử lý lỗi (nếu có)
 			}
 		});
-	});
+	}); */
 </script>
