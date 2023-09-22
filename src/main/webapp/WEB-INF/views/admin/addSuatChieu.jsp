@@ -5,7 +5,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="templatemo-content col-1 light-gray-bg">
+<div class="templatemo-content col-1 black-bg">
 	<div class="templatemo-content-container">
 		<div class="templatemo-content-widget white-bg">
 			<h3 class="margin-bottom-10">${text} suất chiếu</h3>
@@ -30,23 +30,13 @@
 
 					<div class="col-lg-12 col-md-12 form-group">
 						<label class="control-label templatemo-block"> Chọn rạp</label> 
-						<form:select path="theaterId" class="form-control">
-							<c:forEach items="${theaters}" var="item">
-								<option value="${item.theaterId}" ${item.theaterId == record.theaterId ? 'selected' : ''}>${item.theaterName}</option>
+						<form:select path="roomId" class="form-control">
+							<c:forEach items="${rooms}" var="item">
+								<option value="${item.roomId}" ${item.roomId == record.roomId ? 'selected' : ''}>Rạp: ${item.theater.theaterName} - Phòng: ${item.roomName}</option>
 							</c:forEach>
 						</form:select>
-						<form:errors path="theaterId" cssClass="text-danger" />
-					</div>
-
-					<div class="col-lg-12 col-md-12 form-group">
-						<label class="control-label templatemo-block"> Chọn phòng</label>
-						<form:select path="roomId" class="form-control">
-							<option value="R003">Nhỏ</option>
-							<option value="R003">Vừa</option>
-							<option value="R003">Lớn</option>
-						</form:select>
 						<form:errors path="roomId" cssClass="text-danger" />
-					</div>
+					</div>					
 
 					<div class="col-lg-12 col-md-12 form-group">
 						<label for="inputsoghedat">Chọn ngày chiếu</label>

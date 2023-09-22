@@ -16,6 +16,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Range;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +45,8 @@ public class Theater {
 //	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String city;
 
-	@OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
+	@JsonBackReference
+	@OneToMany(mappedBy = "theater",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<Room> roomList;			
 
 	@Override
