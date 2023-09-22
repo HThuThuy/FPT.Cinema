@@ -34,7 +34,11 @@ public class VNPayConfig {
 	public static String bankCode = "NCB";
 	
 	//thay đổi ip để vào được 
-	public static String vnp_IpAddr = "192.168.48.158";
+	//IP máy Thủy
+//	public static String vnp_IpAddr = "192.168.48.158";
+	//IP máy Trà
+	public static String vnp_IpAddr = "10.141.62.47";
+	
 	public static String secretKey = "";
 
 	public static String md5(String message) {

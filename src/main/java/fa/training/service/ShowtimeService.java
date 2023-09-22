@@ -56,6 +56,8 @@ public class ShowtimeService {
 //		}
 		List<Showtime> list = repo.getRecordsForCurrentPage(start, recordsPerPage);
 		return list;
+		
+		
 	}
 
 	// LamNH23
@@ -87,4 +89,9 @@ public class ShowtimeService {
 			repo.deleteAllByIdInBatch(ids);
 		}
 
+	
+	//ThuyHtt14
+	public List<Showtime> getByMovieId(String movieId, String theaterId) {
+		return repo.findByMovieId(movieId, theaterId);
+	}
 }

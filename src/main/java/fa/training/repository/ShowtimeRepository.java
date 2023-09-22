@@ -21,6 +21,10 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, String> {
 	
 	@Query(value = "select CONVERT(varchar(5), startTime, 120) from SHOWTIME where roomId like :roomId", nativeQuery = true)
 	List<String> getTimeByRoom(@Param("roomId") String roomId);
+
+	//ThuyHtt14
+	@Query(value = "select * from Showtime st Join Room r On r.roomId= st.roomId where st.movieId like %:movieId% AND r.theaterId like %:theaterId% ", nativeQuery = true)
+	List<Showtime> findByMovieId(@Param("movieId") String movieId, @Param("theaterId") String theaterId);
 	
 	
 }
