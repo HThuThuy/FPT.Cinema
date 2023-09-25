@@ -77,11 +77,17 @@ span {
 	color: white;
 }
 
-.combo-quantity {
-	width: 60px; /* Đặt chiều rộng tùy ý */
-	height: 40px; /* Đặt chiều cao tùy ý */
-	text-align: center; /* Căn giữa nội dung */
+button#applyDiscount {
+    width: 137px;
 }
+
+input#discountCode {
+    width: 200px;
+}
+
+}
+	
+
 </style>
 <div class="container2">
 	<div class="row">
@@ -244,8 +250,7 @@ span {
 								</div>
 								<div class="col-lg-12 btn-tieptheo">
 									<div class="main-border-button">
-										<a href="${pageContext.request.contextPath}/ticket/bill">Tiếp
-											theo!</a>
+										  <a href="#chonDichVu">Tiếp theo!</a>
 									</div>
 								</div>
 							</div>
@@ -254,7 +259,7 @@ span {
 				</div>
 			</div>
 			<!-- ***** Details End ***** -->
-			<div class="container-fluid">
+			<div class="container-fluid" id="chonDichVu">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="page-content">
@@ -336,16 +341,17 @@ span {
 													<span class="col-2">Tổng:</span> <span class="col-10"
 														id="total">0</span>
 												</div>
-												<div id="infor" class="row p-2 d-flex flex-row">
+												<div id="infor" class="row p-2 d-flex align-items-center">
 												    <span class="col-2">Mã giảm giá:</span>
-												    <div class="col-8">
+												    <div class="col">
 												        <input type="text" id="discountCode" class="form-control" placeholder="Nhập mã giảm giá">
 												    </div>
-												    <div class="col-2">
+												    <div class="col">
 												        <button class="btn btn-primary" id="applyDiscount">Áp dụng</button>
 												    </div>
 												</div>
-												
+ 												 <div id="discountMessage"></div>
+
 											</div>
 										</div>
 									</div>
@@ -353,9 +359,7 @@ span {
 
 									<div class="col-lg-12 btn-tieptheo">
 										<div class="main-border-button">
-											<a id="datVeButton"
-												>Thanh
-												Toán</a>
+											<a id="datVeButton">Thanh Toán</a>
 										</div>
 									</div>
 								</div>
@@ -371,9 +375,199 @@ span {
 		</div>
 	</div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
+
+$(document).ready(function() {
+    // Phần chọn và tính tiền ghế 
+    const seats = $('.layout__seat');
+    let selectedSeats = [];
+    let totalSeatPrice = 0;
+
+    seats.on('click', function() {
+        $(this).toggleClass('layout__seat--selected');
+
+        if (!selectedSeats.includes(this)) {
+            selectedSeats.push(this);
+            totalSeatPrice += calculateSeatPrice(this);
+            $(this).addClass('selected');
+        } else {
+            selectedSeats = selectedSeats.filter(selectedSeat => selectedSeat !== this);
+            totalSeatPrice -= calculateSeatPrice(this);
+            $(this).removeClass('selected');
+        }
+
+        updateSelectedSeatsInfo();
+        updateTotalPrice();
+        updatePaymentInfo();
+    });
+
+    function calculateSeatPrice(seat) {
+        const isMiddleSeat = $(seat).hasClass('middle-seat');
+        const price = isMiddleSeat ? 90000 : 80000;
+        return price;
+    }
+
+    function updateSelectedSeatsInfo() {
+        const selectedSeatsElement = $('#selectedSeats');
+        const selectedSeatsFormElement = $('#selectedSeatsForm');
+        const selectedSeatsText = selectedSeats.map(seat => $(seat).find('.layout__seat__name').text()).join(', ');
+
+        selectedSeatsElement.text(selectedSeatsText);
+        selectedSeatsFormElement.text('Ghế đã chọn: ' + selectedSeatsText);
+
+        const totalSelectedSeatsElement = $('#totalSelectedSeats');
+        totalSelectedSeatsElement.text(selectedSeats.length);
+    }
+
+    function updateTotalPrice() {
+        const totalPriceElement = $('#totalPrice');
+        totalPriceElement.text(formatNumber(totalSeatPrice) + ' VND');
+        updatePaymentInfo();
+    }
+
+    // Cập nhật giá khi thay đổi số lượng combo
+    var comboQuantities = $('.combo-quantity');
+    comboQuantities.on('input', function() {
+        updateComboTotal(this);
+        updatePaymentInfo();
+        updateTotalPrice();
+    });
+
+    // Giảm số lượng combo
+    var minusButtons = $('.minus');
+    minusButtons.on('click', function() {
+        var quantityInput = $(this).next();
+        var quantityValue = parseInt(quantityInput.val());
+        if (quantityValue > 0) {
+            quantityInput.val(quantityValue - 1);
+            updateComboTotal(quantityInput);
+            updatePaymentInfo();
+        }
+    });
+
+    // Tăng số lượng combo
+    var plusButtons = $('.plus');
+    plusButtons.on('click', function() {
+        var quantityInput = $(this).prev();
+        var quantityValue = parseInt(quantityInput.val());
+        quantityInput.val(quantityValue + 1);
+        updateComboTotal(quantityInput);
+        updatePaymentInfo();
+    });
+
+    // Cập nhật tổng tiền của combo
+    function updateComboTotal(input) {
+        var quantity = parseInt($(input).val());
+        var priceElement = $(input).parent().next();
+        var price = parseInt(priceElement.text().replace(',', ''));
+        var total = quantity * price;
+        var totalPriceElement = $(input).parent().next().next();
+        totalPriceElement.text(total);
+    }
+
+    // Cập nhật thông tin thanh toán
+   function updatePaymentInfo() {
+    var comboQuantities = $('.combo-quantity');
+    var comboDetails = [];
+    var totalAmount = totalSeatPrice; // Initialize with total seat price
+
+    comboQuantities.each(function() {
+        var quantity = parseInt($(this).val());
+        if (quantity > 0) {
+        	var comboNameElement = $(this).parent().parent().find('td:nth-child(2)'); // Lấy cột thứ 2
+        	var comboNameText = comboNameElement.find('b').text().trim(); // Lấy nội dung của thẻ <b>
+
+            var comboPrice = parseInt($(this).parent().next().text().replace(',', ''));
+            var totalComboPrice = quantity * comboPrice;
+
+        	comboDetails.push({ name: comboNameText, quantity: quantity });
+            totalAmount += totalComboPrice;
+        }
+    });
+
+    var totalElement = $('#total');
+    var comboElement = $('#combo');
+
+    comboElement.html(comboDetails.map(combo => combo.name + ' x ' + combo.quantity).join(', '));
+
+    totalElement.text(formatNumber(totalAmount) + ' VND');
+}
+
+
+    // Hàm định dạng số thành dạng "80.000"
+    function formatNumber(number) {
+        const formattedNumber = number.toLocaleString('vi-VN');
+        return formattedNumber;
+    }
+});
+
+$(document).ready(function() {
+    $('#applyDiscount').on('click', function() {
+        var discountCode = $('#discountCode').val();
+
+        if (discountCode === 'MAGIAMGIA123') {
+            var totalElement = $('#total');
+            var totalPriceText = totalElement.text();
+            var totalPrice = parseFloat(totalPriceText.replace(' VND', '').replace(/\./g, '').replace(',', '.'));
+
+            var discountAmount = 15; // Phần trăm giảm giá
+            var newTotalPrice = totalPrice - (totalPrice * (discountAmount / 100));
+
+            // Định dạng lại số với dấu chấm phân cách phần nghìn
+           newTotalPrice = newTotalPrice.toLocaleString('vi-VN') + ' VND';
+
+
+            totalElement.text(newTotalPrice);
+
+            // Hiển thị thông báo
+            $('#discountMessage').text('Mã giảm giá đã được áp dụng!');
+        } else {
+            // Hiển thị thông báo
+            $('#discountMessage').text('Mã giảm giá không hợp lệ. Vui lòng kiểm tra lại!');
+        }
+    });
+});
+
+
+//Phần thanh toán
+let paymentInfo = {
+ticketId: 0,
+status: '',
+showtimeTicket: '',
+customer: '',
+order:''
+};
+let totalPrices = totalAmount; 
+document.getElementById('datVeButton').addEventListener('click', () => {
+	let currentDate = new Date();
+	let localDate = currentDate.toLocaleDateString();
+	let localTime = currentDate.toLocaleTimeString();
+
+	paymentInfo.ticketId = 1;
+	paymentInfo.status = 'Booked';
+	paymentInfo.showtimeTicket = '10:00';
+	paymentInfo.customer = 'KH001';
+	paymentInfo.order = 'OD001';
+  console.log(paymentInfo);
+  var jsonString = JSON.stringify(paymentInfo);
+  console.log(jsonString);
+	var url = 'http://localhost:6001/FPT-Cinema/payment/create?param1=' + encodeURIComponent(totalPrices) + '&param2=' + encodeURIComponent(jsonString);
+	console.log(url)
+	  // Redirect đến URL
+	window.location.href = url;
+  });
+  
+</script>
+
+
+
+
+
+<!-- <script>
 		// giảm giá
-		
 		document.getElementById('applyDiscount').addEventListener('click', function() {
     var discountCode = document.getElementById('discountCode').value;
 
@@ -395,7 +589,7 @@ span {
 		
 
 
-
+	// Phần chọn và tính tiền ghế 
 
     // Lấy tất cả các phần tử ghế trong danh sách
     const seats = document.querySelectorAll('.layout__seat');
@@ -431,7 +625,7 @@ span {
       });
     });
 
-    // Hàm tính giá ghế tương ứng với logic của bạn
+    // Hàm tính giá ghế tương ứng
     function calculateSeatPrice(seat) {
       // Lấy giá ghế dựa trên vị trí của ghế
       // Ví dụ: ghế ở giữa có giá 90000, còn lại có giá 80000
@@ -476,8 +670,6 @@ function updateTotalPrice() {
 
 
 //Code Trà viết
-
-
 
  document.addEventListener("DOMContentLoaded", function () {
 	  var comboQuantities = document.querySelectorAll('.combo-quantity');
@@ -551,14 +743,15 @@ function updateTotalPrice() {
 		        }
 		    });
 
-		    var comboElement = document.getElementById('combo');
+		    const totalElement = document.getElementById('total');
+		    /* var comboElement = document.getElementById('combo'); */
 
 		    // Hiển thị tên combo và số lượng
 		    comboElement.innerHTML = comboDetails.map(function(combo) {
 		        return combo.name + ' (' + combo.quantity + ')';
 		    }).join(', ');  // Các combo cách nhau bởi dấu phẩy
 		 
-		    totalElement.textContent = totalAmount.toLocaleString();  // Format tổng tiền
+		    totalElement.textContent = formatNumber(totalAmount) + ' VND' ;  // Format tổng tiền
 		}
 
 		}); 
@@ -572,7 +765,7 @@ function updateTotalPrice() {
   customer: '',
   order:''
 };
-  let totalPrices = 100000;
+  let totalPrices = totalAmount;
 document.getElementById('datVeButton').addEventListener('click', () => {
 	let currentDate = new Date();
 	let localDate = currentDate.toLocaleDateString();
@@ -591,4 +784,4 @@ document.getElementById('datVeButton').addEventListener('click', () => {
 	  // Redirect đến URL
 	window.location.href = url;
     });
-  </script>
+  </script> -->
