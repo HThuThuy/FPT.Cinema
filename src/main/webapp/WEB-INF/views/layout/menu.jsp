@@ -25,7 +25,7 @@
 			<div class="col-12 menu">
 				<nav class="main-nav">
 					<!-- ***** Logo Start ***** -->
-					<a href="index.html" class="logo"> <img
+					<a href="/FPT-Cinema" class="logo"> <img
 						src="${pageContext.request.contextPath}/resources/img/logo.png"
 						alt="">
 					</a>
