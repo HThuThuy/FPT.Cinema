@@ -180,84 +180,50 @@
 					</ul>
 				</div>
 
-				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active" id="tab-1" role="tabpanel"
-						aria-labelledby="home-tab">
-						<form action="${pageContext.request.contextPath}/ticket/showtime?movieID=${dc.movieId}"
-							method="POST">
-							<div class="row justify-content-center" id="Phim-dang-chieu">
-								<c:forEach items="${listMovieDangChieu}" var="dc">
-									<div
-										class="col-lg-3 col-sm-6 d-flex flex-column align-items-center">
-										<div class="item movie-card">
-											<div class="movie-poster">
-												<img src="${dc.posterUrl}" alt="">
-											</div>
-											<div class="movie-details">
-												<h3 class="movie-title">${dc.movieName}</h3>
-												<div class="sml">
-													<p class="movie-genre" style="color: rgb(255, 255, 255);">
-														<i class="fa fa-clock-o" aria-hidden="true"></i>Thời
-														lượng: ${dc.duration}
-													</p>
-												</div>
-												<div class="sml">
-													<p class="movie-rating" style="color: rgb(255, 255, 255);">
-														<i class="fa fa-star" aria-hidden="true"></i> 7.2/10
-													</p>
-												</div>
-											
-												<input type="hidden" name="movieID" value="${dc.movieId}">
-											<!-- 	<button type="submit" class="watch-Q">Đặt vé</button> -->
-											<a href="${pageContext.request.contextPath}/ticket/showtime/${dc.movieId}">Đặt vé</a>
-											</div>
-										</div>
+
+
+
+			</div>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="tab-1" role="tabpanel"
+					aria-labelledby="home-tab">
+					<div class="row justify-content-center" id="Phim-dang-chieu">
+						<c:forEach items="${listMovieDangChieu}" var="dc">
+							<div
+								class="col-lg-3 col-sm-6 d-flex flex-column align-items-center">
+								<div class="item movie-card">
+									<div class="movie-poster">
+										<img src="${dc.posterUrl}" alt="">
 									</div>
-								</c:forEach>
-							</div>
-						</form>
-					</div>
-
-
-
-					<!-- ***** Phim sắp chiếu ***** -->
-
-					<div class="tab-pane fade" id="tab-2" role="tabpanel"
-						aria-labelledby="profile-tab">
-						<form action="${pageContext.request.contextPath}/ticket/showtime"
-							method="POST">
-							<div class="row justify-content-center" id="Phim-sap-chieu">
-								<c:forEach items="${listMovieSapChieu}" var="sc">
-									<div
-										class="col-lg-3 col-sm-6 d-flex flex-column align-items-center">
-										<div class="item movie-card">
-											<div class="movie-poster">
-												<img src="${sc.posterUrl}" alt="">
-											</div>
-											<div class="movie-details">
-												<h3 class="movie-title">${sc.movieName}</h3>
-												<div class="sml">
-													<p class="movie-genre" style="color: rgb(255, 255, 255);">
-														<i class="fa fa-clock-o" aria-hidden="true"></i>Thời
-														lượng: ${sc.duration}
-													</p>
-												</div>
-												<div class="sml">
-													<p class="movie-rating" style="color: rgb(255, 255, 255);">
-														<i class="fa fa-star" aria-hidden="true"></i> 7.2/10
-													</p>
-												</div>
-												 <input type="hidden" name="movieID" value="${sc.movieId}"> 
-												<a href="${pageContext.request.contextPath}/ticket/showtime/${dc.movieId}">Đặt vé</a>
-											</div>
+									<div class="movie-details">
+										<h3 class="movie-title">${dc.movieName}</h3>
+										<div class="sml">
+											<p class="movie-genre" style="color: rgb(255, 255, 255);">
+												<i class="fa fa-clock-o" aria-hidden="true"></i>Thời lượng:
+												${dc.duration}
+											</p>
 										</div>
+										<div class="sml">
+											<p class="movie-rating" style="color: rgb(255, 255, 255);">
+												<i class="fa fa-star" aria-hidden="true"></i> 7.2/10
+											</p>
+										</div>
+										<input type="hidden" name="movieID" value="${dc.movieId}">
+										<a
+											href="${pageContext.request.contextPath}/ticket/showtime/${dc.movieId}">Đặt
+											vé</a>
 									</div>
-								</c:forEach>
+								</div>
 							</div>
-						</form>
+						</c:forEach>
 					</div>
+				</div>
 
+				<div class="tab-pane fade" id="tab-2" role="tabpanel"
+					aria-labelledby="profile-tab">
+					<div class="row justify-content-center" id="Phim-sap-chieu">
 
+					</div>
 				</div>
 			</div>
 		</div>
@@ -300,26 +266,67 @@
 	</div>
 </div>
 <script>
-	/* const movieID = document.getElementById('get-movieID');
-
-	movieID.addEventListener('click', function(event) {
-
-		event.preventDefault();
-
-		const getmovieID = document.getElementById('movieID');
-
-		$.ajax({
-			url : '/your-java-handler',
-			method : 'POST',
-			data : {
-				movieID : getmovieID
-			},
-			success : function(response) {
-				// Xử lý kết quả trả về từ handler Java (nếu cần)
-			},
-			error : function(xhr, status, error) {
-				// Xử lý lỗi (nếu có)
-			}
-		});
-	}); */
+document.addEventListener('DOMContentLoaded', function() {
+      var sapChieuDiv = document.getElementById('Phim-sap-chieu');
+      sapChieuDiv.innerHTML = `
+         <c:forEach items="${listMovieSapChieu}" var="sc">
+          <div class="col-lg-3 col-sm-6 d-flex flex-column align-items-center">
+            <div class="item movie-card">
+              <div class="movie-poster">
+                <img src="${sc.posterUrl}" alt="">
+              </div>
+              <div class="movie-details">
+                <h3 class="movie-title">${sc.movieName}</h3>
+                <div class="sml">
+                  <p class="movie-genre" style="color: rgb(255, 255, 255);">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i>Thời lượng: ${sc.duration}
+                  </p>
+                </div>
+                <div class="sml">
+                  <p class="movie-rating" style="color: rgb(255, 255, 255);">
+                    <i class="fa fa-star" aria-hidden="true"></i> 7.2/10
+                  </p>
+                </div>
+                <input type="hidden" name="movieID" value="${sc.movieId}">
+                <a href="${pageContext.request.contextPath}/ticket/showtime/${sc.movieId}">Đặt vé</a>
+              </div>
+            </div>
+          </div>
+         </c:forEach> 
+      `;
+      
+      
+    /*   var dangChieuDiv = document.getElementById('Phim-dang-chieu');
+      
+      dangChieuDiv.innerHTML = `
+          <c:forEach items="${listMovieDangChieu}" var="dc">
+            <div
+                class="col-lg-3 col-sm-6 d-flex flex-column align-items-center">
+                <div class="item movie-card">
+                    <div class="movie-poster">
+                        <img src="${dc.posterUrl}" alt="">
+                    </div>
+                    <div class="movie-details">
+                        <h3 class="movie-title">${dc.movieName}</h3>
+                        <div class="sml">
+                            <p class="movie-genre" style="color: rgb(255, 255, 255);">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>Thời lượng:
+                                ${dc.duration}
+                            </p>
+                        </div>
+                        <div class="sml">
+                            <p class="movie-rating" style="color: rgb(255, 255, 255);">
+                                <i class="fa fa-star" aria-hidden="true"></i> 7.2/10
+                            </p>
+                        </div>
+                        <input type="hidden" name="movieID" value="${dc.movieId}">
+                        <a
+                            href="${pageContext.request.contextPath}/ticket/showtime/${dc.movieId}">Đặt
+                            vé</a>
+                    </div>
+                </div>
+            </div>
+        </c:forEach> 
+          `; */
+    });
 </script>

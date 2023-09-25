@@ -68,7 +68,7 @@ public class Showtime {
 	@Override
 	public String toString() {
 		return "Showtime [showtimeId=" + showtimeId + ", movie=" + movie.getMovieId() + ", room=" + room.getRoomId() + ", ticketShowTime="
-				 + ", startDate=" + startDate + ", startTime=" + startTime + "]";
+				  + ", startTime=" + startTime + "]";
 	}
 
 

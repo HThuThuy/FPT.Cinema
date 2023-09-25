@@ -106,26 +106,8 @@ span {
 													<img src="assets/images/profile.jpg" alt=""
 														style="border-radius: 23px;">
 												</div>
-												<div class="col-lg-4 align-self-center">
-													<div class="main-info header-text">
-														<h4>Kẻ ẩn danh</h4>
-														<p>
-															Đạo diễn: Trần Trọng Dần <br> Thể loại: Hài, Gia
-															Đình, Hành Động <br> Diễn viên: Kiều Minh Tuấn, Quốc
-															Trường, Vân Trang, Mạc Văn Khoa <br> Quốc gia: Việt
-															Nam <br> Ngày khởi chiếu: 25/8/2023
-														</p>
-
-													</div>
-												</div>
-												<div class="col-lg-4 align-self-center">
-													<ul>
-														<li>Lượt xem <span>3</span></li>
-														<li>Điểm đánh giá <span>4.2</span></li>
-														<li>Chi nhánh <span>Đà Nẵng</span></li>
-														<li>Trailer <span>29</span></li>
-													</ul>
-												</div>
+												
+												
 											</div>
 										</div>
 									</div>
@@ -580,9 +562,9 @@ document.getElementById('datVeButton').addEventListener('click', () => {
 
 	paymentInfo.ticketId = 1;
 	paymentInfo.status = 'Booked';
-	paymentInfo.showtimeTicket = '10:00';
-	paymentInfo.customer = 'KH001';
-	paymentInfo.order = 'OD001';
+	paymentInfo.showtimeTicket = '1';
+	paymentInfo.customer = '111111111111';
+	paymentInfo.order = '1';
     console.log(paymentInfo);
     var jsonString = JSON.stringify(paymentInfo);
     console.log(jsonString);
