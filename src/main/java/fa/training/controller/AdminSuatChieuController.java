@@ -80,7 +80,7 @@ public class AdminSuatChieuController {
 		return "admin/quanLySuatChieu";
 	}
 	
-	@GetMapping("/search")
+	@GetMapping("/searchSuatChieu")
 	public String admin2(
 			@RequestParam(value = "searchName", required = true) String searchName,
 			@RequestParam(name = "page", defaultValue = "0") int page, Model model
@@ -178,7 +178,7 @@ public class AdminSuatChieuController {
 //		Showtime showtime = new Showtime();
 //		showtime.setShowtimeId(showtimeId);
 		showtimeService.deleteST2(Arrays.asList(showtimeId));
-		redirectAttributes.addFlashAttribute("message", "Xóa thành công "+showtimeId);
+		redirectAttributes.addFlashAttribute("message", "Xóa suất chiếu thành công");
 		return "redirect:/admin/quanLySuatChieu";
 	}	
 	

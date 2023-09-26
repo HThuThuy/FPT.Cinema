@@ -60,7 +60,7 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${suatchieuList}" var="item" varStatus="status">
-							<tr style="font-size: 15px">
+							<tr style="font-size: 15px" class="align-middle">
 								<td class="text-center">${status.count}</td>
 								<td class="d-none">${item.showtimeId}</td>								
 								<td>${item.room.theater.theaterName}</td>								

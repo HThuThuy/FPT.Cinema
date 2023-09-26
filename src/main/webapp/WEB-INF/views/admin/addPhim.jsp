@@ -8,49 +8,64 @@
       
       <div class="templatemo-content-container">
         <div class="templatemo-content-widget white-bg">
-          <h3 class="margin-bottom-10">Thêm phim mới</h3>
+          <h3 class="margin-bottom-10">${text} phim</h3>
 
-          <form:form action="${pageContext.request.contextPath}/admin/addPhim" class="templatemo-login-form" method="post" modelAttribute="phim" enctype="multipart/form-data">
+          <form:form action="${pageContext.request.contextPath}/admin/addPhim" class="templatemo-login-form" method="post" modelAttribute="phim">
             <div class="row form-group">
+
+				<div class="col-lg-12 col-md-12 form-group d-none">
+					<label for="inputmasuatchieu">Mã phim</label>
+					<form:input path="movieId" type="text" class="form-control"
+						  />
+					<form:errors path="movieId" cssClass="text-danger" />
+				</div>
+				
+				<div class="col-lg-12 col-md-12 form-group">
+					<label for="inputmasuatchieu">Tên phim</label>
+					<form:input path="movieName" type="text" class="form-control"/>
+					<form:errors path="movieName" cssClass="text-danger" />
+				</div>
+				
+				<div class="col-lg-12 col-md-12 form-group">
+					<label for="inputmasuatchieu">Đạo diễn</label>
+					<form:input path="director" type="text" class="form-control"/>
+					<form:errors path="director" cssClass="text-danger" />
+				</div>
+
+				<div class="col-lg-12 col-md-12 form-group">
+					<label for="inputmasuatchieu">Thời lượng</label>
+					<form:input path="duration" type="time" class="form-control"/>
+					<form:errors path="duration" cssClass="text-danger" />
+				</div>	
+				
+				<div class="col-lg-12 col-md-12 form-group">
+					<label for="inputmasuatchieu">Mô tả</label>
+					<form:textarea path="movieDescription" type="time" class="form-control" rows="3"/>
+					<form:errors path="movieDescription" cssClass="text-danger" />
+				</div>	
+              
               <div class="col-lg-12 col-md-12 form-group">
-                <label for="inputmovieId">Mã phim</label>
-                <input type="text" class="form-control" id="inputmovieId">
-              </div>
-              <div class="col-lg-12 col-md-12 form-group">
-                <label for="inputmovieName">Tên phim</label>
-                <input type="text" class="form-control" id="inputmovieName">
-              </div>
-              <div class="col-lg-12 col-md-12 form-group">
-                <label for="inputdaodien">Đạo diễn</label>
-                <input type="text" class="form-control" id="inputdaodien">
-              </div>
-              <div class="col-lg-12 col-md-12 form-group">
-                <label for="inputgenre">Thời lượng</label>
-                <input type="text" class="form-control" id="inputgenre">
-              </div>
-              <div class="col-lg-12 form-group">
-                <label class="control-label" for="inputDescription">Mô tả</label>
-                <textarea class="form-control" id="inputDescription" rows="3"></textarea>
-              </div>
-              <div class="col-lg-12 col-md-12 form-group">
-                <label for="inputreleaseDate">Ngày bắt đầu</label>
-                <input type="date" class="form-control" id="inputreleaseDate" placeholder="releaseDate">
-              </div>
-              <div class="col-lg-12 col-md-12 form-group">
-                <label for="inputreleaseDate">Ngày kết thúc</label>
-                <input type="date" class="form-control" id="inputreleaseDate" placeholder="releaseDate">
-              </div>
-              <div class="col-lg-12">
-                <label class="control-label templatemo-block">Poster Url</label>
-                <!-- <input type="file" name="fileToUpload" id="fileToUpload" class="margin-bottom-10"> -->
-                <input type="file" name="fileToUpload" id="fileToUpload" class="filestyle" data-buttonName="btn-primary"
-                  data-buttonBefore="true" data-icon="false">
-                <p>Maximum upload size is 5 MB.</p>
-              </div>
+					<label for="inputmasuatchieu">Ngày bắt đầu</label>
+					<form:input path="startDate" type="date" class="form-control"/>
+					<form:errors path="startDate" cssClass="text-danger" />
+				</div>	
+				
+				<div class="col-lg-12 col-md-12 form-group">
+					<label for="inputmasuatchieu">Ngày kết thúc</label>
+					<form:input path="endDate" type="date" class="form-control"/>
+					<form:errors path="endDate" cssClass="text-danger" />
+				</div> 
+				
+				<div class="col-lg-12 col-md-12 form-group">
+					<label for="inputmasuatchieu">Poster Url</label>
+					<form:input path="posterUrl" type="text" class="form-control"/>
+					<form:errors path="posterUrl" cssClass="text-danger" />
+				</div>              
+              
             </div>
 
             <div class="form-group text-right">
-              <button type="submit" class="templatemo-blue-button">Thêm mới</button>
+              <button type="submit" class="templatemo-blue-button">${text2}</button>
               <button type="reset" class="templatemo-white-button">Tạo lại</button>
             </div>
           </form:form>

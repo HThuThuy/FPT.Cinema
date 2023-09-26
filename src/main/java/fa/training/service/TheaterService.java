@@ -51,4 +51,10 @@ public class TheaterService {
 		list.add(new Theater("TT004", "Tên rạp 2", "Thành phố"));
 		return list;
 	}
+	
+	// LamNH23
+	public void deleteTT(Iterable<String> ids) {		
+		repo.deleteAllByIdInBatch(ids);
+	}
+	
 }

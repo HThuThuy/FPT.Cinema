@@ -9,10 +9,10 @@
 	<div class="templatemo-content-container">
 		<div class="templatemo-content-widget white-bg">
 			<h3 class="margin-bottom-10">${text} suất chiếu</h3>
-
 			
 			<form:form action="${pageContext.request.contextPath}/admin/addSuatChieu" method="post" modelAttribute="suatChieu" class="templatemo-login-form">
 				<div class="row form-group">
+					
 					<div class="col-lg-12 col-md-12 form-group d-none">
 						<label for="inputmasuatchieu">Mã suất chiếu</label> 
 						<form:input path="showtimeId" type="text" class="form-control" readonly="${text2}" value="123456"/>
