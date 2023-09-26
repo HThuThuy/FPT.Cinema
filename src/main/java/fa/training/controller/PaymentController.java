@@ -32,8 +32,16 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fa.training.config.VNPayConfig;
+import fa.training.model.Customer;
+import fa.training.model.Order;
+import fa.training.model.Showtime;
+import fa.training.model.TicketInfo;
+import fa.training.service.CustomerService;
+import fa.training.service.OrderService;
 import fa.training.service.SeatService;
 import fa.training.service.SerService;
+import fa.training.service.ShowtimeService;
+import fa.training.service.TicketService;
 
 @Controller
 @RequestMapping(value = "/payment")
@@ -43,6 +51,18 @@ public class PaymentController {
 
 	@Autowired
 	private SerService SerService;
+	
+	@Autowired
+	private CustomerService customers;
+	
+	@Autowired
+	private ShowtimeService showtimes;
+	
+	@Autowired
+	private OrderService orders;
+	
+	@Autowired
+	private TicketService tickets;
 
 	/*
 	 * Project: FPT Cinema Team: 2 Author :ThuyHtt14 Method: Tạo đơn thanh toán
@@ -151,6 +171,41 @@ public class PaymentController {
 //			String maKhuyenMai = jsonNode.get("maKhuyenMai").asText();
 //			String[] maGhe = objectMapper.convertValue(jsonNode.get("maGhe"), String[].class);
 //			JsonNode danhSachDichVu = jsonNode.get("danhSachDichVu");
+			
+			int ticketId = jsonNode.get("ticketId").asInt();
+	        String statusTicket = jsonNode.get("status").asText();
+	        String showtimeGet = jsonNode.get("showtimeTicket").asText();
+	        String customer = jsonNode.get("customer").asText();
+	        int order = jsonNode.get("order").asInt();
+	        
+	        System.out.println("ticketId"+ticketId+ "2 ,"+statusTicket+", 3"+showtimeGet+", 4"+customer+5+ order);
+	        
+	        if (status.equals("00")) {
+	        	Customer customerTicket= customers.findById(customer);
+	        	Showtime showtimeTicket=showtimes.findById(showtimeGet);
+	        	Order orderTicket= orders.findById(order);
+	        	
+	        	TicketInfo buyTicketInfo= new TicketInfo();
+	        	buyTicketInfo.setCustomer(customerTicket);
+	        	buyTicketInfo.setShowtimeTicket(showtimeTicket);
+	        	buyTicketInfo.setOrder(orderTicket);
+	        	buyTicketInfo.setStatus(statusTicket);
+	        	
+	        	System.out.println(buyTicketInfo+"djhfjksdj");
+	        	
+	        	tickets.save(buyTicketInfo);
+	        	
+	        } else {
+//				for (String string : maGhe) {
+//					veService.updateHuyVe(string, maSuatChieu,ngaySuDung,maKhachHang);
+//				}
+//				model.addAttribute("tinhTrang", "thanh toan khong thanh cong");
+//				return "/ve/" + maSuatChieu;
+	        	System.out.println("Thanh toan khong thanh cong");
+	        	
+	        	return "ticket/payment";
+//			}
+	        }
 //			if (status.equals("00")) {
 //				KhachHang kh = khachHangService.findById(maKhachHang);
 //				KhuyenMai km = khuyenMaiService.findById(maKhuyenMai);

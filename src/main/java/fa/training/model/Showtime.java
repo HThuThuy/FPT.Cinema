@@ -36,9 +36,9 @@ import lombok.Setter;
 @Table(name = "SHOWTIME")
 public class Showtime {
 
-	@Id	
+	@Id
 	String showtimeId;
-	
+
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "movieId")
@@ -48,11 +48,11 @@ public class Showtime {
 	@JoinColumn(name = "roomId")
 	@ManyToOne(fetch = FetchType.EAGER)
 	Room room;
-	
+
 	@JsonBackReference
 	@OneToMany(mappedBy = "showtimeTicket", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<TicketInfo> ticketShowTime;
-	
+
 	@DateTimeFormat(pattern = "HH:mm")
 	@Column(columnDefinition = "Time")
 	LocalTime startTime;
@@ -70,12 +70,5 @@ public class Showtime {
 		return "Showtime [showtimeId=" + showtimeId + ", movie=" + movie.getMovieId() + ", room=" + room.getRoomId() + ", ticketShowTime="
 				 + ", startDate=" +  ", startTime=" + startTime + "]";
 	}
-
-
-	
-
-	
-	
-	
 
 }

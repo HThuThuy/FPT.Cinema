@@ -17,36 +17,28 @@
 					<div class="col-lg-12">
 						<div class="main-profile ">
 							<div class="row">
-							
-									<div class="col-lg-4 align-self-center">
-										<img
-											src="${movieChoose.posterUrl}"
-											alt="" class="image">
-									</div>
-									<div class="col-lg-4 align-self-center">
-										<div class="main-info header-text">
-											<span>Đang chiếu</span>
-											<h4>${movieChoose.movieName}</h4>
-										    <input type="hidden" id="movieIDSelect" value="${movieChoose.movieId}">
-											<p>
-												Đạo diễn: ${movieChoose.director} <br> Thể loại: Hài, Gia Đình,
-												Hành Động <br> Diễn viên: Kiều Minh Tuấn, Quốc Trường,
-												Vân Trang, Mạc Văn Khoa <br> Quốc gia: Việt Nam <br>
-												Ngày khởi chiếu: 25/8/2023
 
-											</p>
+								<div class="col-lg-4 align-self-center">
+									<img src="${movieChoose.posterUrl}" alt="" class="image">
+								</div>
+								<div class="col-lg-4 align-self-center">
+									<div class="main-info header-text">
+										<span>Đang chiếu</span>
+										<h4>${movieChoose.movieName}</h4>
+										<input type="hidden" id="movieIDSelect"
+											value="${movieChoose.movieId}">
+										<p>
+											Đạo diễn: ${movieChoose.director} <br> Thể loại: Hài,
+											Gia Đình, Hành Động <br> Diễn viên: Kiều Minh Tuấn, Quốc
+											Trường, Vân Trang, Mạc Văn Khoa <br> Quốc gia: Việt Nam
+											<br> Ngày khởi chiếu: 25/8/2023
 
-										</div>
+										</p>
+
 									</div>
-									<div class="col-lg-4 align-self-center">
-										<ul>
-											<li>Lượt xem <span>3</span></li>
-											<li>Điểm đánh giá <span>4.2</span></li>
-											<li>Chi nhánh <span>Đà Nẵng</span></li>
-											<li>Trailer <span>29</span></li>
-										</ul>
-									</div>
-							
+								</div>
+
+
 							</div>
 							<div class="row">
 								<div class="col-lg-12">
@@ -62,7 +54,7 @@
 
 											<p>${movieChoose.movieDescription}</p>
 
-											
+
 											<h4 class="mt-4">
 												<em>LỊCH CHIẾU</em>
 											</h4>
@@ -89,7 +81,10 @@
 												<div class="col-4">
 													<div class="form-group">
 
-														<input type="date" class="form-control" id="usr">
+														<input type="date" class="form-control" id="usr" value=""
+															pattern="\d{4}-\d{2}-\d{2}" required> <input
+															type="hidden" id="movieEnd"
+															value="${movieChoose.endDate}">
 													</div>
 
 												</div>
@@ -97,7 +92,8 @@
 												<div class="col-4">
 
 													<div class="form-group">
-														<select class="form-control" id="branch" name="branch" onchange="getSelectedTheater()" >
+														<select class="form-control" id="branch" name="branch"
+															onchange="getSelectedTheater()">
 															<%-- <option value="all">Tất cả rạp</option>
 															<c:forEach items="${listCity}" var="th">
 																<option value="${th.theaterName}">${th.theaterName}</option>
@@ -111,7 +107,7 @@
 										</div>
 										<div class="row">
 											<h4 class="mt-4">
-												<em>FPT Cinema 1</em>
+												<em id="theater-select"></em>
 											</h4>
 											<div class="row show-time mt-3">
 												<div class="col-3 title">
@@ -133,23 +129,6 @@
 												</div>
 											</div>
 
-											<div class="row show-time mt-3">
-												<div class="col-3 title">
-
-													<h5>3D- Phụ đề</h5>
-												</div>
-												<div class="col-9 content">
-													<a class="show_time_boder" href="booking.html">10:00</a> <a
-														class="show_time_boder" href="booking.html">11:00</a> <a
-														class="show_time_boder" href="booking.html">12:00</a> <a
-														class="show_time_boder" href="booking.html">13:45</a> <a
-														class="show_time_boder" href="booking.html">15:30</a> <a
-														class="show_time_boder" href="booking.html">16:00</a> <a
-														class="show_time_boder" href="booking.html">17:45</a> <a
-														class="show_time_boder" href="booking.html">18:30</a>
-
-												</div>
-											</div>
 										</div>
 									</div>
 								</div>
@@ -199,6 +178,13 @@
 	 function getSelectedTheater() {
 		console.log('abc');
 		var selectedTheater = document.getElementById("branch").value; // Lấy giá trị được chọn từ dropdown
+		//Rạp
+        var selectElement = document.getElementById("branch");
+        var selectedIndex = selectElement.selectedIndex;
+        var selectedOption = selectElement.options[selectedIndex];
+        var selectedTheaters = selectedOption.innerText;
+        var theaterSelectElement = document.getElementById("theater-select");
+         theaterSelectElement.innerText = selectedTheaters;
 		var selectedMovieId = document.getElementById("movieIDSelect").value;
 		// Gửi giá trị đến controller bằng Axios
 		axios.get("${pageContext.request.contextPath}/ticket/theaterId", {
@@ -212,7 +198,7 @@
 			        var list = response.data;
 			        let result = '';
 			        for (let i = 0; i < list.length; i++) {
-			        	result += '<option value="' + list[i].showtimeId + '">' + list[i].startTime + '</option>';
+			        	result += '<a class="show_time_boder" href="${pageContext.request.contextPath}/ticket/booking">' + list[i].startTime + '</a>';
 			        }
 			        document.getElementById('showtime').innerHTML = result;
 			        console.log(list);
@@ -225,5 +211,26 @@
 	    console.log("Lỗi khi gọi API: " + error);
 		});
 	}
-	
+	//Validate ngày nhập vào:
+     var usrInput = document.getElementById("usr");
+var movieEndInput = document.getElementById("movieEnd");
+
+
+var currentDate = new Date();
+
+// Định dạng ngày tháng
+var year = currentDate.getFullYear();
+var month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); // Thêm số 0 phía trước nếu cần
+var day = currentDate.getDate().toString().padStart(2, "0"); // Thêm số 0 phía trước nếu cần
+
+// Tạo chuỗi ngày tháng trong định dạng yyyy-MM-dd
+var currentDateString = year + "-" + month + "-" + day;
+
+// Lấy giá trị ngày kết thúc từ phần tử input ẩn "movieEnd"
+var movieEndDate = movieEndInput.value;
+
+// Đặt giá trị mặc định và giới hạn ngày cho ô input "usr"
+usrInput.value = currentDateString;
+usrInput.min = currentDateString;
+usrInput.max = movieEndDate;
 </script>
