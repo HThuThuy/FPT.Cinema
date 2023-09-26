@@ -516,23 +516,22 @@ $(document).ready(function() {
 
 //Phần thanh toán
 let paymentInfo = {
-ticketId: 0,
+
 status: '',
-showtimeTicket: '',
 customer: '',
 order:''
 };
-let totalPrices = totalAmount; 
+let totalPrices = 100000; 
 document.getElementById('datVeButton').addEventListener('click', () => {
 	let currentDate = new Date();
 	let localDate = currentDate.toLocaleDateString();
 	let localTime = currentDate.toLocaleTimeString();
 
-	paymentInfo.ticketId = 1;
+	
 	paymentInfo.status = 'Booked';
-	paymentInfo.showtimeTicket = '10:00';
-	paymentInfo.customer = 'KH001';
-	paymentInfo.order = 'OD001';
+	
+	paymentInfo.customer = '111111111111';
+	paymentInfo.order = '1';
   console.log(paymentInfo);
   var jsonString = JSON.stringify(paymentInfo);
   console.log(jsonString);

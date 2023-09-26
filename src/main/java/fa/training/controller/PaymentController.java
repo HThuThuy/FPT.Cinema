@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -153,7 +155,7 @@ public class PaymentController {
 	@GetMapping("/return")
 	public String getPaymentInfo(@RequestParam(value = "vnp_Amount") String amount,
 			@RequestParam(value = "vnp_ResponseCode") String status,
-			@RequestParam(value = "vnp_OrderInfo") String orderInfo, Model model) {
+			@RequestParam(value = "vnp_OrderInfo") String orderInfo, Model model,HttpSession session) {
 		int maSuatChieu = 0;
 		String ghe = "";
 		try {
@@ -172,22 +174,26 @@ public class PaymentController {
 //			String[] maGhe = objectMapper.convertValue(jsonNode.get("maGhe"), String[].class);
 //			JsonNode danhSachDichVu = jsonNode.get("danhSachDichVu");
 			
-			int ticketId = jsonNode.get("ticketId").asInt();
+			//int ticketId = jsonNode.get("ticketId").asInt();
 	        String statusTicket = jsonNode.get("status").asText();
-	        String showtimeGet = jsonNode.get("showtimeTicket").asText();
+	        
+	       // String showtimeGet = jsonNode.get("showtimeTicket").asText();
+	        
+	        Showtime showtimeGets = (Showtime)session.getAttribute("selectedShowtime");
+	        System.out.println("abc-------------------------"+showtimeGets);
 	        String customer = jsonNode.get("customer").asText();
 	        int order = jsonNode.get("order").asInt();
 	        
-	        System.out.println("ticketId"+ticketId+ "2 ,"+statusTicket+", 3"+showtimeGet+", 4"+customer+5+ order);
+	        System.out.println("ticketId"+ "2 ,"+statusTicket+", 3"+showtimeGets+", 4"+customer+5+ order);
 	        
 	        if (status.equals("00")) {
 	        	Customer customerTicket= customers.findById(customer);
-	        	Showtime showtimeTicket=showtimes.findById(showtimeGet);
+	        	// showtimeTicket=showtimes.findById(showtimeGet);
 	        	Order orderTicket= orders.findById(order);
 	        	
 	        	TicketInfo buyTicketInfo= new TicketInfo();
 	        	buyTicketInfo.setCustomer(customerTicket);
-	        	buyTicketInfo.setShowtimeTicket(showtimeTicket);
+	        	buyTicketInfo.setShowtimeTicket(showtimeGets);
 	        	buyTicketInfo.setOrder(orderTicket);
 	        	buyTicketInfo.setStatus(statusTicket);
 	        	

@@ -40,7 +40,7 @@ public class Order {
 	@JoinColumn(name = "serviceId")
 	Services services;
 	
-	@ManyToOne
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "promotionId")
 	Promotion promotion;
 	

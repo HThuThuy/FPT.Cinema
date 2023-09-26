@@ -198,7 +198,8 @@
 			        var list = response.data;
 			        let result = '';
 			        for (let i = 0; i < list.length; i++) {
-			        	result += '<a class="show_time_boder" href="${pageContext.request.contextPath}/ticket/booking">' + list[i].startTime + '</a>';
+			        	/* result += '<a class="show_time_boder" href="${pageContext.request.contextPath}/ticket/booking">' + list[i].startTime + '</a>'; */
+			        	result += '<a class="show_time_boder" value="' + list[i].showtimeId + '" href="#" onclick="sendSelectedShowtime(\'' + list[i].showtimeId + '\')">' + list[i].startTime + '</a>';
 			        }
 			        document.getElementById('showtime').innerHTML = result;
 			        console.log(list);
@@ -218,19 +219,23 @@ var movieEndInput = document.getElementById("movieEnd");
 
 var currentDate = new Date();
 
-// Định dạng ngày tháng
 var year = currentDate.getFullYear();
-var month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); // Thêm số 0 phía trước nếu cần
-var day = currentDate.getDate().toString().padStart(2, "0"); // Thêm số 0 phía trước nếu cần
+var month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); 
+var day = currentDate.getDate().toString().padStart(2, "0"); 
 
-// Tạo chuỗi ngày tháng trong định dạng yyyy-MM-dd
+
 var currentDateString = year + "-" + month + "-" + day;
-
-// Lấy giá trị ngày kết thúc từ phần tử input ẩn "movieEnd"
 var movieEndDate = movieEndInput.value;
 
 // Đặt giá trị mặc định và giới hạn ngày cho ô input "usr"
 usrInput.value = currentDateString;
 usrInput.min = currentDateString;
 usrInput.max = movieEndDate;
+
+
+//Showtime
+function sendSelectedShowtime(showtimeId) {
+      // Gửi giá trị showtimeId đến controller
+      window.location.href = "${pageContext.request.contextPath}/ticket/booking?showtimeId=" + showtimeId;
+    }
 </script>
