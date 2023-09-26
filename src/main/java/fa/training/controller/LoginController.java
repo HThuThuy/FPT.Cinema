@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import fa.training.model.Customer;
 import fa.training.model.Users;
 import fa.training.service.CustomerService;
 import fa.training.service.UserService;
@@ -46,6 +47,12 @@ public class LoginController {
             session.setAttribute("account1", accountName);
             // Get customer name from CustomerService
             String customerName = customerService.getCustomerName(account.getCustomer().getCccd());
+            Customer custerLogin = customerService.findById(account.getCustomer().getCccd());
+            
+            System.out.println("custerLogin"+custerLogin);
+            
+            session.setAttribute("custerLogin", custerLogin);
+            
             session.setAttribute("customerName", customerName);
             session.setAttribute("loggedInUser", customerService.findById(account.getCustomer().getCccd()));
             return "redirect:/#"; // Chuyển hướng user thường về trang chủ

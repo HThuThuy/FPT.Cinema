@@ -2,6 +2,8 @@ package fa.training.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import fa.training.model.Customer;
 import fa.training.model.Movie;
 import fa.training.model.Showtime;
 import fa.training.model.Theater;
@@ -33,7 +36,7 @@ public class TicketController {
 	private ShowtimeService showtime;
 
 	@GetMapping(value = { "/showtime/{movieID}" })
-	public String ticket(Model model, @PathVariable("movieID") String movieID) {
+	public String ticket(Model model, @PathVariable("movieID") String movieID, HttpSession session) {
 
 		List<Theater> listaList = theater.getAll();
 		for (Theater theaters : listaList) {
@@ -48,6 +51,10 @@ public class TicketController {
 		 System.out.println("Movie:-----------"+ movieChoose);
 		model.addAttribute("movieChoose", movieChoose);
 		
+		
+		Customer loginCustomer = (Customer)session.getAttribute("custerLogin");
+
+		System.out.println("custerLogin"+loginCustomer);
 		
 		//List<Showtime> shotimeList= showtime.getByMovieId(movieID, theaterId);
 		
