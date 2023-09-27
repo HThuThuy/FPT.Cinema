@@ -127,8 +127,13 @@ public class AdminPhimController {
 	public String admin6(@RequestParam String movieId,  Model model, RedirectAttributes redirectAttributes) {
 		System.out.print("Xóa phim: " + movieId);
 
-		movieService.deleteMV(Arrays.asList(movieId));
-		redirectAttributes.addFlashAttribute("message", "Xóa phim thành công");
+		try {
+			movieService.deleteMV(Arrays.asList(movieId));
+			redirectAttributes.addFlashAttribute("message", "Xóa phim thành công");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("message", "Thất bại! Xóa suất chiếu có phim trước");
+		}
+		
 		return "redirect:/admin/quanLyPhim";
 	}	
 }

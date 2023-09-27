@@ -29,12 +29,12 @@ import lombok.Setter;
 @Table(name = "ROOM")
 public class Room {
 	@Id
-	@Column(columnDefinition = "varchar(7)")
+	@Column(columnDefinition = "Nvarchar(255)")
 //	@Pattern(regexp = "^PC[0-9]{5}$", message = "mã phòng chiếu không đúng định dạng PCxxxxx")
 //	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String roomId;
 
-	@Column(columnDefinition = "Nvarchar(20)")
+	@Column(columnDefinition = "Nvarchar(255)")
 //	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String roomName;
 

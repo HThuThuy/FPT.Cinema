@@ -154,6 +154,7 @@ public class AdminSuatChieuController {
 		QLShowTimeDTO qlShowTimeDTO = new QLShowTimeDTO();
 		qlShowTimeDTO.setShowtimeId(showtime.getShowtimeId());		
 		Room room = showtime.getRoom();
+		Movie movie = showtime.getMovie();
 		qlShowTimeDTO.setTheaterId(room.getTheater().getTheaterId());
 		qlShowTimeDTO.setRoomId(room.getRoomId());
 		qlShowTimeDTO.setStartTime(showtime.getStartTime());
@@ -164,7 +165,8 @@ public class AdminSuatChieuController {
 		model.addAttribute("roomName", room.getRoomName());
 		model.addAttribute("startTime", showtime.getStartTime());
 		List<Movie> list = movieService.getAllEnable();
-		model.addAttribute("movies", list);		
+		model.addAttribute("movies", list);	
+		model.addAttribute("selectedMovie", movie.getMovieId());
 				
 		return "admin/editSuatChieu";
 	}	

@@ -47,6 +47,11 @@ public class RoomService {
 		return repo.getAllByTheater(theaterId);
 	}
 	
+	// LamNH23
+	public void deleteRoom(Iterable<String> ids) {		
+		repo.deleteAllByIdInBatch(ids);
+	}
+	
 	
 
 }
