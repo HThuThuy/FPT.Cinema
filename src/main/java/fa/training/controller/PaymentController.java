@@ -53,16 +53,16 @@ public class PaymentController {
 
 	@Autowired
 	private SerService SerService;
-	
+
 	@Autowired
 	private CustomerService customers;
-	
+
 	@Autowired
 	private ShowtimeService showtimes;
-	
+
 	@Autowired
 	private OrderService orders;
-	
+
 	@Autowired
 	private TicketService tickets;
 
@@ -72,7 +72,7 @@ public class PaymentController {
 	@GetMapping("/create")
 	public String createPayment(@RequestParam("param1") String soTien, @RequestParam("param2") String orderInfo)
 			throws UnsupportedEncodingException {
-	long amount = Long.parseLong(soTien) * 100;
+		long amount = Long.parseLong(soTien) * 100;
 		String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
 		Map<String, String> vnp_Params = new HashMap<>();
 		vnp_Params.put("vnp_Version", VNPayConfig.vnp_Version);
@@ -86,7 +86,7 @@ public class PaymentController {
 		vnp_Params.put("vnp_OrderType", "other");
 		vnp_Params.put("vnp_Locale", "vn");
 		vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_Returnurl);
-        vnp_Params.put("vnp_IpAddr", VNPayConfig.vnp_IpAddr);
+		vnp_Params.put("vnp_IpAddr", VNPayConfig.vnp_IpAddr);
 		try {
 			// Tạo một ObjectMapper
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -143,8 +143,6 @@ public class PaymentController {
 		vnp_Params.put("vnp_SecureHash", vnp_SecureHash);
 		String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + queryUrl;
 
-	
-
 		return "redirect:" + paymentUrl;
 	}
 
@@ -155,7 +153,7 @@ public class PaymentController {
 	@GetMapping("/return")
 	public String getPaymentInfo(@RequestParam(value = "vnp_Amount") String amount,
 			@RequestParam(value = "vnp_ResponseCode") String status,
-			@RequestParam(value = "vnp_OrderInfo") String orderInfo, Model model,HttpSession session) {
+			@RequestParam(value = "vnp_OrderInfo") String orderInfo, Model model, HttpSession session) {
 		int maSuatChieu = 0;
 		String ghe = "";
 		try {
@@ -167,81 +165,75 @@ public class PaymentController {
 
 			// Lấy giá trị từ JsonNode
 //			maSuatChieu = jsonNode.get("maSuatChieu").asInt();
-//			LocalDate ngaySuDung = LocalDate.now();
-//			LocalTime gioSuDung = LocalTime.now();
-//			int maKhachHang = jsonNode.get("maKhachHang").asInt();
-//			String maKhuyenMai = jsonNode.get("maKhuyenMai").asText();
+			LocalDate ngaySuDung = LocalDate.now();
+			LocalTime gioSuDung = LocalTime.now();
+
 //			String[] maGhe = objectMapper.convertValue(jsonNode.get("maGhe"), String[].class);
 //			JsonNode danhSachDichVu = jsonNode.get("danhSachDichVu");
+
 			
-			//int ticketId = jsonNode.get("ticketId").asInt();
-	        String statusTicket = jsonNode.get("status").asText();
-	        
-	       // String showtimeGet = jsonNode.get("showtimeTicket").asText();
-	        
-	        Showtime showtimeGets = (Showtime)session.getAttribute("selectedShowtime");
-	        System.out.println("abc-------------------------"+showtimeGets);
-	        String customer = jsonNode.get("customer").asText();
-	        int order = jsonNode.get("order").asInt();
-	        
-	        System.out.println("ticketId"+ "2 ,"+statusTicket+", 3"+showtimeGets+", 4"+customer+5+ order);
-	        
-	        if (status.equals("00")) {
-	        	Customer customerTicket= customers.findById(customer);
-	        	// showtimeTicket=showtimes.findById(showtimeGet);
-	        	Order orderTicket= orders.findById(order);
-	        	
-	        	TicketInfo buyTicketInfo= new TicketInfo();
-	        	buyTicketInfo.setCustomer(customerTicket);
-	        	buyTicketInfo.setShowtimeTicket(showtimeGets);
-	        	buyTicketInfo.setOrder(orderTicket);
-	        	buyTicketInfo.setStatus(statusTicket);
-	        	
-	        	System.out.println(buyTicketInfo+"djhfjksdj");
-	        	
-	        	tickets.save(buyTicketInfo);
-	        	
-	        } else {
+			
+			// int ticketId = jsonNode.get("ticketId").asInt();
+			String statusTicket = jsonNode.get("status").asText();
+			
+			//String serviceTicket = jsonNode.get("service").asText();
+			
+			/*
+			 * lấy list serviceShow từ serviceTicket
+			 * chạy vòng lặp tính tổng số lượng nước A, số lượng bắp B số lượng snack C, số lượng tiền D
+			 * Service service = new Service(A,B,C,D)
+			 * service.setServiceId(UIUD.random())
+			 * servicesService.save(service)
+			 * 
+			 * 
+			 * */
+
+			// String showtimeGet = jsonNode.get("showtimeTicket").asText();
+
+			Showtime showtimeGets = (Showtime) session.getAttribute("selectedShowtime");
+			System.out.println("abc-------------------------" + showtimeGets);
+			String customer = jsonNode.get("customer").asText();
+			int order = jsonNode.get("order").asInt();
+
+			System.out.println("ticketId" + "2 ," + statusTicket + ", 3" + showtimeGets + ", 4" + customer + 5 + order);
+
+			if (status.equals("00")) {
+				//Order
+			 Order getOrder= new Order();
+//				 getOrder.setOrderDate(ngaySuDung);
+//				 getOrder.setOrderTime(gioSuDung)
+//			 	getOrder.setServices(null);			 
+				// getOrder.setTotalPrice(amount);
+			 
+			 
+				 
+				
+				Customer customerTicket = customers.findById(customer);
+				
+				Order orderTicket = orders.findById(order);
+
+				TicketInfo buyTicketInfo = new TicketInfo();
+				buyTicketInfo.setCustomer(customerTicket);
+				buyTicketInfo.setShowtimeTicket(showtimeGets);
+				buyTicketInfo.setOrder(orderTicket);
+				buyTicketInfo.setStatus(statusTicket);
+
+				System.out.println(buyTicketInfo + "djhfjksdj");
+
+				tickets.save(buyTicketInfo);
+
+			} else {
 //				for (String string : maGhe) {
 //					veService.updateHuyVe(string, maSuatChieu,ngaySuDung,maKhachHang);
 //				}
 //				model.addAttribute("tinhTrang", "thanh toan khong thanh cong");
 //				return "/ve/" + maSuatChieu;
-	        	System.out.println("Thanh toan khong thanh cong");
-	        	
-	        	return "ticket/payment";
+				System.out.println("Thanh toan khong thanh cong");
+
+				return "ticket/payment";
 //			}
-	        }
-//			if (status.equals("00")) {
-//				KhachHang kh = khachHangService.findById(maKhachHang);
-//				KhuyenMai km = khuyenMaiService.findById(maKhuyenMai);
-//				model.addAttribute("soTien", Integer.parseInt(amount) / 100);
-//				model.addAttribute("tinhTrang", "thanh toan thanh cong");
-//				model.addAttribute("ngayThanhToan", ngaySuDung);
-//				model.addAttribute("maGhe", maGhe);
-//				model.addAttribute("maSuatChieu", maSuatChieu);
-//				model.addAttribute("tenPhim", suatChieuService.findById(maSuatChieu).getPhim().getTenPhim());
-//				List<SuDungDichVu> listSD = new ArrayList<SuDungDichVu>();
-//				for (String string : maGhe) {
-//					veService.updateDatVe(string, maSuatChieu,ngaySuDung,maKhachHang);
-//				}
-//				for (JsonNode jsonNode2 : danhSachDichVu) {
-//					 String maDichVu = jsonNode2.get("maDichVu").asText();
-//		                int soLuong = jsonNode2.get("soLuong").asInt();
-//		            	DichVu dv = dichVuService.findById(maDichVu);
-//		                SuDungDichVu sddv = new SuDungDichVu(kh, dv, km, ngaySuDung, gioSuDung, soLuong);
-//		                suDungDichVuService.save(sddv);
-//		                listSD.add(sddv);
-//				}
-//				model.addAttribute("sddv", listSD);
-//				model.addAttribute("khuyenMai", km);
-//			} else {
-//				for (String string : maGhe) {
-//					veService.updateHuyVe(string, maSuatChieu,ngaySuDung,maKhachHang);
-//				}
-//				model.addAttribute("tinhTrang", "thanh toan khong thanh cong");
-//				return "/ve/" + maSuatChieu;
-//			}
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

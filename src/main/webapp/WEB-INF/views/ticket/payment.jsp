@@ -78,16 +78,13 @@ span {
 }
 
 button#applyDiscount {
-    width: 137px;
+	width: 137px;
 }
 
 input#discountCode {
-    width: 200px;
+	width: 200px;
 }
-
 }
-	
-
 </style>
 <div class="container2">
 	<div class="row">
@@ -112,8 +109,8 @@ input#discountCode {
 													<img src="assets/images/profile.jpg" alt=""
 														style="border-radius: 23px;">
 												</div>
-												
-												
+
+
 											</div>
 										</div>
 									</div>
@@ -147,6 +144,7 @@ input#discountCode {
 																	style="background: #aaa; color: black;">
 																	<span aria-hidden="false" class="layout__seat__name"
 																		data-reactid="100"> ${se.seatPositon} </span>
+
 																</div>
 															</li>
 														</c:when>
@@ -159,7 +157,9 @@ input#discountCode {
 																	role="checkbox" tabindex="-1" data-reactid="99"
 																	style="background: rgb(93, 57, 164); color: black;">
 																	<span aria-hidden="false" class="layout__seat__name"
-																		data-reactid="100"> ${se.seatPositon} </span>
+																		data-reactid="100"> ${se.seatPositon} </span> <input
+																		type="hidden" name="seatId"
+																		value="${se.seatId.seatId}" />
 																</div>
 															</li>
 														</c:when>
@@ -172,7 +172,9 @@ input#discountCode {
 																	class="layout__seat layout__seat--love-seat-left"
 																	role="checkbox" tabindex="-1" data-reactid="99">
 																	<span aria-hidden="false" class="layout__seat__name"
-																		data-reactid="100"> ${se.seatPositon} </span>
+																		data-reactid="100"> ${se.seatPositon} </span> <input
+																		type="hidden" name="seatId"
+																		value="${se.seatId.seatId}" />
 																</div>
 
 
@@ -232,7 +234,7 @@ input#discountCode {
 								</div>
 								<div class="col-lg-12 btn-tieptheo">
 									<div class="main-border-button">
-										  <a href="#chonDichVu">Tiếp theo!</a>
+										<a href="#chonDichVu">Tiếp theo!</a>
 									</div>
 								</div>
 							</div>
@@ -270,6 +272,8 @@ input#discountCode {
 																	<td style="text-align: left;"><b>${sr.serviceName}</b>
 																		<br> ${sr.serviceDescription}</td>
 																	<td>
+																	
+																	
 																		<button type="button" class="minus">
 																			<i class="fas fa-minus-circle fa-lg"
 																				style="color: #ffffff;"></i>
@@ -324,15 +328,17 @@ input#discountCode {
 														id="total">0</span>
 												</div>
 												<div id="infor" class="row p-2 d-flex align-items-center">
-												    <span class="col-2">Mã giảm giá:</span>
-												    <div class="col">
-												        <input type="text" id="discountCode" class="form-control" placeholder="Nhập mã giảm giá">
-												    </div>
-												    <div class="col">
-												        <button class="btn btn-primary" id="applyDiscount">Áp dụng</button>
-												    </div>
+													<span class="col-2">Mã giảm giá:</span>
+													<div class="col">
+														<input type="text" id="discountCode" class="form-control"
+															placeholder="Nhập mã giảm giá">
+													</div>
+													<div class="col">
+														<button class="btn btn-primary" id="applyDiscount">Áp
+															dụng</button>
+													</div>
 												</div>
- 												 <div id="discountMessage"></div>
+												<div id="discountMessage"></div>
 
 											</div>
 										</div>
@@ -519,8 +525,22 @@ let paymentInfo = {
 
 status: '',
 customer: '',
-order:''
+order:'',
+service:[],
+seat: []
 };
+//Lấy ghế
+document.querySelectorAll('.layout__seat').forEach((divElement) => {
+	  divElement.addEventListener('click', function() {
+	    const seatId = this.querySelector('input[name="seatId"]').value;
+	    paymentInfo.seat.push(seatId);
+	    console.log(paymentInfo.seat);
+	    
+	  });
+	});
+	
+//lấy service
+
 let totalPrices = 100000; 
 document.getElementById('datVeButton').addEventListener('click', () => {
 	let currentDate = new Date();
@@ -529,6 +549,7 @@ document.getElementById('datVeButton').addEventListener('click', () => {
 
 	
 	paymentInfo.status = 'Booked';
+	paymentInfo.service = '1';
 	
 	paymentInfo.customer = '111111111111';
 	paymentInfo.order = '1';
