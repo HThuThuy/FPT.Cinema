@@ -6,22 +6,23 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="templatemo-content col-1 black-bg">
+
 	<div class="templatemo-content-container">
-		<h3 style="font-size: 35px; margin: 10px 10px 30px 5px;">QUẢN LÝ SUẤT CHIẾU</h3>
-		<div class="row ml-1"
+		<h3 style="font-size: 35px; margin: 10px 10px 30px 5px;">QUẢN LÝ THÔNG TIN CÁ NHÂN</h3>
+		<div class="row"
 			style="display: flex; justify-content: center; align-items: center;">
 
 			<div class="col-lg-6 col-md-6">
-				<%-- <form:form class="row"
-					action="${pageContext.request.contextPath}/admin/search" method="get">
+				<form:form class="row"
+					action="${pageContext.request.contextPath}/user/accountHistory"
+					method="get">
 					
 					<div class="col-lg-1 col-md-1">
 						
 					</div>
 
 					<div class="col-lg-6 col-md-6">
-						<input type="hidden" name="page" value="${1}" />
-						<input
+						<input type="hidden" name="page" value="${1}" /> <input
 							id="nameCustomer" type="text" name="searchName"
 							class="form-control ml-1" value="${searchName}"
 							placeholder="Nhập tên phim">
@@ -31,47 +32,48 @@
 						<button type="submit" class="btn">Search</button>
 					</div>
 
-				</form:form> --%>
-			</div>
-
+				</form:form>
+			</div>			
+			
 			<div class="col-lg-3 col-md-6"></div>
 			<div class="col-lg-3 col-md-6">
-				<a class="btn  "
-					href="${pageContext.request.contextPath}/admin/addSuatChieu">Thêm suất chiếu mới</a>
+				<a class="btn " href="${pageContext.request.contextPath}/admin/addPhim">Thêm phim mới</a>
 			</div>
 		</div>
 		<div class="templatemo-content-widget no-padding">
 			<div class="panel panel-default table-responsive">
-				<table 
+				<table
 					class="table table-light table-striped table-bordered text-center">
 					<thead>
 						<tr>
 							<th style="background-color: #e75e8d; color: white;">#</th>							
-							<th class="d-none" style="background-color: #e75e8d; color: white;">Mã suất chiếu</th>							
-							<th style="background-color: #e75e8d; color: white;">Tên rạp</th>
-							<th style="background-color: #e75e8d; color: white;">Tên phòng</th>
-							<th style="background-color: #e75e8d; color: white;">Giờ chiếu</th>
+							<th style="background-color: #e75e8d; color: white;">Mã phim</th>
 							<th style="background-color: #e75e8d; color: white;">Tên phim</th>
-							<th style="background-color: #e75e8d; color: white;">Ngày khởi chiếu</th>
-							<th style="background-color: #e75e8d; color: white;">Ngày kết thúc</th>							
+							<th style="background-color: #e75e8d; color: white;">Mô tả</th>
+							<th style="background-color: #e75e8d; color: white;">Đạo diễn</th>
+							<th style="background-color: #e75e8d; color: white;">Ngày bắt đầu</th>
+							<th style="background-color: #e75e8d; color: white;">Ngày kết thúc</th>
+							<th style="background-color: #e75e8d; color: white;">Thời lượng</th>
+							<th style="background-color: #e75e8d; color: white;">Poster</th>
 							<th style="background-color: #e75e8d; color: white;">Sửa</th>
 							<th style="background-color: #e75e8d; color: white;">Xóa</th>
-						</tr>
+						</tr>						
 					</thead>
 					<tbody>
-						<c:forEach items="${suatchieuList}" var="item" varStatus="status">
-							<tr style="font-size: 15px" class="align-middle">
+
+						<c:forEach items="${phimList}" var="item" varStatus="status">
+							<tr>
 								<td class="text-center">${status.count}</td>
-								<td class="d-none">${item.showtimeId}</td>								
-								<td>${item.room.theater.theaterName}</td>								
-								<td>${item.room.roomName}</td>
-								<td>${item.startTime}</td>
-								<td>${item.movie.movieName}</td>
-								<td>${item.movie.startDate}</td>
-								<td>${item.movie.endDate}</td>
-								
-								<td><a
-									href="${pageContext.request.contextPath}/admin/${item.showtimeId}">
+								<td>${item.movieId}</td>
+								<td>${item.movieName}</td>
+								<td>${item.movieDescription}</td>
+								<td>${item.director}</td>
+								<td>${item.startDate}</td>
+								<td>${item.endDate}</td>
+								<td>${item.duration}</td>
+								<td>${item.posterUrl}</td>
+								<td>
+									<a href="${pageContext.request.contextPath}/admin/${item.movieId}">
 										<button class="btn btn-outline-secondary color-icon">
 											<i class="fa-solid fa-pen-to-square"></i>
 										</button>
@@ -80,20 +82,20 @@
 								<td>
 									<button type="button" class="btn btn-outline-secondary"
 										data-bs-toggle="modal" data-bs-target="#exampleModal"
-										onclick="showModalDelete('${item.showtimeId}')">
+										onclick="showModalDelete('${item.movieId}', '${item.movieName}')">
 										<i class="fa-solid fa-trash"></i>
 									</button>
 								</td>
 							</tr>
 						</c:forEach>
-
 					</tbody>
 				</table>
 			</div>
 		</div>
-		
+
+
 		<!--Pagination-->
-		<c:if test="${suatchieuList.size() !=0}">
+		<c:if test="${phimList.size() !=0}">
 			<div class="pagination-wrap">
 				<ul class="pagination">
 					<li>
@@ -129,7 +131,7 @@
 	</div>
 </div>
 
-	<!--thong bao truoc khi delete -->
+<!--thong bao truoc khi delete -->
 	<input value="${message}" id="message" hidden="true">
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -140,7 +142,7 @@
 					</div>
 					<div class="modal-body container-fluid">
 						Chắn chắc xóa suất chiếu mã <span id="delete_modal"></span> 
-						<input hidden="true" id="sendId" name="showtimeId"><span>?</span>
+						<input hidden="true" id="sendId" name="customerId"><span>?</span>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>

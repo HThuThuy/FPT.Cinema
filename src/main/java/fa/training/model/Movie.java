@@ -31,7 +31,7 @@ import lombok.Setter;
 public class Movie {
 
 	@Id
-	@Column(columnDefinition = "varchar(7)")
+	@Column(columnDefinition = "varchar(255)")
 //	@Pattern(regexp = "^PH[0-9]{5}$", message = "mã phim không đúng định dạng PHxxxxx")
 //	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String movieId;

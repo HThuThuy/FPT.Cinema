@@ -63,4 +63,11 @@ public class Customer {
 
 	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Set<Users> user;
+
+	@Override
+	public String toString() {
+		return "Customer [cccd=" + cccd + ", customerName=" + customerName + ", birthDate=" + birthDate + ", email="
+				+ email + ", phone=" + phone + ", gender=" + gender + ", address=" + address + ", userType=" + userType
+				+ "]";
+	}
 }

@@ -14,8 +14,7 @@
 
 			<div class="col-lg-6 col-md-6">
 				<form:form class="row"
-					action="${pageContext.request.contextPath}/admin/searchPhim"
-					method="get">
+					action="${pageContext.request.contextPath}/admin/search" method="get">
 					
 					<div class="col-lg-1 col-md-1">
 						
@@ -47,35 +46,36 @@
 					<thead>
 						<tr>
 							<th style="background-color: #e75e8d; color: white;">#</th>							
-							<th style="background-color: #e75e8d; color: white;">Mã phim</th>
+							<th class="d-none" style="background-color: #e75e8d; color: white;">Mã phim</th>
 							<th style="background-color: #e75e8d; color: white;">Tên phim</th>
-							<th style="background-color: #e75e8d; color: white;">Mô tả</th>
-							<th style="background-color: #e75e8d; color: white;">Đạo diễn</th>
-							<th style="background-color: #e75e8d; color: white;">Ngày bắt đầu</th>
+							<th class="d-none" style="background-color: #e75e8d; color: white;">Mô tả</th>
+							<th class="d-none" style="background-color: #e75e8d; color: white;">Đạo diễn</th>
+							<th style="background-color: #e75e8d; color: white;">Ngày khởi chiếu</th>
 							<th style="background-color: #e75e8d; color: white;">Ngày kết thúc</th>
-							<th style="background-color: #e75e8d; color: white;">Thời lượng</th>
+							<th class="d-none" style="background-color: #e75e8d; color: white;">Thời lượng</th>
 							<th style="background-color: #e75e8d; color: white;">Poster</th>
-							<th style="background-color: #e75e8d; color: white;">Sửa</th>
+							<th style="background-color: #e75e8d; color: white;">Chi tiết</th>
 							<th style="background-color: #e75e8d; color: white;">Xóa</th>
 						</tr>						
 					</thead>
 					<tbody>
 
 						<c:forEach items="${phimList}" var="item" varStatus="status">
-							<tr>
+							<tr class="align-middle">
 								<td class="text-center">${status.count}</td>
-								<td>${item.movieId}</td>
+								<td class="d-none">${item.movieId}</td>
 								<td>${item.movieName}</td>
-								<td>${item.movieDescription}</td>
-								<td>${item.director}</td>
+								<td class="d-none">${item.movieDescription}</td>
+								<td class="d-none">${item.director}</td>
 								<td>${item.startDate}</td>
 								<td>${item.endDate}</td>
-								<td>${item.duration}</td>
-								<td>${item.posterUrl}</td>
+								<td class="d-none">${item.duration}</td>
+								<td><img src="${item.posterUrl}" class="card-img-center" alt="..."></td>
+								
 								<td>
-									<a href="${pageContext.request.contextPath}/admin/${item.movieId}">
+									<a href="${pageContext.request.contextPath}/admin/movie/${item.movieId}">
 										<button class="btn btn-outline-secondary color-icon">
-											<i class="fa-solid fa-pen-to-square"></i>
+											<i class="fa-regular fa-file-lines"></i>
 										</button>
 									</a>
 								</td>
@@ -84,6 +84,7 @@
 										data-bs-toggle="modal" data-bs-target="#exampleModal"
 										onclick="showModalDelete('${item.movieId}', '${item.movieName}')">
 										<i class="fa-solid fa-trash"></i>
+										
 									</button>
 								</td>
 							</tr>
@@ -101,7 +102,8 @@
 					<li>
 						<c:if test="${currentPage!=1}">
 							<a href="?page=${currentPage - 1}&searchName=${searchName}"><span aria-hidden="true"><i class="fa-solid fa-caret-left"></i></span></a>
-						</c:if> <c:if test="${currentPage==1}">
+						</c:if> 
+						<c:if test="${currentPage==1}">
 							<a ><span aria-hidden="true"><i class="fa-solid fa-caret-left"></i></span></a>
 						</c:if>
 					</li>
@@ -135,14 +137,14 @@
 	<input value="${message}" id="message" hidden="true">
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<form action="${pageContext.request.contextPath}/admin/delete" method="post">
+			<form action="${pageContext.request.contextPath}/admin/deletePhim" method="post">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>						
 					</div>
 					<div class="modal-body container-fluid">
-						Chắn chắc xóa suất chiếu mã <span id="delete_modal"></span> 
-						<input hidden="true" id="sendId" name="customerId"><span>?</span>
+						Chắn chắc xóa phim <span id="delete_modal"></span> 
+						<input hidden="true" id="sendId" name="movieId"><span>?</span>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -188,9 +190,9 @@
 	</script>
 
 	<script>
-		function showModalDelete(a) {
+		function showModalDelete(a, b) {
 			/* alert("Ha ha "+a) */
-			document.getElementById("delete_modal").innerText = a;
+			document.getElementById("delete_modal").innerText = b;
 			document.getElementById("sendId").value = a; 
 		}
 	</script>

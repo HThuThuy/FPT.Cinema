@@ -56,18 +56,35 @@ public class MovieService {
 	
 	//LamNH23
 	public List<Movie> getRecordsForCurrentPage(int start, int recordsPerPage) {
-		List<Movie> list = new ArrayList<>();
-		for(int i = start+1;i<(start+recordsPerPage+1);i++) {
-			list.add(new Movie("Movie "+i, "Tên phim", "Mô tả", "Đạo diễn", LocalDate.of(2023, 9, 14), LocalDate.of(2023, 9, 24), LocalTime.of(02, 30),"Url poster",new HashSet<Showtime>()));
-		}			
+//		List<Movie> list = new ArrayList<>();
+//		for(int i = start+1;i<(start+recordsPerPage+1);i++) {
+//			list.add(new Movie("Movie "+i, "Tên phim", "Mô tả", "Đạo diễn", LocalDate.of(2023, 9, 14), LocalDate.of(2023, 9, 24), LocalTime.of(02, 30),"Url poster",new HashSet<Showtime>()));
+//		}	
+		List<Movie> list = repo.getRecordsForCurrentPage(start, recordsPerPage);
 		return list;
 	}
 	
+	//LamNH23
 	public List<Movie> getAllEnable() {
 		List<Movie> list = repo.getAllEnable(new Date (System.currentTimeMillis() ));		
 		return list;
 	}
 	
+	//LamNh23
+	public List<Movie> searchMovie(String searchName) {
+		return repo.searchMovie ("%" + searchName + "%");		
+	}
 	
-
+	
+	// LamNH23
+	public List<Movie> getRecordsForCurrentPage2(String searchName, int start, int recordsPerPage) {
+		List<Movie> list = repo.getRecordsForCurrentPage2("%" + searchName + "%",start, recordsPerPage);
+		return list;
+	}
+	
+	// LamNH23
+	public void deleteMV(Iterable<String> ids) {
+		
+		repo.deleteAllByIdInBatch(ids);
+	}
 }

@@ -30,17 +30,17 @@ import fa.training.service.UserService;
 @RequestMapping("/")
 public class AccountController {
 
-//	@Autowired
-//	private UserService userService;
-//
-//	@Autowired
-//	private CustomerService customerService;
-//
-//	@Autowired
-//	EmailService emailService;
-//
-//	@Autowired
-//	PasswordEncoder passEncode;
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private CustomerService customerService;
+
+	@Autowired
+	EmailService emailService;
+
+	@Autowired
+	PasswordEncoder passEncode;
 
 //	/**
 //	 * Project: FPT-Cinema Team: 1 Author : TraNLC Function/Class/JSP : thêm tài
@@ -128,36 +128,36 @@ public class AccountController {
 	/**
 	 * Project: FPT-Cinema Team: 1 Author : TraNLC Function/Class/JSP : Đăng ký
 	 */
-//	@PostMapping("/register")
-//	public ResponseEntity<?> registerUser(@RequestBody RegisterDTO registerDTO) {
-//	    // Tạo và lưu Customer
-//	    Customer customer = new Customer();
-//	    customer.setCccd(registerDTO.getCccd());
-//	    customer.setCustomerName(registerDTO.getCustomerName());
-//	    customer.setBirthDate(registerDTO.getBirthDate());
-//	    customer.setEmail(registerDTO.getEmail());
-//	    customer.setPhone(registerDTO.getPhone());
-//	    customer.setGender(registerDTO.getGender());
-//	    customer.setUserType("Thường");
-//
-//	    System.out.println("abc-----------" + registerDTO);
-//	    customerService.save(customer);
-//	    
-//	    // Tạo và lưu User
-//	    Users newUser = new Users();
-//	    newUser.setAccount(registerDTO.getAccount());
-//	    newUser.setPassword(passEncode.encode(registerDTO.getPassword())); // Mã hóa mật khẩu
-//	    newUser.setUserRole("USER");
-//	    newUser.setStatus("active");
-//	    newUser.setCustomer(customer);
-//
-//	    // mã hóa password 
-//	    // check exist hoặc validate
-//	    System.out.println("bcd---------" + newUser);
-//	    userService.save(newUser);
-//	    System.out.println("Đã lưu thành công!");
-//	    return ResponseEntity.ok("User registered successfully");
-//	}
+	@PostMapping("/register")
+	public ResponseEntity<?> registerUser(@RequestBody RegisterDTO registerDTO) {
+	    // Tạo và lưu Customer
+	    Customer customer = new Customer();
+	    customer.setCccd(registerDTO.getCccd());
+	    customer.setCustomerName(registerDTO.getCustomerName());
+	    customer.setBirthDate(registerDTO.getBirthDate());
+	    customer.setEmail(registerDTO.getEmail());
+	    customer.setPhone(registerDTO.getPhone());
+	    customer.setGender(registerDTO.getGender());
+	    customer.setUserType("Thường");
+
+	    System.out.println("abc-----------" + registerDTO);
+	    customerService.save(customer);
+	    
+	    // Tạo và lưu User
+	    Users newUser = new Users();
+	    newUser.setAccount(registerDTO.getAccount());
+	    newUser.setPassword(passEncode.encode(registerDTO.getPassword())); // Mã hóa mật khẩu
+	    newUser.setUserRole("USER");
+	    newUser.setStatus("active");
+	    newUser.setCustomer(customer);
+
+	    // mã hóa password 
+	    // check exist hoặc validate
+	    System.out.println("bcd---------" + newUser);
+	    userService.save(newUser);
+	    System.out.println("Đã lưu thành công!");
+	    return ResponseEntity.ok("User registered successfully");
+	}
 
 	/**
 	 * Project: FPT-Cinema Team: 1 Author : TraNLC Function/Class/JSP : Quên mật

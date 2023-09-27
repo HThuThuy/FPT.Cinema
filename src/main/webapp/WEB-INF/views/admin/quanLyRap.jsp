@@ -28,9 +28,11 @@
                 <thead>
                 	<tr>
 						<th style="background-color: #e75e8d; color: white;">#</th>							
-						<th style="background-color: #e75e8d; color: white;">Mã rạp</th>
+						<th class="d-none" style="background-color: #e75e8d; color: white;">Mã rạp</th>
 						<th style="background-color: #e75e8d; color: white;">Têp rạp</th>
 						<th style="background-color: #e75e8d; color: white;">Thành phố</th>
+						<th style="background-color: #e75e8d; color: white;">Địa chỉ</th>
+						<th style="background-color: #e75e8d; color: white;">Hotline</th>
 						<th style="background-color: #e75e8d; color: white;">Sửa</th>
 						<th style="background-color: #e75e8d; color: white;">Xóa</th>
 					</tr>                  
@@ -38,13 +40,15 @@
                 <tbody>
 
 					<c:forEach items="${rapList}" var="item" varStatus="status">
-						<tr>
+						<tr class="align-middle">
 							<td class="text-center">${status.count}</td>
-							<td>${item.theaterId}</td>
+							<td class="d-none">${item.theaterId}</td>
 							<td>${item.theaterName}</td>
-							<td>${item.city}</td>							
+							<td>${item.city}</td>
+							<td>${item.address}</td>
+							<td>${item.phone}</td>							
 							<td><a
-								href="${pageContext.request.contextPath}/admin/${item.theaterId}">
+								href="${pageContext.request.contextPath}/admin/theater/${item.theaterId}">
 									<button class="btn btn-outline-secondary color-icon">
 										<i class="fa-solid fa-pen-to-square"></i>
 									</button>
@@ -70,14 +74,14 @@
 	<input value="${message}" id="message" hidden="true">
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<form action="${pageContext.request.contextPath}/admin/delete" method="post">
+			<form action="${pageContext.request.contextPath}/admin/deleteRap" method="post">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>						
 					</div>
 					<div class="modal-body container-fluid">
-						Chắn chắc xóa suất chiếu mã <span id="delete_modal"></span> 
-						<input hidden="true" id="sendId" name="customerId"><span>?</span>
+						Chắn chắc xóa rạp <span id="delete_modal"></span> 
+						<input hidden="true" id="sendId" name="theaterId"><span>?</span>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -123,9 +127,9 @@
 	</script>
 
 	<script>
-		function showModalDelete(a) {
+		function showModalDelete(a,b) {
 			/* alert("Ha ha "+a) */
-			document.getElementById("delete_modal").innerText = a;
+			document.getElementById("delete_modal").innerText = b;
 			document.getElementById("sendId").value = a; 
 		}
 	</script>

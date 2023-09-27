@@ -10,13 +10,18 @@
    
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
    <link href="<c:url value="/resources/css/templatemo-style.css" />" rel="stylesheet">
-   
-  
-   
-  
-  
 
- 
+<style>
+	img {
+		height: 100px;
+		width: 100px;
+		border-radius: 5%; 
+	}
+</style>
 
 
-   
+
+
+
+
+

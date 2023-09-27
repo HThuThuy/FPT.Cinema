@@ -34,7 +34,7 @@ public class Theater {
 //	@Column(columnDefinition = "varchar(7)")
 //	@Pattern(regexp = "^PC[0-9]{5}$", message = "mã phòng chiếu không đúng định dạng PCxxxxx")
 //	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
-	@Column(columnDefinition = "Varchar(10)")
+	@Column(columnDefinition = "Varchar(255)")
 	String theaterId;
 
 	@Column(columnDefinition = "Nvarchar(30)")
@@ -44,6 +44,12 @@ public class Theater {
 	@Column(columnDefinition = "Nvarchar(30)")
 //	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String city;
+	
+	@Column(columnDefinition = "Nvarchar(255)")
+	String address;
+	
+	@Column(columnDefinition = "Varchar(11)")
+	String phone;
 
 	@JsonBackReference
 	@OneToMany(mappedBy = "theater",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
