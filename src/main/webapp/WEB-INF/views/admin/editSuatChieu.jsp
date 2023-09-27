@@ -36,7 +36,7 @@
 						<form:select path="movieId" class="form-control">
 							<option value="">Mời chọn phim</option>
 							<c:forEach items="${movies}" var="item">
-								<option value="${item.movieId}" ${item.movieId == record.movieId ? 'selected' : ''}>${item.movieName}</option>
+								<option value="${item.movieId}" ${item.movieId == selectedMovie ? 'selected' : ''}>${item.movieName}</option>
 							</c:forEach>
 						</form:select>
 						<form:errors path="movieId" cssClass="text-danger" />

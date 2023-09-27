@@ -80,7 +80,7 @@
 								<td>
 									<button type="button" class="btn btn-outline-secondary"
 										data-bs-toggle="modal" data-bs-target="#exampleModal"
-										onclick="showModalDelete('${item.showtimeId}')">
+										onclick="showModalDelete('${item.showtimeId}','${item.movie.movieName}')">
 										<i class="fa-solid fa-trash"></i>
 									</button>
 								</td>
@@ -139,7 +139,7 @@
 						<h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>						
 					</div>
 					<div class="modal-body container-fluid">
-						Chắn chắc xóa suất chiếu mã <span id="delete_modal"></span> 
+						Chắn chắc xóa suất chiếu của phim <span id="delete_modal"></span> 
 						<input hidden="true" id="sendId" name="showtimeId"><span>?</span>
 					</div>
 					<div class="modal-footer">
@@ -186,9 +186,9 @@
 	</script>
 
 	<script>
-		function showModalDelete(a) {
+		function showModalDelete(a,b) {
 			/* alert("Ha ha "+a) */
-			document.getElementById("delete_modal").innerText = a;
+			document.getElementById("delete_modal").innerText = b;
 			document.getElementById("sendId").value = a; 
 		}
 	</script>

@@ -93,35 +93,23 @@
 			value="/WEB-INF/views/admin/quanlydichvu.jsp" />
 	</definition>  
 
-
-	<!-- admin definition -->
-	<definition name="account.definition"
-		template="/WEB-INF/views/layoutAccount.jsp">
-		<put-attribute name="head2"
-			value="/WEB-INF/views/layout2/head2.jsp" />
-		<put-attribute name="menu2"
-			value="/WEB-INF/views/layout2/menuAccount.jsp" />
-		<put-attribute name="footer2"
-			value="/WEB-INF/views/layout2/footer2.jsp" />
-		<put-attribute name="body2" value="" />
+	<!-- customer definition -->
+	<definition name="customer.definition"
+		template="/WEB-INF/views/layout3.jsp">
+		<put-attribute name="head3"
+			value="/WEB-INF/views/layout3/head3.jsp" />
+		<put-attribute name="menu3"
+			value="/WEB-INF/views/layout3/menu3.jsp" />
+		<put-attribute name="footer3"
+			value="/WEB-INF/views/layout3/footer3.jsp" />
+		<put-attribute name="body3" value="" />
 	</definition>
 
 
-	<definition name="account/*" extends="account.definition">
+	<definition name="customer/history" extends="customer.definition">
 		<put-attribute name="body3"
-			value="/WEB-INF/views/{1}/{2}.jsp" />
-	</definition>
-	
-	<definition name="account/history" extends="account.definition">
-		<put-attribute name="body3"
-			value="/WEB-INF/views/account/history.jsp" />
-	</definition>
-	
-	<definition name="account/info" extends="account.definition">
-		<put-attribute name="body3"
-			value="/WEB-INF/views/account/info.jsp" />
+			value="/WEB-INF/views/customer/history.jsp" />
 	</definition> 
-	
 	<!-- <definition name="errorPage" template="/WEB-INF/views/errorPage.jsp"> 
 		<put-attribute name="content" value="" /> </definition> <definition name="error/*" 
 		extends="errorPage"> <put-attribute name="content" value="/WEB-INF/views/error/{1}.jsp" 

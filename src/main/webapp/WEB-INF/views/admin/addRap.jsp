@@ -28,9 +28,10 @@
 					<div class="col-lg-12 col-md-12 form-group">
 						<label class="control-label templatemo-block"> Chọn thành phố</label> 
 						<form:select path="city" id="startTime"  class="form-control">
-							<option value="Hà Nội">Hà Nội</option>
-							<option value="Đà Nẵng">Đà Nẵng</option>
-							<option value="Hồ Chí Minh">Hồ Chí Minh</option>
+							<option value="" >Mời chọn thành phố</option>
+							<option value="Hà Nội" ${selectedCity == 'Hà Nội' ? 'selected' : ''}>Hà Nội</option>
+							<option value="Đà Nẵng" ${selectedCity == 'Đà Nẵng' ? 'selected' : ''}>Đà Nẵng</option>
+							<option value="Hồ Chí Minh" ${selectedCity == 'Hồ Chí Minh' ? 'selected' : ''}>Hồ Chí Minh</option>
 						</form:select>
 						<form:errors path="city" cssClass="text-danger" />
 					</div>
