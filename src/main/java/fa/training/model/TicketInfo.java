@@ -46,4 +46,6 @@ public class TicketInfo {
 	@ManyToOne
 	@JoinColumn(name = "orderId")
 	Order order;
+	
+	String QRCode;
 }

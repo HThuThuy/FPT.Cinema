@@ -1,7 +1,5 @@
 package fa.training.DTO;
 
-import fa.training.model.Room;
-import fa.training.model.SeatId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

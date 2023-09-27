@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import fa.training.DTO.CustomerDTO;
 import fa.training.model.Customer;
 import fa.training.repository.CustomerRepository;
 
@@ -46,5 +47,9 @@ public class CustomerService {
 	public void deleteById(String cccd) {
 		repo.deleteById(cccd);
 	}
-
+	
+	public List<CustomerDTO> getRecordsForCurrentPage(String cccd) {
+		List<CustomerDTO> list = repo.getRecordsForCurrentPage(cccd);
+		return list;
+	}
 }

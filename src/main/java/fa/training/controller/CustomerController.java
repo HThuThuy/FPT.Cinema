@@ -1,27 +1,16 @@
 package fa.training.controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import fa.training.model.Customer;
-import fa.training.model.Movie;
-import fa.training.page.PageAble;
+import fa.training.DTO.CustomerDTO;
 import fa.training.service.CustomerService;
 import fa.training.service.MovieService;
 import fa.training.service.OrderService;
@@ -37,7 +26,7 @@ public class CustomerController {
 
 	@Autowired
 	CustomerService customerService;
-
+	
 	@Autowired
 	OrderService orderService;
 
@@ -50,6 +39,30 @@ public class CustomerController {
 	@Autowired
 	PromotionService promotionService;
 	
+	@GetMapping(value = { "/history" })
+	public String checkHistory(Model model) {
+		
+
+		String cccd = "111122223333";
+	    List<CustomerDTO> list = customerService.getRecordsForCurrentPage(cccd);
+	    model.addAttribute("historyList", list);
+	    
+	    // Lấy thông tin từ list CustomerDTO
+	    for (CustomerDTO customerDTO : list) {
+	        LocalDate orderDate = customerDTO.getOrderDate();
+	        int orderId = customerDTO.getOrderId();
+	        int ticketId = customerDTO.getTicketId();
+	        String theaterName = customerDTO.getTheaterName();
+	        String movieName = customerDTO.getMovieName();
+	        int totalPrice = customerDTO.getTotalPrice();
+	        String QRCode = customerDTO.getQRCode();
+	        
+	        System.out.println(customerDTO);
+	        
+	    }
+	    
+	    return "customer/history";
+	}
 //	@GetMapping(value = { "/quanLyPhim" })
 //	public String admin(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
 //		

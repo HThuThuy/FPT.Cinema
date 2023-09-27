@@ -6,96 +6,66 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="templatemo-content col-1 black-bg">
-
 	<div class="templatemo-content-container">
-		<h3 style="font-size: 35px; margin: 10px 10px 30px 5px;">QUẢN LÝ THÔNG TIN CÁ NHÂN</h3>
-		<div class="row"
+		<h3 style="font-size: 35px; margin: 10px 10px 30px 5px;">LỊCH SỬ GIAO DỊCH</h3>
+		<div class="row ml-1"
 			style="display: flex; justify-content: center; align-items: center;">
 
-			<div class="col-lg-6 col-md-6">
-				<form:form class="row"
-					action="${pageContext.request.contextPath}/user/accountHistory"
-					method="get">
-					
-					<div class="col-lg-1 col-md-1">
-						
-					</div>
-
-					<div class="col-lg-6 col-md-6">
-						<input type="hidden" name="page" value="${1}" /> <input
-							id="nameCustomer" type="text" name="searchName"
-							class="form-control ml-1" value="${searchName}"
-							placeholder="Nhập tên phim">
-					</div>
-
-					<div class="col-lg-3 col-md-3">
-						<button type="submit" class="btn">Search</button>
-					</div>
-
-				</form:form>
-			</div>			
-			
-			<div class="col-lg-3 col-md-6"></div>
-			<div class="col-lg-3 col-md-6">
-				<a class="btn " href="${pageContext.request.contextPath}/admin/addPhim">Thêm phim mới</a>
+			<div class="col-lg-3 col-md-3 mb-3">
+			    <label for="startDate">
+			        <h3 style="display: flex; justify-content: center; align-items: center; font-size: 20px; margin: 10px 10px 10px 5px;">Từ</h3>
+			        <input type="date" id="startDate" name="startDate">
+			    </label>
 			</div>
+			
+			<div class="col-lg-3 col-md-3 mb-3">
+			    <label for="endDate">
+			        <h3 style="font-size: 20px; margin: 10px 10px 10px 5px;">Đến</h3>
+			        <input type="date" id="endDate" name="endDate">
+			    </label>
+			</div>
+
+
+
+			<div class="col-lg-3 col-md-6"></div>
 		</div>
 		<div class="templatemo-content-widget no-padding">
 			<div class="panel panel-default table-responsive">
-				<table
+				<table 
 					class="table table-light table-striped table-bordered text-center">
 					<thead>
 						<tr>
 							<th style="background-color: #e75e8d; color: white;">#</th>							
-							<th style="background-color: #e75e8d; color: white;">Mã phim</th>
+							<th style="background-color: #e75e8d; color: white;">Ngày</th>							
+							<th style="background-color: #e75e8d; color: white;">Số giao dịch</th>
+							<th style="background-color: #e75e8d; color: white;">Mã Vé</th>
+							<th style="background-color: #e75e8d; color: white;">Rạp</th>
 							<th style="background-color: #e75e8d; color: white;">Tên phim</th>
-							<th style="background-color: #e75e8d; color: white;">Mô tả</th>
-							<th style="background-color: #e75e8d; color: white;">Đạo diễn</th>
-							<th style="background-color: #e75e8d; color: white;">Ngày bắt đầu</th>
-							<th style="background-color: #e75e8d; color: white;">Ngày kết thúc</th>
-							<th style="background-color: #e75e8d; color: white;">Thời lượng</th>
-							<th style="background-color: #e75e8d; color: white;">Poster</th>
-							<th style="background-color: #e75e8d; color: white;">Sửa</th>
-							<th style="background-color: #e75e8d; color: white;">Xóa</th>
-						</tr>						
+							<th style="background-color: #e75e8d; color: white;">Giá trị</th>
+							<th style="background-color: #e75e8d; color: white;">QR code</th>							
+						</tr>
 					</thead>
 					<tbody>
-
-						<c:forEach items="${phimList}" var="item" varStatus="status">
-							<tr>
+						<c:forEach items="${historyList}" var="item" varStatus="status">
+							<tr style="font-size: 15px" class="align-middle">
 								<td class="text-center">${status.count}</td>
-								<td>${item.movieId}</td>
+								<td>${item.orderDate}</td>								
+								<td>${item.orderId}</td>								
+								<td>${item.ticketId}</td>
+								<td>${item.theaterName}</td>
 								<td>${item.movieName}</td>
-								<td>${item.movieDescription}</td>
-								<td>${item.director}</td>
-								<td>${item.startDate}</td>
-								<td>${item.endDate}</td>
-								<td>${item.duration}</td>
-								<td>${item.posterUrl}</td>
-								<td>
-									<a href="${pageContext.request.contextPath}/admin/${item.movieId}">
-										<button class="btn btn-outline-secondary color-icon">
-											<i class="fa-solid fa-pen-to-square"></i>
-										</button>
-									</a>
-								</td>
-								<td>
-									<button type="button" class="btn btn-outline-secondary"
-										data-bs-toggle="modal" data-bs-target="#exampleModal"
-										onclick="showModalDelete('${item.movieId}', '${item.movieName}')">
-										<i class="fa-solid fa-trash"></i>
-									</button>
-								</td>
+								<td>${item.totalPrice}</td>
+								<td>${item.QRCode}</td>
 							</tr>
 						</c:forEach>
+
 					</tbody>
 				</table>
 			</div>
 		</div>
-
-
+		
 		<!--Pagination-->
-		<c:if test="${phimList.size() !=0}">
+		<c:if test="${suatchieuList.size() !=0}">
 			<div class="pagination-wrap">
 				<ul class="pagination">
 					<li>
@@ -131,66 +101,3 @@
 	</div>
 </div>
 
-<!--thong bao truoc khi delete -->
-	<input value="${message}" id="message" hidden="true">
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<form action="${pageContext.request.contextPath}/admin/delete" method="post">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>						
-					</div>
-					<div class="modal-body container-fluid">
-						Chắn chắc xóa suất chiếu mã <span id="delete_modal"></span> 
-						<input hidden="true" id="sendId" name="customerId"><span>?</span>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-						<button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xóa</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-
-	<!--thong bao sau khi delete -->
-	<div class="modal fade" id="modalAlert" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div>
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Alert</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body container-fluid">
-						<p id="modalAlertMes"></p>
-
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary"
-							data-bs-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<script>
-		window.onload = function() {
-			if ($('#message').val() != null && $('#message').val() != "") {
-				$("#modalAlertMes").html($('#message').val());
-				$(document).ready(function() {
-					$('#modalAlert').modal("show")
-				})
-			}
-		}
-	</script>
-
-	<script>
-		function showModalDelete(a) {
-			/* alert("Ha ha "+a) */
-			document.getElementById("delete_modal").innerText = a;
-			document.getElementById("sendId").value = a; 
-		}
-	</script>
