@@ -1,5 +1,6 @@
 package fa.training.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,8 @@ public class CustomerService {
 		repo.deleteById(cccd);
 	}
 	
-	public List<CustomerDTO> getRecordsForCurrentPage(String cccd) {
-		List<CustomerDTO> list = repo.getRecordsForCurrentPage(cccd);
-		return list;
+	public Page<CustomerDTO> getRecordsForCurrentPage(String cccd, LocalDate startDate, LocalDate endDate, Pageable pageable) {
+	    return repo.getRecordsForCurrentPage(cccd, startDate, endDate, pageable);
 	}
+
 }

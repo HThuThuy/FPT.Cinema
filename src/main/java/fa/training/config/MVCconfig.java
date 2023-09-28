@@ -154,7 +154,7 @@ public class MVCconfig implements WebMvcConfigurer {
 
 		Properties properties = new Properties();
 		// Environment.SHOW_SQL;
-		properties.setProperty("hibernate.show_sql", "true");
+		properties.setProperty("hibernate.show_sql", "false");
 		obj.setJpaProperties(properties);
 
 		return obj;

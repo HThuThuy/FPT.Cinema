@@ -272,8 +272,6 @@ input#discountCode {
 																	<td style="text-align: left;"><b>${sr.serviceName}</b>
 																		<br> ${sr.serviceDescription}</td>
 																	<td>
-																	
-																	
 																		<button type="button" class="minus">
 																			<i class="fas fa-minus-circle fa-lg"
 																				style="color: #ffffff;"></i>
@@ -290,6 +288,7 @@ input#discountCode {
 																			<span id="price">0</span>
 																		</div>
 																	</td>
+																	<input type="hidden" class="serviceId" value="${sr.serviceId}">
 																</tr>
 															</c:forEach>
 														</tbody>
@@ -539,7 +538,40 @@ document.querySelectorAll('.layout__seat').forEach((divElement) => {
 	  });
 	});
 	
-//lấy service
+//Lấy serviceId khi dấu + chỗ combo được click
+var plusButtons = $('.plus');
+plusButtons.on('click', function() {
+    var quantityInput = $(this).prev();
+    var quantityValue = parseInt(quantityInput.val());
+
+    if (quantityValue >= 0) {
+        // Lấy serviceId từ input ẩn của mục tương ứng
+        var serviceId = $(this).closest('tr').find('.serviceId').val();
+        // Thêm serviceId vào mảng service của paymentInfo
+        paymentInfo.service.push(serviceId);
+        console.log(paymentInfo.service);
+    }
+});
+
+//Thêm code xử lý cho nút -
+var minusButtons = $('.minus');
+minusButtons.on('click', function() {
+    var quantityInput = $(this).next();
+    var quantityValue = parseInt(quantityInput.val());
+
+    if (quantityValue < 1) {
+        // Lấy serviceId từ input ẩn của mục tương ứng
+        var serviceId = $(this).closest('tr').find('.serviceId').val();
+        // Bỏ serviceId ra khỏi mảng service của paymentInfo
+        paymentInfo.service = paymentInfo.service.filter(id => id !== serviceId);
+        console.log(paymentInfo.service);
+    }
+});
+
+
+
+
+
 
 let totalPrices = 100000; 
 document.getElementById('datVeButton').addEventListener('click', () => {
@@ -564,226 +596,3 @@ document.getElementById('datVeButton').addEventListener('click', () => {
   
 </script>
 
-
-
-
-
-<!-- <script>
-		// giảm giá
-		document.getElementById('applyDiscount').addEventListener('click', function() {
-    var discountCode = document.getElementById('discountCode').value;
-
-    // Kiểm tra mã giảm giá có hợp lệ hay không
-    if (discountCode === 'MAGIAMGIA123') {
-        // Nếu mã hợp lệ, giảm giá và cập nhật tổng tiền
-        var totalElement = document.getElementById('total');
-        var totalPrice = parseFloat(totalElement.textContent);
-        var discountAmount = 15; // Số tiền giảm giá (đây là ví dụ, bạn có thể thay đổi)
-
-        var newTotalPrice = totalPrice -  (totalPrice*(discountAmount/100));
-        totalElement.textContent = newTotalPrice;
-
-        alert('Mã giảm giá đã được áp dụng!');
-    } else {
-        alert('Mã giảm giá không hợp lệ. Vui lòng kiểm tra lại!');
-    }
-});
-		
-
-
-	// Phần chọn và tính tiền ghế 
-
-    // Lấy tất cả các phần tử ghế trong danh sách
-    const seats = document.querySelectorAll('.layout__seat');
-
-    // Khởi tạo các biến để lưu trữ thông tin ghế đã chọn
-    let selectedSeats = [];
-    let totalPrice = 0;
-    
-    // Lặp qua từng phần tử ghế và gắn sự kiện click
-    seats.forEach((seat) => {
-      seat.addEventListener('click', () => {
-        seat.classList.toggle('layout__seat--selected');
-        // Kiểm tra xem ghế đã được chọn hay chưa
-        if (!selectedSeats.includes(seat)) {
-          // Thêm ghế vào danh sách đã chọn
-          selectedSeats.push(seat);
-          // Tăng tổng số tiền
-          totalPrice += calculateSeatPrice(seat); // Hãy sửa hàm tính giá ghế tương ứng với logic của bạn
-          // Thêm class hoặc hiệu ứng để đánh dấu ghế đã chọn
-          seat.classList.add('selected');
-        } else {
-          // Xóa ghế khỏi danh sách đã chọn
-          selectedSeats = selectedSeats.filter((selectedSeat) => selectedSeat !== seat);
-          // Giảm tổng số tiền
-          totalPrice -= calculateSeatPrice(seat); // Hãy sửa hàm tính giá ghế tương ứng với logic của bạn
-          // Xóa class hoặc hiệu ứng đánh dấu ghế đã chọn
-          seat.classList.remove('selected');
-        }
-
-        // Cập nhật thông tin ghế đã chọn, tổng số ghế và tổng số tiền trên giao diện
-        updateSelectedSeatsInfo();
-        updateTotalPrice();
-      });
-    });
-
-    // Hàm tính giá ghế tương ứng
-    function calculateSeatPrice(seat) {
-      // Lấy giá ghế dựa trên vị trí của ghế
-      // Ví dụ: ghế ở giữa có giá 90000, còn lại có giá 80000
-      const isMiddleSeat = seat.classList.contains('middle-seat');
-      const price = isMiddleSeat ? 90000 : 80000;
-      return price;
-    }
-
-    // Hàm cập nhật thông tin ghế đã chọn trên giao diện
-    function updateSelectedSeatsInfo() {
-    const selectedSeatsElement = document.getElementById('selectedSeats');
-    const selectedSeatsFormElement = document.getElementById('selectedSeatsForm');
-    const selectedSeatsText = selectedSeats.map((seat) => seat.querySelector('.layout__seat__name').textContent).join(', ');
-
-    selectedSeatsElement.textContent = selectedSeatsText;
-    selectedSeatsFormElement.textContent = 'Ghế đã chọn: ' + selectedSeatsText;
-    
-    // Cập nhật tổng số ghế đã chọn
-    const totalSelectedSeatsElement = document.getElementById('totalSelectedSeats');
-    totalSelectedSeatsElement.textContent = selectedSeats.length;
-}
-
-
-    // Hàm cập nhật tổng số tiền trên giao diện
-    function updateTotalPrice() {
-      const totalPriceElement = document.getElementById('totalPrice');
-      totalPriceElement.textContent = totalPrice.toFixed(2); // Hiển thị tổng số tiền với hai chữ số thập phân
-    }
-
-// Hàm định dạng số thành dạng "80.000"
-function formatNumber(number) {
-  // Sử dụng hàm toLocaleString() để định dạng số và chuyển đổi thành chuỗi
-  const formattedNumber = number.toLocaleString('vi-VN');
-  return formattedNumber;
-}
-
-// Hàm cập nhật tổng số tiền trên giao diện
-function updateTotalPrice() {
-  const totalPriceElement = document.getElementById('totalPrice');
-  totalPriceElement.textContent = formatNumber(totalPrice) + ' VND';
-}
-
-
-//Code Trà viết
-
- document.addEventListener("DOMContentLoaded", function () {
-	  var comboQuantities = document.querySelectorAll('.combo-quantity');
-
-	  comboQuantities.forEach(function (input) {
-	    input.addEventListener('input', function () {
-	      updateTotalPrice(input);
-	      updatePaymentInfo(); 
-
-	    });
-	  });
-
-	  var minusButtons = document.querySelectorAll('.minus');
-	  var plusButtons = document.querySelectorAll('.plus');
-
-	  minusButtons.forEach(function (button) {
-	    button.addEventListener('click', function () {
-	      var input = button.nextElementSibling;
-	      var value = parseInt(input.value);
-	      if (value > 0) {
-	        input.value = value - 1;
-	        updateTotalPrice(input);
-	        updatePaymentInfo(); 
-
-	      }
-	    });
-	  });
-
-	  plusButtons.forEach(function (button) {
-	    button.addEventListener('click', function () {
-	      var input = button.previousElementSibling;
-	      var value = parseInt(input.value);
-	      input.value = value + 1;
-	      updateTotalPrice(input);
-	      updatePaymentInfo(); 
-
-	    });
-	  });
-
-	  function updateTotalPrice(input) {
-		  var quantity = parseInt(input.value);
-		  var priceElement = input.parentElement.nextElementSibling;
-		  var price = parseInt(priceElement.textContent.replace(',', ''));
-		  var total = quantity * price;
-		  var totalPriceElement = input.parentElement.nextElementSibling.nextElementSibling;
-		  totalPriceElement.textContent = total;
-		}
-
-	  function updatePaymentInfo() {
-		    var combos = document.querySelectorAll('.combo-quantity');
-		    var comboDetails = [];  // Mảng chứa thông tin combo (tên và số lượng)
-		    var totalAmount = 0;
-		    var totalElement = document.getElementById('total');
-		 /*    var totalSeatPrice = document.getElementById('totalPrice');
-		    var totalPriceValue = parseFloat(totalSeatPrice.innerHTML); */
-		    /* var totalSeatPrice = totalPriceElement; */
-
-		    combos.forEach(function(combo) {
-		        var quantity = parseInt(combo.value);
-		        if (quantity > 0) {	
-		        	var comboNameElement = combo.parentElement.parentElement.querySelector('td:nth-child(1)');
-		        	var comboNameText = comboNameElement.textContent.trim();
-
-
-		            var comboPrice = parseInt(combo.parentElement.nextElementSibling.textContent.replace(',', ''));
-		            var totalComboPrice = quantity * comboPrice;
-					
-					
-		            comboDetails.push({name: comboNameText, quantity: quantity});  // Thêm thông tin combo vào mảng
-		            totalAmount += totalComboPrice + totalPrice;
-		        }
-		    });
-
-		    const totalElement = document.getElementById('total');
-		    /* var comboElement = document.getElementById('combo'); */
-
-		    // Hiển thị tên combo và số lượng
-		    comboElement.innerHTML = comboDetails.map(function(combo) {
-		        return combo.name + ' (' + combo.quantity + ')';
-		    }).join(', ');  // Các combo cách nhau bởi dấu phẩy
-		 
-		    totalElement.textContent = formatNumber(totalAmount) + ' VND' ;  // Format tổng tiền
-		}
-
-		}); 
-
-
-//Phần thanh toán
-  let paymentInfo = {
-  ticketId: 0,
-  status: '',
-  showtimeTicket: '',
-  customer: '',
-  order:''
-};
-  let totalPrices = totalAmount;
-document.getElementById('datVeButton').addEventListener('click', () => {
-	let currentDate = new Date();
-	let localDate = currentDate.toLocaleDateString();
-	let localTime = currentDate.toLocaleTimeString();
-
-	paymentInfo.ticketId = 1;
-	paymentInfo.status = 'Booked';
-	paymentInfo.showtimeTicket = '1';
-	paymentInfo.customer = '111111111111';
-	paymentInfo.order = '1';
-    console.log(paymentInfo);
-    var jsonString = JSON.stringify(paymentInfo);
-    console.log(jsonString);
-	var url = 'http://localhost:6001/FPT-Cinema/payment/create?param1=' + encodeURIComponent(totalPrices) + '&param2=' + encodeURIComponent(jsonString);
-	console.log(url)
-	  // Redirect đến URL
-	window.location.href = url;
-    });
-  </script> -->

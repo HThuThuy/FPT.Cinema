@@ -49,6 +49,11 @@ public class LoginController {
             String customerName = customerService.getCustomerName(account.getCustomer().getCccd());
             Customer custerLogin = customerService.findById(account.getCustomer().getCccd());
             
+            // Lấy cccd trong session
+            String getCccd = account.getCustomer().getCccd();
+            session.setAttribute("getCccd", getCccd);
+            System.out.println("cccd"+getCccd);
+            
             System.out.println("custerLogin"+custerLogin);
             
             session.setAttribute("custerLogin", custerLogin);

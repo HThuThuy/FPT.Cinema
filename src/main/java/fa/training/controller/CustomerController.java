@@ -1,9 +1,13 @@
 package fa.training.controller;
 
 import java.time.LocalDate;
-import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fa.training.DTO.CustomerDTO;
+import fa.training.model.Customer;
 import fa.training.service.CustomerService;
 import fa.training.service.MovieService;
 import fa.training.service.OrderService;
@@ -26,7 +31,7 @@ public class CustomerController {
 
 	@Autowired
 	CustomerService customerService;
-	
+
 	@Autowired
 	OrderService orderService;
 
@@ -38,31 +43,68 @@ public class CustomerController {
 
 	@Autowired
 	PromotionService promotionService;
+
 	
 	@GetMapping(value = { "/history" })
-	public String checkHistory(Model model) {
-		
+	public String checkHistory(Model model,  
+	                           @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+	                           @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate, 
+	                           @RequestParam(name = "page", defaultValue = "1") int page,
+	                           HttpSession session) {
 
-		String cccd = "111122223333";
-	    List<CustomerDTO> list = customerService.getRecordsForCurrentPage(cccd);
-	    model.addAttribute("historyList", list);
-	    
-	    // Lấy thông tin từ list CustomerDTO
-	    for (CustomerDTO customerDTO : list) {
-	        LocalDate orderDate = customerDTO.getOrderDate();
-	        int orderId = customerDTO.getOrderId();
-	        int ticketId = customerDTO.getTicketId();
-	        String theaterName = customerDTO.getTheaterName();
-	        String movieName = customerDTO.getMovieName();
-	        int totalPrice = customerDTO.getTotalPrice();
-	        String QRCode = customerDTO.getQRCode();
-	        
-	        System.out.println(customerDTO);
-	        
-	    }
-	    
+	    Customer customer = (Customer) session.getAttribute("custerLogin");
+	    String cccd = customer.getCccd();
+
+	    Page<CustomerDTO> customerDTOPage = customerService.getRecordsForCurrentPage(cccd, startDate, endDate, PageRequest.of(page - 1, 5));
+
+	    model.addAttribute("historyList", customerDTOPage.getContent());
+	    model.addAttribute("noOfPages", customerDTOPage.getTotalPages());
+	    model.addAttribute("currentPage", page);
+
 	    return "customer/history";
 	}
+
+	
+//	@GetMapping(value = { "/history" })
+//	public String checkHistory(Model model,  
+//	                           @RequestParam(value = "startDate", required = false) String startDate,
+//	                           @RequestParam(value = "endDate", required = false) String endDate, 
+//	                           @RequestParam(name = "page", defaultValue = "0") int page,
+//	                           HttpSession session) {
+//
+//		int noOfRecords =showtimeService.getAll().size();
+//		int recordsPerPage = 5;
+//		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+//		if (page < 1) {
+//			page = 1;
+//		} else if (page > noOfRecords) {
+//			page = noOfRecords;
+//		}
+//		int start = page > 0 ? page - 1 : 0;
+//		
+//	    LocalDate startDate1 = null;
+//	    LocalDate endDate1 = null;
+//	    
+//	    if (startDate != null && endDate != null) {
+//	    	startDate1 = LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE);
+//	        endDate1 = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE);
+//	    }
+//	    
+//	    Customer customer = (Customer) session.getAttribute("custerLogin");
+//	    String cccd = customer.getCccd();
+//	    System.out.println("cccc" + cccd);
+//	    
+//	    System.out.println("ngày bắt đầu"+startDate);
+//	    System.out.println("ngày kết thúc"+endDate);
+//	    
+//	    List<CustomerDTO> list = customerService.getRecordsForCurrentPage(cccd, startDate1, endDate1, (start) * recordsPerPage, recordsPerPage);
+//	    model.addAttribute("noOfPages", noOfPages);
+//		model.addAttribute("currentPage", page);
+//	    model.addAttribute("historyList", list);
+//
+//	    return "customer/history";
+//	}
+
 //	@GetMapping(value = { "/quanLyPhim" })
 //	public String admin(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
 //		
@@ -148,7 +190,6 @@ public class CustomerController {
 //		return "/phim/trangchusearch";
 //	}
 
-	
 //	@GetMapping("/phimview/{id}")
 //	public String viewDangKy(@PathVariable String id, Model model) {
 //		Phim phim1 = phimService.findById(id);
@@ -216,11 +257,11 @@ public class CustomerController {
 //		return "/phim/phimview";
 //	}
 
-	/**
-	 * Project: Cinema WebApp Team: 2 Author : ViTM jsp : từ jsp home dẫn về đây
-	 * đeer lấy Id khách hàng và dẫn đến /khachhang/update để xử lý việt hiển thị
-	 * thông tin update
-	 */
+/**
+ * Project: Cinema WebApp Team: 2 Author : ViTM jsp : từ jsp home dẫn về đây
+ * đeer lấy Id khách hàng và dẫn đến /khachhang/update để xử lý việt hiển thị
+ * thông tin update
+ */
 
 //	@RequestMapping("/info")
 //	public String update(Model model, HttpServletRequest request) {
