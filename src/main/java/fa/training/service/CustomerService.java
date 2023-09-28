@@ -1,5 +1,6 @@
 package fa.training.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import fa.training.DTO.CustomerDTO;
 import fa.training.model.Customer;
 import fa.training.repository.CustomerRepository;
 
@@ -45,6 +47,10 @@ public class CustomerService {
 
 	public void deleteById(String cccd) {
 		repo.deleteById(cccd);
+	}
+	
+	public Page<CustomerDTO> getRecordsForCurrentPage(String cccd, LocalDate startDate, LocalDate endDate, Pageable pageable) {
+	    return repo.getRecordsForCurrentPage(cccd, startDate, endDate, pageable);
 	}
 
 }

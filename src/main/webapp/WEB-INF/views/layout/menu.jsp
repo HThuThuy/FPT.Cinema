@@ -42,7 +42,7 @@
 					<!-- ***** Menu Start ***** -->
 					<ul class="nav d-flex justify-content-center">
 						<li><a href="index.html" class="active">MUA VÉ</a></li>
-						<li><a href="browse.html">PHIM</a></li>
+						<li><a href="${pageContext.request.contextPath}/customer/history">PHIM</a></li>
 						<li><a href="booking.html">RẠP/GIÁ VÉ</a></li>
 						<li><a href="streams.html">KHUYẾN MÃI</a></li>
 						<c:choose>

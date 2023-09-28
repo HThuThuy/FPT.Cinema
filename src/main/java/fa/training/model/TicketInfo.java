@@ -46,4 +46,15 @@ public class TicketInfo {
 	@ManyToOne
 	@JoinColumn(name = "orderId")
 	Order order;
+
+	String QRCode;
+	
+	
+	@Override
+	public String toString() {
+		return "TicketInfo [ticketId=" + ticketId + ", status=" + status + ", showtimeTicket=" + showtimeTicket.getShowtimeId()
+				+ ", customer=" + customer.getCccd() + ", order=" + order.getOrderId() + "]";
+	}
+	
+	String QRCode;
 }

@@ -1,17 +1,10 @@
 package fa.training.DTO;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import fa.training.model.Room;
-import fa.training.model.SeatId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

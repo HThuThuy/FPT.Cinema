@@ -1,7 +1,5 @@
 package fa.training.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,13 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.Length;
-
+import fa.training.service.OrderService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -55,13 +48,13 @@ public class Services {
 	@Column(columnDefinition = "text")
 	String url;
 
-	@OneToMany(mappedBy = "services", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	Set<Order> order;
+	@OneToMany(mappedBy = "services")
+	Set<OrderServied> orderService;
 
 	@Override
 	public String toString() {
 		return "Services [serviceId=" + serviceId + ", serviceName=" + serviceName + ", serviceDescription="
-				+ serviceDescription + ", servicePrice=" + servicePrice + ", order=" + order + "]";
+				+ serviceDescription + ", servicePrice="  + ", order=" +  "]";
 	}
 
 }

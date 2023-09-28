@@ -10,7 +10,7 @@
 		<div class="templatemo-content-widget white-bg">
 			<h3 class="margin-bottom-10">Thay đổi suất chiếu</h3>
 			
-			<form:form action="${pageContext.request.contextPath}/user/accountInfo" method="post" modelAttribute="suatChieu" class="templatemo-login-form">
+			<form:form action="${pageContext.request.contextPath}/customer/info" method="post" modelAttribute="suatChieu" class="templatemo-login-form">
 				<div class="row form-group">
 					<div class="col-lg-12 col-md-12 form-group d-none">						
 						<form:input path="showtimeId" type="text" class="form-control" readonly="true"/>						
@@ -52,64 +52,4 @@
 	</div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<script>
-	function getA() {
-		console.log('abc');
-		var selectedTheater = document.getElementById("theaterId").value; // Lấy giá trị được chọn từ dropdown
-
-		// Gửi giá trị đến controller bằng Axios
-		axios.get("${pageContext.request.contextPath}/admin/theater", {
-		    params: {
-		        theater: selectedTheater
-		    }
-		}).then(function(response) {
-    			if (response.status === 200) {
-    				console.log('eeeeeeeeee');
-			        var list = response.data;
-			        let result = '<option value="">Mời chọn phòng</option>';
-			        for (let i = 0; i < list.length; i++) {
-			        	result += '<option value="' + list[i].roomId + '">' + list[i].roomName + '</option>';
-			        }
-			        document.getElementById('roomId').innerHTML = result;
-			        console.log(list);
-			    } else {
-			        // Xử lý lỗi trạng thái phản hồi
-			        console.log("Lỗi khi gọi API");
-			    }
-		}).catch(function(error) {
-	    // Xử lý lỗi
-	    console.log("Lỗi khi gọi API: " + error);
-		});
-	}
-	
-	function getA2() {
-		console.log('abc');
-		var selectedRoom = document.getElementById("roomId").value; // Lấy giá trị được chọn từ dropdown
-
-		// Gửi giá trị đến controller bằng Axios
-		axios.get("${pageContext.request.contextPath}/admin/room", {
-		    params: {
-		        room: selectedRoom
-		    }
-		}).then(function(response) {
-    			if (response.status === 200) {
-    				console.log('hhhhhhhhhhh');
-			        var list = response.data;
-			        let result = '<option value="">Mời chọn giờ chiếu</option>';
-			        for (let i = 0; i < list.length; i++) {
-			        	result += '<option value="' + list[i] + '">' + list[i] + '</option>';
-			        }
-			        document.getElementById('startTime').innerHTML = result;
-			        console.log(list);
-			    } else {
-			        // Xử lý lỗi trạng thái phản hồi
-			        console.log("Lỗi khi gọi API");
-			    }
-		}).catch(function(error) {
-	    // Xử lý lỗi
-	    console.log("Lỗi khi gọi API: " + error);
-		});
-	}
-</script>
