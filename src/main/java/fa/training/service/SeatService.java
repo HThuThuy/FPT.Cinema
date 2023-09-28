@@ -41,6 +41,9 @@ public class SeatService {
 		repo.deleteById(seatId);
 	}
 	
+	public void updateSeatStatus(String seatId) {
+		repo.updateSeatStatus(seatId);
+    }
 	
 
 }
