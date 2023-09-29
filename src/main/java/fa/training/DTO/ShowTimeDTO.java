@@ -1,7 +1,9 @@
 package fa.training.DTO;
 
-import fa.training.model.Room;
-import fa.training.model.SeatId;
+import java.math.BigInteger;
+import java.sql.Date;
+import java.sql.Time;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,21 +14,22 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShowTimeDTO {
-	
-	String showtimeId;
 
+	String theaterName;		
+	String roomName;	
+	Time startTime;
 	String movieName;
+	Date startDate;
+	Date endDate;		
+	Integer doanhThu;
 	
-	String theaterName;	
+	@Override
+	public String toString() {
+		return "ShowTimeDTO [theaterName=" + theaterName + ", roomName=" + roomName + ", startTime=" + startTime
+				+ ", movieName=" + movieName + ", startDate=" + startDate + ", endDate=" + endDate + ", doanhThu="
+				+ doanhThu + "]";
+	}
 	
-	String startTime;
 	
-	String endTime;	
 	
-	int soGheDat;
-	
-	int soGheTrong;
-	
-	int doanhThu;	
-
 }
