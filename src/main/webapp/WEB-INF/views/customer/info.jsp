@@ -1,55 +1,65 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<style>
+label {
+    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight: bold;
+}
+</style>
+
 
 <div class="templatemo-content col-1 black-bg">
 	<div class="templatemo-content-container">
+	<h3 class="text-center display-4 mb-4" style="font-size: 35px;">THÔNG TIN THÀNH VIÊN</h3>
 		<div class="templatemo-content-widget white-bg">
-			<h3 class="margin-bottom-10">Thay đổi suất chiếu</h3>
-			
-			<form:form action="${pageContext.request.contextPath}/customer/info" method="post" modelAttribute="suatChieu" class="templatemo-login-form">
-				<div class="row form-group">
-					<div class="col-lg-12 col-md-12 form-group d-none">						
-						<form:input path="showtimeId" type="text" class="form-control" readonly="true"/>						
-					</div>					
-					
-					<div class="col-lg-12 col-md-12 form-group">
-						<input value="${theaterName}" type="text" class="form-control" readonly="true">
-						<form:input path="theaterId" type="text" class="form-control d-none"/>						
-					</div>	
 
-					<div class="col-lg-12 col-md-12 form-group">
-						<input value="${roomName}" type="text" class="form-control" readonly="true">
-						<form:input path="roomId" type="text" class="form-control d-none"/>						
+			<div class="templatemo-login-form">
+				<div class="row form-group">
+					<div class="col-lg-12 col-md-12 form-group mb-4">
+						<label for="inputFullName">Họ và Tên</label>
+						<input value="${customer.customerName}" type="text" class="form-control" readonly="true">
 					</div>
-					
-					<div class="col-lg-12 col-md-12 form-group">
-						<input value="${startTime}" type="text" class="form-control" readonly="true">
-						<form:input path="startTime" type="text" class="form-control d-none"/>						
+
+					<div class="col-lg-12 col-md-12 form-group mb-4">
+						<label for="inputDateOfBirth">Ngày sinh</label>
+						<input value="${customer.birthDate}" type="text" class="form-control" readonly="true">
 					</div>
-					
-					<div class="col-lg-12 col-md-12 form-group">
-						<label for="inputmasuatchieu">Chọn phim</label> 
-						<form:select path="movieId" class="form-control">
-							<option value="">Mời chọn phim</option>
-							<c:forEach items="${movies}" var="item">
-								<option value="${item.movieId}" ${item.movieId == record.movieId ? 'selected' : ''}>${item.movieName}</option>
-							</c:forEach>
-						</form:select>
-						<form:errors path="movieId" cssClass="text-danger" />
+
+					<div class="col-lg-12 col-md-12 form-group mb-4 mt-2">
+						<label for="inputGender">Giới tính</label>
+						<input value="${customer.gender}" type="text" class="form-control" readonly="true">
+					</div>
+
+					<div class="col-lg-12 col-md-12 form-group mb-4 mt-1">
+					    <label for="inputPhoneNumber">Số điện thoại</label>
+					    <input value="${customer.phone}" name="phone" type="text" class="form-control" readonly="true">
+					</div>
+
+
+					<div class="col-lg-12 col-md-12 form-group mb-4 mt-1">
+						<label for="inputAddress">Địa chỉ</label>
+						<input value="${customer.address}" name="address" type="text" class="form-control" readonly="true">
+					</div>
+
+					<div class="col-lg-12 col-md-12 form-group mb-4 mt-1">
+						<label for="inputEmail">Email</label>
+						<input value="${customer.email}" name="email" type="text" class="form-control" readonly="true">
 					</div>
 
 					<div class="form-group text-right">
-						<button type="submit" class="templatemo-blue-button">Thay đổi</button>
-						<button type="reset" class="templatemo-white-button">Tạo lại</button>
+					<a	href="${pageContext.request.contextPath}/customer/update">
+										<button class="templatemo-blue-button">
+											Cập nhật
+										</button>
+									</a>
 					</div>
 				</div>
-			</form:form>
+			</div>
 		</div>
 	</div>
 </div>
-
-

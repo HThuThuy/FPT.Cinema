@@ -24,9 +24,12 @@
 					class="fa fa-database fa-fw"></i>Lịch sử giao dịch</a></li>
 			<li><a style="text-decoration: none"
 				href="${pageContext.request.contextPath}/customer/info"><i
-					class="fa fa-film fa-fw"></i>Thông tin khách hàng</a></li>
+					class="fa fa-solid fa-person"></i>Thông tin khách hàng</a></li>
 			<li><a style="text-decoration: none"
-				href="${pageContext.request.contextPath}/"><i
+				href="${pageContext.request.contextPath}/customer/faq"><i
+					class="fa fa-solid fa-gem"></i>Chính sách/ FAQ</a></li>
+			<li><a style="text-decoration: none" 
+				href="${pageContext.request.contextPath}/logout"><i
 					class="fa fa-eject fa-fw"></i>Sign Out</a></li>
 		</ul>
 	</nav>

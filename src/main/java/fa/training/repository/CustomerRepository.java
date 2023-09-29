@@ -19,6 +19,7 @@ import fa.training.model.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, String> {
 
+	 
 	//Tranlc
 	@Transactional
 	@Modifying
@@ -40,4 +41,7 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
 		        @Param("endDate") LocalDate endDate, Pageable pageable);
 
 	
+	Customer findByPhone(String phone);
+
+	Customer findByEmail(String email);
 }

@@ -143,7 +143,7 @@ input#discountCode {
 																	role="checkbox" tabindex="-1" data-reactid="99"
 																	style="background: #aaa; color: black;">
 																	<span aria-hidden="false" class="layout__seat__name"
-																		data-reactid="100"> ${se.seatPositon} </span>
+																		data-reactid="100"> ${se.seatPosition} </span>
 
 																</div>
 															</li>
@@ -157,7 +157,7 @@ input#discountCode {
 																	role="checkbox" tabindex="-1" data-reactid="99"
 																	style="background: rgb(93, 57, 164); color: black;">
 																	<span aria-hidden="false" class="layout__seat__name"
-																		data-reactid="100"> ${se.seatPositon} </span> <input
+																		data-reactid="100"> ${se.seatPosition} </span> <input
 																		type="hidden" name="seatId"
 																		value="${se.seatId.seatId}" />
 																</div>
@@ -172,7 +172,7 @@ input#discountCode {
 																	class="layout__seat layout__seat--love-seat-left"
 																	role="checkbox" tabindex="-1" data-reactid="99">
 																	<span aria-hidden="false" class="layout__seat__name"
-																		data-reactid="100"> ${se.seatPositon} </span> <input
+																		data-reactid="100"> ${se.seatPosition} </span> <input
 																		type="hidden" name="seatId"
 																		value="${se.seatId.seatId}" />
 																</div>
@@ -272,6 +272,8 @@ input#discountCode {
 																	<td style="text-align: left;"><b>${sr.serviceName}</b>
 																		<br> ${sr.serviceDescription}</td>
 																	<td>
+																	
+																	
 																		<button type="button" class="minus">
 																			<i class="fas fa-minus-circle fa-lg"
 																				style="color: #ffffff;"></i>
@@ -523,56 +525,58 @@ $(document).ready(function() {
 let paymentInfo = {
 
 status: '',
-customer: '',
-order:'',
 service:[],
 seat: []
 };
 //Lấy ghế
-document.querySelectorAll('.layout__seat').forEach((divElement) => {
-	  divElement.addEventListener('click', function() {
-	    const seatId = this.querySelector('input[name="seatId"]').value;
-	    paymentInfo.seat.push(seatId);
-	    console.log(paymentInfo.seat);
-	    
-	  });
-	});
+const seatElements = document.querySelectorAll('.layout__seat');
+seatElements.forEach((divElement) => {
+  divElement.addEventListener('click', function() {
+    const seatId = this.querySelector('input[name="seatId"]').value;
+    const seatIndex = paymentInfo.seat.indexOf(seatId);
+
+    if (seatIndex === -1) {
+      paymentInfo.seat.push(seatId);
+      console.log(paymentInfo.seat);
+    } else {
+      paymentInfo.seat.splice(seatIndex, 1);
+      console.log(paymentInfo.seat);
+    }
+  });
+});
 	
+
 //Lấy serviceId khi dấu + chỗ combo được click
+
 var plusButtons = $('.plus');
 plusButtons.on('click', function() {
-    var quantityInput = $(this).prev();
-    var quantityValue = parseInt(quantityInput.val());
+  var quantityInput = $(this).prev();
+  var quantityValue = parseInt(quantityInput.val());
 
-    if (quantityValue >= 0) {
-        // Lấy serviceId từ input ẩn của mục tương ứng
-        var serviceId = $(this).closest('tr').find('.serviceId').val();
-        // Thêm serviceId vào mảng service của paymentInfo
-        paymentInfo.service.push(serviceId);
-        console.log(paymentInfo.service);
+  if (quantityValue >= 0) {
+    var serviceId = $(this).closest('tr').find('.serviceId').val();
+
+    if (!paymentInfo.service.includes(serviceId)) {
+      paymentInfo.service.push(serviceId);
+      console.log(paymentInfo.service);
     }
+  }
 });
 
-//Thêm code xử lý cho nút -
 var minusButtons = $('.minus');
 minusButtons.on('click', function() {
-    var quantityInput = $(this).next();
-    var quantityValue = parseInt(quantityInput.val());
+  var quantityInput = $(this).next();
+  var quantityValue = parseInt(quantityInput.val());
 
-    if (quantityValue < 1) {
-        // Lấy serviceId từ input ẩn của mục tương ứng
-        var serviceId = $(this).closest('tr').find('.serviceId').val();
-        // Bỏ serviceId ra khỏi mảng service của paymentInfo
-        paymentInfo.service = paymentInfo.service.filter(id => id !== serviceId);
-        console.log(paymentInfo.service);
-    }
+  if (quantityValue < 1) {
+    var serviceId = $(this).closest('tr').find('.serviceId').val();
+    paymentInfo.service = paymentInfo.service.filter(id => id !== serviceId);
+    console.log(paymentInfo.service);
+  }
 });
 
 
-
-
-
-
+//Thanh toán
 let totalPrices = 100000; 
 document.getElementById('datVeButton').addEventListener('click', () => {
 	let currentDate = new Date();
@@ -581,10 +585,6 @@ document.getElementById('datVeButton').addEventListener('click', () => {
 
 	
 	paymentInfo.status = 'Booked';
-	paymentInfo.service = '1';
-	
-	paymentInfo.customer = '111111111111';
-	paymentInfo.order = '1';
   console.log(paymentInfo);
   var jsonString = JSON.stringify(paymentInfo);
   console.log(jsonString);
@@ -595,4 +595,5 @@ document.getElementById('datVeButton').addEventListener('click', () => {
   });
   
 </script>
+
 
