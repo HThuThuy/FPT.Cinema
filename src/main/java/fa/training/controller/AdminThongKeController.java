@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import fa.training.DTO.MovieDTO;
 import fa.training.DTO.ShowTimeDTO;
 import fa.training.DTO.TheaterDTO;
+import fa.training.model.Movie;
 import fa.training.service.TicketService;
 
 @Controller
@@ -43,7 +44,7 @@ public class AdminThongKeController {
 	
 	@GetMapping(value = { "/thongKe2" })
 	public String admin2(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
-		int noOfRecords = ticketService.getNoOfShowTimes2();
+		int noOfRecords = ticketService.getNoOfMovie();
 		int recordsPerPage = 5;
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		if (page < 1) {
@@ -61,36 +62,37 @@ public class AdminThongKeController {
 		return "admin/thongKe2";
 	}
 	
-	@GetMapping(value = { "/thongKe3" })
-	public String admin3(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
+	@GetMapping("/thongKe2/search")
+	public String admin2(
+			@RequestParam(value = "searchName", required = true) String searchName,
+			@RequestParam(name = "page", defaultValue = "0") int page, Model model
+	) {
 		
+		int noOfRecords = ticketService.getNoOfMovieForName(searchName);
+		int recordsPerPage = 5;
+		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+		if (page < 1) {
+			page = 1;
+		} else if (page > noOfRecords) {
+			page = noOfRecords;
+		}
+		int start = page > 0 ? page - 1 : 0;
 		
-		List<TheaterDTO> list = ticketService.getRecordsForCurrentPage3();
-//		model.addAttribute("noOfPages", noOfPages);
-//		model.addAttribute("currentPage", page);
-		model.addAttribute("theaterList", list);		
+		List<MovieDTO> list = ticketService.getRecordsForCurrentPage2ForName(searchName,(start) * recordsPerPage, recordsPerPage);
+		model.addAttribute("searchName", searchName);
+		model.addAttribute("noOfPages", noOfPages);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("phimList", list);		
 		
-		return "admin/thongKe3";
+		return "admin/thongKe2";		
 	}
 	
-	@GetMapping(value = { "/thongKeDuLieu" })
-	public String admin10() {
-		/*
-		 * THỐNG KÊ THEO SUẤT CHIẾU
-		 * TICKET_INFO -> group by theo showtimeId (Mã suất, Giờ bắt đầu, Giờ kết thúc, Tên phim, Tên rạp)
-		 *  -> tính tổng totalPrice (Tổng tiền)
-		 */
-		
-		/*
-		 * TICKET_INFO -> group by theo movieId (Tên phim, Giờ bắt đầu, Giờ kết thúc)
-		 *  -> tính tổng totalPrice (Tổng tiền)
-		 */
-		
-		/*
-		 * TICKET_INFO -> group by theo theaterId (Tên rạp, thành phố)
-		 *  -> tính tổng totalPrice (Tổng tiền)
-		 */
-		return "admin/addSuatChieu";
-	}
+	@GetMapping(value = { "/thongKe3" })
+	public String admin3(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
+
+		List<TheaterDTO> list = ticketService.getRecordsForCurrentPage3();
+		model.addAttribute("rapList", list);
+		return "admin/thongKe3";
+	}	
 }
 
