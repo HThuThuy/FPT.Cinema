@@ -44,8 +44,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMeParameter("remember-me")
             .and()
             .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/#");
+                .logoutUrl("/logout") //Địa chỉ URL để thực hiện logout
+                .logoutSuccessUrl("/"); //Chuyển hướng về trang chủ khi logout thành công
     }
 
 //    @Bean

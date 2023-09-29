@@ -54,13 +54,13 @@ public class LoginController {
             session.setAttribute("getCccd", getCccd);
             System.out.println("cccd"+getCccd);
             
-            System.out.println("custerLogin"+custerLogin);
+            System.out.println("customerLogin"+custerLogin);
             
-            session.setAttribute("custerLogin", custerLogin);
+            session.setAttribute("customerLogin", custerLogin);
             
             session.setAttribute("customerName", customerName);
             session.setAttribute("loggedInUser", customerService.findById(account.getCustomer().getCccd()));
-            return "redirect:/#"; // Chuyển hướng user thường về trang chủ
+            return "redirect:/"; // Chuyển hướng user thường về trang chủ
         }
     }
     
@@ -71,6 +71,6 @@ public class LoginController {
  			if (authentication != null) {
  				new SecurityContextLogoutHandler().logout(request, response, authentication);
  			}
- 			return "redirect:/#";
+ 			return "redirect:/";
  		}
 }

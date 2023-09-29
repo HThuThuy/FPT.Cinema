@@ -110,6 +110,21 @@
 		<put-attribute name="body3"
 			value="/WEB-INF/views/customer/history.jsp" />
 	</definition> 
+	
+	<definition name="customer/info" extends="customer.definition">
+		<put-attribute name="body3"
+			value="/WEB-INF/views/customer/info.jsp" />
+	</definition> 
+	
+	<definition name="customer/update" extends="customer.definition">
+		<put-attribute name="body3"
+			value="/WEB-INF/views/customer/update.jsp" />
+	</definition> 
+	
+	<definition name="customer/faq" extends="customer.definition">
+		<put-attribute name="body3"
+			value="/WEB-INF/views/customer/faq.jsp" />
+	</definition>
 	<!-- <definition name="errorPage" template="/WEB-INF/views/errorPage.jsp"> 
 		<put-attribute name="content" value="" /> </definition> <definition name="error/*" 
 		extends="errorPage"> <put-attribute name="content" value="/WEB-INF/views/error/{1}.jsp" 
