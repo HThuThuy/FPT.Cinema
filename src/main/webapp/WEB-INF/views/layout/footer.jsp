@@ -72,10 +72,10 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
 	<%-- <script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/owlcarousel.js"></script> --%>
-	<script type="text/javascript"
+ 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/login.js"></script>
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/js/tabs.js"></script>
+<%--	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/tabs.js"></script> --%>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/popup.js"></script>
 	<script type="text/javascript"

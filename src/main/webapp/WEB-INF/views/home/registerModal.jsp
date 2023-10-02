@@ -26,9 +26,9 @@
 			<!-- <label for="disabledTextInput" class="form-label font-weight-bold" style="color: black;">Giới tính <span class="text-danger">(*)</span></label> -->
 			<select class="form-select" id="gender" aria-placeholder="Giới tính">
 				<option selected>Chọn giới tính</option>
-				<option value="male">Nam</option>
-				<option value="female">Nữ</option>
-				<option value="other">Khác</option>
+				<option value="Nam">Nam</option>
+				<option value="Nu">Nữ</option>
+				<option value="Khac">Khác</option>
 			</select> <span id="gender-error" style="color: red;"></span>
 		</div>
 
@@ -43,7 +43,7 @@
 
 	<div class="mb-3">
 		<!-- <label for="disabledTextInput" class="form-label font-weight-bold" style="color: black;">Email <span class="text-danger">(*)</span></label> -->
-		<input type="email" class="form-control" id="email"
+		<input type="text" class="form-control" id="email"
 			placeholder="Email"> <span id="email-error"
 			style="color: red;"></span>
 	</div>
@@ -73,7 +73,7 @@
 	</div>
 	<div class="mb-2">
 		<!-- <label for="disabledTextInput" class="form-label font-weight-bold" style="color: black;">Ngày sinh <span class="text-danger">(*)</span></label> -->
-		<input type="text" class="form-control" id="birthDate"
+		<input type="date" class="form-control" id="birthDate"
 			placeholder="Chọn ngày sinh"> <span id="birthDate-error"
 			style="color: red;"></span>
 	</div>

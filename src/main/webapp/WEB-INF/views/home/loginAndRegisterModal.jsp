@@ -6,7 +6,7 @@
 div#loginModal {
     margin-top: 115px;
 }
-</style>
+</style> 
 
 
 <div class="modal fade" id="loginModal" tabindex="-1"
@@ -28,21 +28,16 @@ div#loginModal {
 			</div>
 			<div class="modal-body">
 				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active" id="login" role="tabpanel"
-						aria-labelledby="login-tab">
-						<!-- Login form -->
+				<div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+				    <!-- Login form -->
+				    <jsp:include page="loginModal.jsp" /> 
+				    
 
-						<jsp:include page="loginModal.jsp" />
-
-
-					</div>
-					<div class="tab-pane fade" id="register" role="tabpanel"
-						aria-labelledby="register-tab">
-						<!-- Register form -->
-
-						<jsp:include page="registerModal.jsp" />
-
-					</div>
+				</div>
+				<div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+				    <!-- Register form -->
+				    <jsp:include page="registerModal.jsp" />
+				</div>
 				</div>
 			</div>
 
@@ -50,24 +45,3 @@ div#loginModal {
 	</div>
 </div>
 
-<script>
-    /* // Thêm sự kiện click cho tab Đăng Ký
-    document.getElementById("register-tab").addEventListener("click", function(event) {
-        // Thay đổi URL trên trình duyệt
-        history.pushState({}, "", "${pageContext.request.contextPath}/register");
-    });
-
-    // Thêm sự kiện click cho tab Đăng Nhập
-    document.getElementById("login-tab").addEventListener("click", function(event) {
-        // Thay đổi URL trên trình duyệt
-        history.pushState({}, "", "${pageContext.request.contextPath}/login");
-    });
-
-    $(document).ready(function() {
-        $('#loginModal').on('hide.bs.modal', function () {
-            console.log('Modal is hiding');
-            history.pushState({}, "", "${pageContext.request.contextPath}/");
-        });
-    });
- */
-</script>
