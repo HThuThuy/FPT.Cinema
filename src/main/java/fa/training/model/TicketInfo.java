@@ -56,5 +56,4 @@ public class TicketInfo {
 				+ ", customer=" + customer.getCccd() + ", order=" + order.getOrderId() + "]";
 	}
 	
-	String QRCode;
 }

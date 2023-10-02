@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpSession;
@@ -36,10 +37,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fa.training.config.VNPayConfig;
 import fa.training.model.Customer;
 import fa.training.model.Order;
+import fa.training.model.OrderServiceId;
+import fa.training.model.OrderServied;
+import fa.training.model.Promotion;
 import fa.training.model.Showtime;
 import fa.training.model.TicketInfo;
 import fa.training.service.CustomerService;
+import fa.training.service.OrderSer;
 import fa.training.service.OrderService;
+import fa.training.service.PromotionService;
 import fa.training.service.SeatService;
 import fa.training.service.SerService;
 import fa.training.service.ShowtimeService;
@@ -62,9 +68,15 @@ public class PaymentController {
 
 	@Autowired
 	private OrderService orders;
+	
+	@Autowired
+	private OrderSer orderSer;
 
 	@Autowired
 	private TicketService tickets;
+
+	@Autowired
+	private PromotionService promotions;
 
 	/*
 	 * Project: FPT Cinema Team: 2 Author :ThuyHtt14 Method: Tạo đơn thanh toán
@@ -96,12 +108,8 @@ public class PaymentController {
 
 			// Lấy giá trị từ JsonNode
 //			String[] maGhe = objectMapper.convertValue(jsonNode.get("maGhe"), String[].class);
-//			int maSuatChieu = jsonNode.get("maSuatChieu").asInt();
-//			int maKhachHang = jsonNode.get("maKhachHang").asInt();
+
 			LocalDate ngaySuDung = LocalDate.now();
-//				for (String string : maGhe) {
-//					veService.updateDatVe(string, maSuatChieu,ngaySuDung,maKhachHang);
-//				}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -147,7 +155,7 @@ public class PaymentController {
 	}
 
 	/*
-	 * Project: FPT Cinema Team: 2 Author : ThuyHTT14 Method: Lấy thông tin thanh
+	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: Lấy thông tin thanh
 	 * toán và xử lý lưu dữ liệu vào database
 	 */
 	@GetMapping("/return")
@@ -164,79 +172,91 @@ public class PaymentController {
 			JsonNode jsonNode = objectMapper.readTree(orderInfo);
 
 			// Lấy giá trị từ JsonNode
-//			maSuatChieu = jsonNode.get("maSuatChieu").asInt();
+
 			LocalDate ngaySuDung = LocalDate.now();
 			LocalTime gioSuDung = LocalTime.now();
 
-//			String[] maGhe = objectMapper.convertValue(jsonNode.get("maGhe"), String[].class);
-//			JsonNode danhSachDichVu = jsonNode.get("danhSachDichVu");
-
 			
-			
-			// int ticketId = jsonNode.get("ticketId").asInt();
 			String statusTicket = jsonNode.get("status").asText();
-			
-			//String serviceTicket = jsonNode.get("service").asText();
-			
-			/*
-			 * lấy list serviceShow từ serviceTicket
-			 * chạy vòng lặp tính tổng số lượng nước A, số lượng bắp B số lượng snack C, số lượng tiền D
-			 * Service service = new Service(A,B,C,D)
-			 * service.setServiceId(UIUD.random())
-			 * servicesService.save(service)
-			 * 
-			 * 
-			 * */
-
-			// String showtimeGet = jsonNode.get("showtimeTicket").asText();
 
 			Showtime showtimeGets = (Showtime) session.getAttribute("selectedShowtime");
 			System.out.println("abc-------------------------" + showtimeGets);
-			String customer = jsonNode.get("customer").asText();
-			int order = jsonNode.get("order").asInt();
-
-			System.out.println("ticketId" + "2 ," + statusTicket + ", 3" + showtimeGets + ", 4" + customer + 5 + order);
 
 			if (status.equals("00")) {
-				//Order
-			 Order getOrder= new Order();
-//				 getOrder.setOrderDate(ngaySuDung);
-//				 getOrder.setOrderTime(gioSuDung)
-//			 	getOrder.setServices(null);			 
-				// getOrder.setTotalPrice(amount);
-			 
-			 
-				 
-				
-				Customer customerTicket = customers.findById(customer);
-				
-				Order orderTicket = orders.findById(order);
+				JsonNode seatNode = jsonNode.get("seat");
+				JsonNode serviceNode = jsonNode.get("service");
+	            System.out.println("seatNode: " + seatNode.toString());
+	            System.out.println("serviceNode: " + serviceNode.toString());
+				String[] seatList = new String[seatNode.size()];
+				for (int i = 0; i < seatNode.size(); i++) {
+					seatList[i] = seatNode.get(i).asText();
+				}
 
+				String[] serviceList = new String[serviceNode.size()];
+				for (int i = 0; i < serviceNode.size(); i++) {
+					serviceList[i] = serviceNode.get(i).asText();
+				}
+                //Update trang thai seat khi da dat
+				for (String seatUpdate : seatList) {
+					System.out.println("ghe-------"+seatUpdate);
+					seat.updateSeatStatus(seatUpdate);
+					System.out.println("Update thanh cong seat");
+
+				}
+
+				// Order
+				Order getOrder = new Order();
+				Random random = new Random();
+				int randomNumber = random.nextInt(900) + 100;
+				getOrder.setOrderDate(ngaySuDung);
+				getOrder.setOrderTime(gioSuDung);
+				getOrder.setOrderId(randomNumber);
+				String pro = "P001";
+				Promotion proTicket = promotions.findById(pro);
+				int intValue = Integer.parseInt(amount);
+				getOrder.setTotalPrice(intValue);
+				getOrder.setPromotion(proTicket);
+
+				orders.save(getOrder);
+				//insert tab orderService
+				for (String serviceOrder : serviceList) {
+					System.out.println("dv------" + serviceOrder);
+					OrderServied ordService = new OrderServied();
+					OrderServiceId ordServiceId= new OrderServiceId();
+					ordServiceId.setOrderId(randomNumber);
+					ordServiceId.setServiceId(serviceOrder);
+					ordService.setOrderServiceId(ordServiceId);
+					orderSer.save(ordService);
+					
+					System.out.println("insert thanh cong ordService");
+					
+				}
+				
+                //Customer
+				Customer loginCustomer = (Customer) session.getAttribute("custerLogin");
+				System.out.println("custerLogin------------" + loginCustomer);
+
+                // ticket
 				TicketInfo buyTicketInfo = new TicketInfo();
-				buyTicketInfo.setCustomer(customerTicket);
+				buyTicketInfo.setCustomer(loginCustomer);
 				buyTicketInfo.setShowtimeTicket(showtimeGets);
-				buyTicketInfo.setOrder(orderTicket);
+				buyTicketInfo.setOrder(getOrder);
 				buyTicketInfo.setStatus(statusTicket);
-
-				System.out.println(buyTicketInfo + "djhfjksdj");
-
+				buyTicketInfo.setQRCode("https://external-preview.redd.it/cg8k976AV52mDvDb5jDVJABPrSZ3tpi1aXhPjgcDTbw.png?auto=webp&s=1c205ba303c1fa0370b813ea83b9e1bddb7215eb");
+				System.out.println(buyTicketInfo + "ticketInfor");
 				tickets.save(buyTicketInfo);
 
 			} else {
-//				for (String string : maGhe) {
-//					veService.updateHuyVe(string, maSuatChieu,ngaySuDung,maKhachHang);
-//				}
-//				model.addAttribute("tinhTrang", "thanh toan khong thanh cong");
-//				return "/ve/" + maSuatChieu;
+
+				model.addAttribute("tinhTrang", "thanh toan khong thanh cong");
 				System.out.println("Thanh toan khong thanh cong");
 
 				return "ticket/payment";
-//			}
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "/ticket/bill";
+		return "ticket/bill";
 	}
 }

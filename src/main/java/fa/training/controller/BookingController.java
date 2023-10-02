@@ -34,9 +34,9 @@ public class BookingController {
 	@GetMapping(value= {"/booking"})
 	public String booking(Model model,@RequestParam("showtimeId") String selectedShowtime,HttpSession session) {
 		List<Seat> listaList= seat.getAll();
-		for (Seat seats : listaList) {
-			System.out.println(seats.getSeatPositon());
-		}
+//		for (Seat seats : listaList) {
+//			System.out.println(seats.getSeatPositon());
+//		}
 		model.addAttribute("listSeat", seat.getAll());
 		model.addAttribute("seatAdd", new Seat());
 		

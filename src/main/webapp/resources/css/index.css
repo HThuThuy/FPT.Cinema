@@ -413,16 +413,9 @@ Header Style
   display: none;
 } */
 
-a.logo {
-  height: 0px;
-  margin-bottom: 60px;
-}
-
 .header-area {
-  background-color: rgb(206, 202, 203);
-  position: sticky;
+  background-color: #1f2122;
   height: 70px;
-  top: 15px;
   left: 0px;
   right: 0;
   z-index: 100;
@@ -444,12 +437,20 @@ a.logo {
 
 /* chỉnh padding sau khi trượt menu */
 
-.header-area .main-nav #search {
+#search {
   position: relative;
 }
 
-.header-area .main-nav #search input {
-  background-color: #27292a;
+form#search {
+    margin-top: 15px;
+}
+
+.container.row-logo {
+    margin-top: -15px;
+}
+
+#search input {
+  background-color:white;
   height: 46px;
   border-radius: 23px;
   border: none;
@@ -458,7 +459,7 @@ a.logo {
   padding: 0px 15px 0px 45px;
 }
 
-.header-area .main-nav #search i {
+#search i {
   position: absolute;
   color: #666;
   left: 20px;
@@ -470,8 +471,6 @@ a.logo {
 
 .header-area .main-nav .logo {
   border-right: 1px solid #27292a;
-  flex-basis: 25%;
-  margin-right: 15%;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
@@ -480,15 +479,11 @@ a.logo {
 
 .header-area .main-nav .logo img {
   width: 191px;
+  margin-right: 100px;
 }
 
 .background-header .main-nav .logo {
-  margin-top: -8px;
-}
-
-.logo img {
-  width: 180px;
-  transition: filter 0.3s ease;
+  margin-top: 0px;
 }
 
 .main-nav .logo:hover img {
@@ -522,7 +517,7 @@ a.logo {
   font-weight: 400;
   font-size: 14px;
   text-transform: capitalize;
-  color: #666;
+  color:#ec6090;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
@@ -706,7 +701,7 @@ a.logo {
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
   .header-area {
     top: 0;
   }
