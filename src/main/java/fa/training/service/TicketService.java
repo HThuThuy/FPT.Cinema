@@ -83,26 +83,59 @@ public class TicketService {
 	}
 
 	// LamNH23
-	public int getNoOfShowTimes2() {
-		return 45;
+	public int getNoOfMovie() {
+		return repo.getNumberMovie().size();
 	}
 
 	// LamNH23
-	public List<MovieDTO> getRecordsForCurrentPage2(int start, int recordsPerPage) {
-		List<MovieDTO> list = new ArrayList<>();
-		for (int i = start + 1; i < (start + recordsPerPage + 1); i++) {
-			list.add(new MovieDTO("MV" + i, "Tên phim", "22/09/2023", "22/09/2023", 350000));
-		}		
+	public List<MovieDTO> getRecordsForCurrentPage2(int start, int recordsPerPage) {		
+		List<Tuple> list2 = repo.getRecordsForCurrentPage2(start, recordsPerPage);
+		List<MovieDTO> list = list2.stream().map(t -> new MovieDTO(
+				t.get(0,String.class), //movieName
+				t.get(1,Date.class), //startDate
+				t.get(2,Date.class), //endDate
+				t.get(3,String.class), //posterUrl
+				t.get(4,Integer.class))) //doanhThu
+				.collect(Collectors.toList());
+		
+		return list;
+	}
+	
+	// LamNH23
+	public int getNoOfMovieForName(String searchName) {
+		return repo.getNumberMovieForName("%" + searchName + "%").size();
+	}
+
+	// LamNH23
+	public List<MovieDTO> getRecordsForCurrentPage2ForName(String searchName, int start, int recordsPerPage) {
+		List<Tuple> list2 = repo.getRecordsForCurrentPage2ForName("%" + searchName + "%", start, recordsPerPage);
+		List<MovieDTO> list = list2.stream().map(t -> new MovieDTO(t.get(0, String.class), // movieName
+				t.get(1, Date.class), // startDate
+				t.get(2, Date.class), // endDate
+				t.get(3, String.class), // posterUrl
+				t.get(4, Integer.class))) // doanhThu
+				.collect(Collectors.toList());
+
 		return list;
 	}
 
 
 	// LamNH23
 	public List<TheaterDTO> getRecordsForCurrentPage3() {
-		List<TheaterDTO> list = new ArrayList<>();
-		for (int i = 1; i < 6; i++) {
-			list.add(new TheaterDTO("Theater" + i, "Tên rạp", "Thành phố", 350000));
-		}
+//		List<TheaterDTO> list = new ArrayList<>();
+//		for (int i = 1; i < 6; i++) {
+//			list.add(new TheaterDTO("Theater" + i, "Tên rạp", "Thành phố", 350000));
+//		}
+		
+		List<Tuple> list2 = repo.getRecordsForCurrentPage3();
+		List<TheaterDTO> list = list2.stream().map(t -> new TheaterDTO(
+				t.get(0,String.class), //theaterName
+				t.get(1,String.class), //city
+				t.get(2,String.class), //address
+				t.get(3,String.class), //phone
+				t.get(4,Integer.class))) //doanhThu
+				.collect(Collectors.toList());
+		
 		return list;
 	}
 
