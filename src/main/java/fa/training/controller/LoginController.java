@@ -24,53 +24,48 @@ public class LoginController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private CustomerService customerService;
 
-    @GetMapping(value = "/role")
-    public String hienThiTheoPhanQuyen(Principal principal, HttpSession session) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String accountName = principal.getName();
-        Users account = userService.findByAccount(accountName);
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .anyMatch(role -> role.equals("ROLE_ADMIN"));
-        if (isAdmin) {
-            session.setAttribute("account1", accountName);
-            // Get customer name from CustomerService
-            String customerName = customerService.getCustomerName(account.getCustomer().getCccd());
-            session.setAttribute("customerName", customerName);
-            session.setAttribute("loggedInUser", customerService.findById(account.getCustomer().getCccd()));
-            return "redirect:/admin/quanLySuatChieu"; // Chuyển hướng admin đến trang quản lý suất chiếu
-        } else {
-            session.setAttribute("account1", accountName);
-            // Get customer name from CustomerService
-            String customerName = customerService.getCustomerName(account.getCustomer().getCccd());
-            Customer custerLogin = customerService.findById(account.getCustomer().getCccd());
-            
-            // Lấy cccd trong session
-            String getCccd = account.getCustomer().getCccd();
-            session.setAttribute("getCccd", getCccd);
-            System.out.println("cccd"+getCccd);
-            
-            System.out.println("customerLogin"+custerLogin);
-            
-            session.setAttribute("customerLogin", custerLogin);
-            
-            session.setAttribute("customerName", customerName);
-            session.setAttribute("loggedInUser", customerService.findById(account.getCustomer().getCccd()));
-            return "redirect:/"; // Chuyển hướng user thường về trang chủ
-        }
-    }
-    
- // Chức năng đăng xuất khi người dùng có đăng nhập và điều hướng về màn hình đăng nhập ban đầu
- 		@GetMapping(value = "/logout")
- 		public String dangXuat (HttpServletRequest request, HttpServletResponse response) {
- 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
- 			if (authentication != null) {
- 				new SecurityContextLogoutHandler().logout(request, response, authentication);
- 			}
- 			return "redirect:/";
- 		}
+	@GetMapping(value = "/role")
+	public String showByRole(Principal principal, HttpSession session) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String accountName = principal.getName();
+		Users account = userService.findByAccount(accountName);
+		boolean isAdmin = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+				.anyMatch(role -> role.equals("ROLE_ADMIN"));
+		if (isAdmin) {
+			session.setAttribute("account1", accountName);
+			// Get customer name from CustomerService
+			String customerName = customerService.getCustomerName(account.getCustomer().getCccd());
+			session.setAttribute("customerName", customerName);
+			session.setAttribute("loggedInUser", customerService.findById(account.getCustomer().getCccd()));
+			return "redirect:/admin/quanLySuatChieu"; // Chuyển hướng admin đến trang quản lý suất chiếu
+		} else {
+			session.setAttribute("account1", accountName);
+			// Get customer name from CustomerService
+			String customerName = customerService.getCustomerName(account.getCustomer().getCccd());
+			Customer custerLogin = customerService.findById(account.getCustomer().getCccd());
+
+			// Lấy cccd trong session
+			String getCccd = account.getCustomer().getCccd();
+			session.setAttribute("getCccd", getCccd);
+			session.setAttribute("customerLogin", custerLogin);
+			session.setAttribute("customerName", customerName);
+			session.setAttribute("loggedInUser", customerService.findById(account.getCustomer().getCccd()));
+			return "redirect:/"; // Chuyển hướng user thường về trang chủ
+		}
+	}
+
+	// Chức năng đăng xuất khi người dùng có đăng nhập và điều hướng về màn hình
+	// đăng nhập ban đầu
+	@GetMapping(value = "/logout")
+	public String dangXuat(HttpServletRequest request, HttpServletResponse response) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null) {
+			new SecurityContextLogoutHandler().logout(request, response, authentication);
+		}
+		return "redirect:/";
+	}
 }

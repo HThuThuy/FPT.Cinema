@@ -28,8 +28,8 @@ public class Services {
 	@Id
 //	@Pattern(regexp = "^DV[0-9]{5}$",message ="Mã dịch vụ không đúng định dạng (DVxxxxx)")
 //	@NotBlank(message = "Xin hãy nhập thông tin vào trường này sever")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int serviceId;
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	String serviceId;
 
 	@Column(columnDefinition = "Nvarchar(50)")
 //	@Pattern(regexp = "^.{3,50}$", message = "Vui lòng nhập từ 3 - 50 kí tự sever")

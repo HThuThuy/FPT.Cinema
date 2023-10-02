@@ -1,42 +1,50 @@
+var isLoggedIn = false;
+
+function loginSuccess(customerName) {
+    isLoggedIn = true;
+}
+
+function logoutSuccess() {
+    isLoggedIn = false;
+}
+
 document.getElementById('member-tab').addEventListener('click', function(event) {
-    event.preventDefault();
-    var myModalEl = document.getElementById('loginModal');
-    var myModal = new bootstrap.Modal(myModalEl, {});
-    myModal.show();
+    if (isLoggedIn) {
+        event.preventDefault();
+    } else {
+        var myModalEl = document.getElementById('loginModal');
+        var myModal = new bootstrap.Modal(myModalEl, {});
+        myModal.show();
+    }
 });
 
+function logout() {
+    // Send an AJAX request to the server to logout
+    $.ajax({
+        url : "${pageContext.request.contextPath}/logout",
+        method : "POST",
+        success : function() {
+            // Refresh the page or redirect the user
+            logoutSuccess(); // Call the function after successful logout
+        }
+    });
+}
+
 $(document).ready(function() {
-    // When the forgot password form is submitted...
     $('#forgotPasswordForm').on('submit', function(e) {
         e.preventDefault();
-
-        // Check the OTP here...
-        // If the OTP is correct...
         if ('check OTP') {
-            // Close the forgot password modal
             var forgotPasswordModalEl = document.getElementById('forgotPasswordModal');
             var forgotPasswordModal = bootstrap.Modal.getInstance(forgotPasswordModalEl);
             forgotPasswordModal.hide();
 
-            // Open the reset password modal
             var resetPasswordModalEl = document.getElementById('resetPasswordModal');
             var resetPasswordModal = new bootstrap.Modal(resetPasswordModalEl, {});
             resetPasswordModal.show();
         }
     });
-});
 
-
-$(document).ready(function() {
-  $('#birthdate').on('focus', function() {
-    $(this).attr('type', 'date');
-  });
+    $('#birthdate').on('focus', function() {
+        $(this).attr('type', 'date');
+    });
 });
-
-/*var xhr = new XMLHttpRequest();
-xhr.addEventListener('readystatechange', function() {
-  if (xhr.status == 401) { 
-    $('#loginModal').modal('show');
-  }
-});
-*/

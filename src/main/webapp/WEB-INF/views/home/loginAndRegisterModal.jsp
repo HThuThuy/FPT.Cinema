@@ -2,6 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 
+<style>
+div#loginModal {
+    margin-top: 115px;
+}
+</style>
+
 
 <div class="modal fade" id="loginModal" tabindex="-1"
 	aria-labelledby="loginModalLabel" aria-hidden="true">

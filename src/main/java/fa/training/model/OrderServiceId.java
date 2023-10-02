@@ -19,6 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 
 
 public class OrderServiceId implements Serializable  {/**
@@ -36,7 +37,7 @@ public class OrderServiceId implements Serializable  {/**
 	
 	int orderId;
 	
-	int serviceId;
+	String serviceId;
 	
 	
 }

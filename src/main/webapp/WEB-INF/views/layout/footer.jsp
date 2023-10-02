@@ -8,10 +8,10 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="heading-section tab-content mb-3">
-				<a href="index.html" class="logo"> <img
-					src="${pageContext.request.contextPath}/resources/img/logo.png"
-					alt="">
-				</a>
+				<a href="index.html" class="logo">
+    <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" width="100px" height="240px">
+</a>
+
 			</div>
 
 			<div class="row">
