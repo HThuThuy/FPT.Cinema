@@ -122,10 +122,6 @@ public class TicketService {
 
 	// LamNH23
 	public List<TheaterDTO> getRecordsForCurrentPage3() {
-//		List<TheaterDTO> list = new ArrayList<>();
-//		for (int i = 1; i < 6; i++) {
-//			list.add(new TheaterDTO("Theater" + i, "Tên rạp", "Thành phố", 350000));
-//		}
 		
 		List<Tuple> list2 = repo.getRecordsForCurrentPage3();
 		List<TheaterDTO> list = list2.stream().map(t -> new TheaterDTO(
@@ -138,5 +134,20 @@ public class TicketService {
 		
 		return list;
 	}
+	
+	// LamNH23
+		public List<TheaterDTO> getRecordsForCurrentPage4(String searchDate, String searchDate2) {
+			
+			List<Tuple> list2 = repo.getRecordsForCurrentPage4(searchDate, searchDate2);
+			List<TheaterDTO> list = list2.stream().map(t -> new TheaterDTO(
+					t.get(0,String.class), //theaterName
+					t.get(1,String.class), //city
+					t.get(2,String.class), //address
+					t.get(3,String.class), //phone
+					t.get(4,Integer.class))) //doanhThu
+					.collect(Collectors.toList());
+			
+			return list;
+		}
 
 }

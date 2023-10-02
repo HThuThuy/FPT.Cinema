@@ -45,6 +45,10 @@ public interface TicketRepository extends JpaRepository<TicketInfo, Integer> {
 	//LamNH23
 	@Query(value = "SELECT tt.theaterName, tt.city, tt.address, tt.phone, sum(o.totalPrice) from TICKET_INFO t join ORDERS o on o.orderId = t.orderId join SHOWTIME s on s.showtimeId = t.showtimeId join ROOM r on r.roomId = s.roomId join THEATER tt on tt.theaterId = r.theaterId group by tt.theaterName, tt.city, tt.address, tt.phone order by tt.theaterName", nativeQuery = true)
 	List<Tuple> getRecordsForCurrentPage3();
+	
+	//LamNH23
+	@Query(value = "SELECT tt.theaterName, tt.city, tt.address, tt.phone, sum(o.totalPrice) from TICKET_INFO t join ORDERS o on o.orderId = t.orderId join SHOWTIME s on s.showtimeId = t.showtimeId join ROOM r on r.roomId = s.roomId join THEATER tt on tt.theaterId = r.theaterId where o.orderDate > :searchDate and o.orderDate < :searchDate2 group by tt.theaterName, tt.city, tt.address, tt.phone order by tt.theaterName", nativeQuery = true)
+	List<Tuple> getRecordsForCurrentPage4(@Param("searchDate") String searchDate, @Param("searchDate2") String searchDate2);
 
 
 }

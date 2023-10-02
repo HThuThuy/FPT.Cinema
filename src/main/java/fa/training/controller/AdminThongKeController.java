@@ -93,6 +93,22 @@ public class AdminThongKeController {
 		List<TheaterDTO> list = ticketService.getRecordsForCurrentPage3();
 		model.addAttribute("rapList", list);
 		return "admin/thongKe3";
-	}	
+	}
+	
+	@GetMapping("/thongKe3/search")
+	public String admin23(
+			@RequestParam(value = "searchDate", required = true) String searchDate,
+			@RequestParam(value = "searchDate2", required = true) String searchDate2,
+			Model model
+	) {
+		
+
+		List<TheaterDTO> list = ticketService.getRecordsForCurrentPage4(searchDate, searchDate2);
+		model.addAttribute("rapList", list);
+		model.addAttribute("searchDate", searchDate);
+		model.addAttribute("searchDate2", searchDate2);
+		return "admin/thongKe3";
+		
+	}
 }
 
