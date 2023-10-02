@@ -60,7 +60,13 @@
 					<label for="inputmasuatchieu">Poster Url</label>
 					<form:input path="posterUrl" type="text" class="form-control"/>
 					<form:errors path="posterUrl" cssClass="text-danger" />
-				</div>              
+				</div> 
+				
+				<div class="col-lg-12 col-md-12 form-group">
+					<label for="inputmasuatchieu">Trailer Url</label>
+					<form:input path="trailerUrl" type="text" class="form-control"/>
+					<form:errors path="trailerUrl" cssClass="text-danger" />
+				</div>                
               
             </div>
 

@@ -67,6 +67,9 @@ public class Movie {
 	@NotBlank(message = "Chưa nhập dữ liệu")
 	String posterUrl;
 	
+//	@NotBlank(message = "Chưa nhập dữ liệu")
+	String trailerUrl;
+	
 	String movieStatus;
 	
 	@OneToMany(mappedBy = "movie",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
