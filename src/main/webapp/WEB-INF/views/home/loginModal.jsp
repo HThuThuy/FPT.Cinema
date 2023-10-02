@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 
+
 <form action="${pageContext.request.contextPath}/login" method="post">
 	<div>
 		<h6 style="color: rgb(155, 155, 155);">Vui lòng đăng nhập trước
@@ -32,4 +33,33 @@
 			NHẬP</button>
 	</div>
 </form>
+<!-- <script>
+$(document).ready(function() {
+    $('#loginForm').on('submit', function(e) {
+        e.preventDefault();
 
+        var account = $('#account').val();
+        var password = $('#password').val();
+
+        $.ajax({
+            url: '${pageContext.request.contextPath}/login',
+            type: 'POST',
+            data: {
+                account: account,
+                password: password
+            },
+            success: function(data) {
+                window.location.href = "${pageContext.request.contextPath}/role";
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status == 401) { // Unauthorized
+                    $('#account-error').text('Tên đăng nhập hoặc mật khẩu không đúng');
+                    var loginModalEl = document.getElementById('loginModal');
+                    var loginModal = new bootstrap.Modal(loginModalEl, {});
+                    loginModal.show();
+                }
+            }
+        });
+    });
+});
+</script> -->

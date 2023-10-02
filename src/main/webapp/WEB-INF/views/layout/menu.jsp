@@ -73,8 +73,8 @@
 									<div class="dropdown-menu" aria-labelledby="member-tab">
 										<a class="dropdown-item"
 											href="${pageContext.request.contextPath}/customer/history">Tài
-											khoản</a> <a class="dropdown-item" href="#"
-											onclick="logout(); return false;">Thoát</a>
+											khoản</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/logout"
+											>Thoát</a>
 									</div></li>
 							</c:otherwise>
 						</c:choose>
@@ -93,17 +93,6 @@
 
 
 <script>
-	/* function logout() {
-		// Send an AJAX request to the server to logout
-		$.ajax({
-			url : "${pageContext.request.contextPath}/logout",
-			method : "POST",
-			success : function() {
-				// Refresh the page or redirect the user
-				location.reload();
-			}
-		});
-	} */
 
 	 function loginSuccess(customerName) {
 		    // Remove the login link

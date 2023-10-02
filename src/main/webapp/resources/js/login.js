@@ -30,21 +30,16 @@ function logout() {
     });
 }
 
-$(document).ready(function() {
-    $('#forgotPasswordForm').on('submit', function(e) {
-        e.preventDefault();
-        if ('check OTP') {
-            var forgotPasswordModalEl = document.getElementById('forgotPasswordModal');
-            var forgotPasswordModal = bootstrap.Modal.getInstance(forgotPasswordModalEl);
-            forgotPasswordModal.hide();
 
-            var resetPasswordModalEl = document.getElementById('resetPasswordModal');
-            var resetPasswordModal = new bootstrap.Modal(resetPasswordModalEl, {});
-            resetPasswordModal.show();
+
+/*$('.btn').click(function(e) {
+    e.preventDefault();
+
+    $.get('/checkLogin', function(data) {
+        if (data.checkLogin) {
+            window.location.href = "/booking";
+        } else {
+            $('#loginModal').modal('show');
         }
     });
-
-    $('#birthdate').on('focus', function() {
-        $(this).attr('type', 'date');
-    });
-});
+});*/

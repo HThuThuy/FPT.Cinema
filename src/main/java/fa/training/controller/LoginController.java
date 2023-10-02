@@ -1,12 +1,15 @@
 package fa.training.controller;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -58,6 +61,14 @@ public class LoginController {
 		}
 	}
 
+//	@GetMapping("/checkLogin")
+//	public Map<String, Boolean> kiemTraDangNhap() {
+//	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//	    boolean checkLogin = authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
+//
+//	    return Collections.singletonMap("checkLogin", checkLogin);
+//	}
+	
 	// Chức năng đăng xuất khi người dùng có đăng nhập và điều hướng về màn hình
 	// đăng nhập ban đầu
 	@GetMapping(value = "/logout")

@@ -20,9 +20,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private UserRepository userRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	    Users user = userRepository.findByAccount(username);
-	    System.out.println(userRepository.findByAccount(username));
+	public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
+	    Users user = userRepository.findByAccount(account);
+	    System.out.println(userRepository.findByAccount(account));
 	    if (user == null) {
 	        throw new UsernameNotFoundException("Could not find user");
 	    }
