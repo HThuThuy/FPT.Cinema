@@ -34,7 +34,7 @@
 					<div class="col-lg-12 col-md-12 form-group">
 						<label for="inputmasuatchieu">Chọn phim</label> 
 						<form:select path="movieId" class="form-control">
-							<option value="">Mời chọn phim</option>
+							<!-- <option value="">Mời chọn phim</option> -->
 							<c:forEach items="${movies}" var="item">
 								<option value="${item.movieId}" ${item.movieId == selectedMovie ? 'selected' : ''}>${item.movieName}</option>
 							</c:forEach>

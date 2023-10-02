@@ -95,12 +95,28 @@ public class AdminPhimController {
 			BindingResult bindingResult, Model model) {
 		
 		//check valid
-		if(bindingResult.hasErrors()) {
+		try {
+			if(movie.getEndDate().isBefore(movie.getStartDate()))
+			bindingResult.rejectValue("endDate", "xxx", "Ngày kết thúc phải lớn hơn ngày khởi chiếu");
+		} catch (Exception e) {
 			
+		}
+		
+		
+		if(bindingResult.hasErrors()) {			
 			model.addAttribute("phim", movie);
-			model.addAttribute("text", "Thêm mới ");
+			if(movie.getMovieId().equals("123456")) {
+				model.addAttribute("text", "Thêm mới ");
+				model.addAttribute("text2", "Thêm mới");
+			} else {
+				model.addAttribute("text", "Chi tiết");
+				model.addAttribute("text2", "Thay đổi");
+			}
+			
 			return "admin/addPhim";
 		}
+		
+		
 		
 		//thêm mới hoặc updtate data
 		
@@ -112,6 +128,7 @@ public class AdminPhimController {
 		
 		return "redirect:/admin/quanLyPhim";
 	}
+	
 	
 	@GetMapping("/movie/{id}")
 	public String admin5(Model model, @PathVariable("id") String id) {
