@@ -62,7 +62,7 @@
 									TRỢ</span></a></li>
 						<c:choose>
 							<c:when test="${empty sessionScope.customerName}">
-								<li class="has-children" id="login"><a href="#"
+								<li class="has-children"><a href="#"
 									id="member-tab">ĐĂNG NHẬP </a></li>
 							</c:when>
 							<c:otherwise>
@@ -79,6 +79,7 @@
 									</div></li>
 							</c:otherwise>
 						</c:choose>
+						
 				</nav>
 			</div>
 

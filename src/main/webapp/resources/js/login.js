@@ -18,6 +18,7 @@ document.getElementById('member-tab').addEventListener('click', function(event) 
     }
 });
 
+
 function logout() {
     // Send an AJAX request to the server to logout
     $.ajax({
@@ -29,17 +30,3 @@ function logout() {
         }
     });
 }
-
-
-
-/*$('.btn').click(function(e) {
-    e.preventDefault();
-
-    $.get('/checkLogin', function(data) {
-        if (data.checkLogin) {
-            window.location.href = "/booking";
-        } else {
-            $('#loginModal').modal('show');
-        }
-    });
-});*/
