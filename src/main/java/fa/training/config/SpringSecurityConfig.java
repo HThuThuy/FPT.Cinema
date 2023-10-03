@@ -1,10 +1,12 @@
-package fa.training.security;
+package fa.training.config;
 
 import java.util.concurrent.TimeUnit;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,6 +27,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+	        .formLogin().disable()
+	        .httpBasic().disable()
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/home", "/").permitAll()
@@ -32,19 +36,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/customer/**").hasAnyRole("ADMIN", "USER")
             .and()
-            .exceptionHandling()
-                .accessDeniedPage("/dang-nhap?error=403")
+            .exceptionHandling().accessDeniedPage("/dang-nhap?error=403")
                 .authenticationEntryPoint((request, response, authException) -> {
-                    response.sendRedirect("/login");
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // Trả về mã lỗi 401
                 })
             .and()
             .formLogin()
                 .usernameParameter("account")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/role", true)
-                .failureHandler((request, response, exception) -> {
-                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                })
             .and()
             .rememberMe()
                 .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
@@ -55,11 +55,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/");
     }
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+    
     
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -80,7 +76,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
-    // Add this method
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {

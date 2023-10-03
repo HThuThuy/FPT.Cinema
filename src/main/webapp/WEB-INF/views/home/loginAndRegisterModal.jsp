@@ -2,12 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 
+<%
+String error = (String) request.getSession().getAttribute("error");
+%>
+
 <style>
 div#loginModal {
-    margin-top: 115px;
+	margin-top: 115px;
 }
-</style> 
-
+</style>
 
 <div class="modal fade" id="loginModal" tabindex="-1"
 	aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -28,20 +31,20 @@ div#loginModal {
 			</div>
 			<div class="modal-body">
 				<div class="tab-content" id="myTabContent">
-				<div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-				    <!-- Login form -->
-				    <jsp:include page="loginModal.jsp" /> 
-				    
-
-				</div>
-				<div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-				    <!-- Register form -->
-				    <jsp:include page="registerModal.jsp" />
-				</div>
+					<div class="tab-pane fade show active" id="login" role="tabpanel"
+						aria-labelledby="login-tab">
+						<!-- Login form -->
+						<jsp:include page="loginModal.jsp" />
+					</div>
+					<div class="tab-pane fade" id="register" role="tabpanel"
+						aria-labelledby="register-tab">
+						<!-- Register form -->
+						<jsp:include page="registerModal.jsp" />
+					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>
+
 

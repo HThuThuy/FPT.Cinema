@@ -85,6 +85,7 @@ public class UserService {
 		return repo.findByAccountAndPassword(account, password);
 	}
 
+	
 	/**
 	 * 
 	 * Project: FPT Cinema Team: 1 Author : TraNLC Function/Class/JSP : Insert tài
@@ -111,9 +112,6 @@ public class UserService {
 		repo.updatePass(account, password);
 	}
 	
-//	public Customer searchCustomer(String email) {
-//		return repo.findByEmail(email);
-//	}
 
 	
 }

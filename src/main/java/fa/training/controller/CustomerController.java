@@ -49,6 +49,7 @@ public class CustomerController {
 	@Autowired
 	PromotionService promotionService;
 
+	
 	@GetMapping(value = { "/history" })
 	public String checkHistory(Model model,
 			@RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,

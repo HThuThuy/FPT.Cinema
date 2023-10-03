@@ -58,23 +58,24 @@
 								<li><a href="#">Menu Three</a></li>
 							</ul></li>
 						<li><a href="about.html"><span>KHUYẾN MÃI</span></a></li>
-						<li><a href="blog.html"><span>HỖ TRỢ</span></a></li>
+						<li><a href="${pageContext.request.contextPath}/login"><span>HỖ
+									TRỢ</span></a></li>
 						<c:choose>
 							<c:when test="${empty sessionScope.customerName}">
 								<li class="has-children" id="login"><a href="#"
 									id="member-tab">ĐĂNG NHẬP </a></li>
 							</c:when>
 							<c:otherwise>
-								<li class="dropdown"><a href="${pageContext.request.contextPath}/customer/history" class="dropdown-toggle"
-									id="member-tab" data-toggle="dropdown">
-									
-									Chào mừng
-										${sessionScope.customerName} ! </a>
+								<li class="dropdown"><a
+									href="${pageContext.request.contextPath}/customer/history"
+									class="dropdown-toggle" id="member-tab" data-toggle="dropdown">
+
+										Chào mừng ${sessionScope.customerName} ! </a>
 									<div class="dropdown-menu" aria-labelledby="member-tab">
 										<a class="dropdown-item"
 											href="${pageContext.request.contextPath}/customer/history">Tài
-											khoản</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/logout"
-											>Thoát</a>
+											khoản</a> <a class="dropdown-item"
+											href="${pageContext.request.contextPath}/logout">Thoát</a>
 									</div></li>
 							</c:otherwise>
 						</c:choose>
@@ -93,7 +94,6 @@
 
 
 <script>
-
 	 function loginSuccess(customerName) {
 		    // Remove the login link
 		    $('#login').remove();
