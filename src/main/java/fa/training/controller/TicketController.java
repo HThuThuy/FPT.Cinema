@@ -35,6 +35,11 @@ public class TicketController {
 	@Autowired
 	private ShowtimeService showtime;
 
+	
+	/*
+	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: Lấy thông tin suất
+	 * chiếu, rạp và xử lý lưu dữ liệu vào database
+	 */
 	@GetMapping(value = { "/showtime/{movieID}" })
 	public String ticket(Model model, @PathVariable("movieID") String movieID, HttpSession session) {
 
@@ -50,11 +55,23 @@ public class TicketController {
 		Movie movieChoose = movie.findById(movieID);
 		 System.out.println("Movie:-----------"+ movieChoose);
 		model.addAttribute("movieChoose", movieChoose);
+		//Movie
+		String decription = movieChoose.getMovieDescription();
+		 System.out.println("decription:-----------"+ decription);
+		String actor = decription.substring(decription.indexOf("1.")+2, decription.indexOf("2."));
+		model.addAttribute("dienVien", actor);
+		String genre = decription.substring(decription.indexOf("2.")+2, decription.indexOf("3."));
+		model.addAttribute("genre", genre);
+		System.out.println("decription:-----------"+ genre);
+		String nation = decription.substring(decription.indexOf("3.")+2, decription.indexOf("4."));
+		model.addAttribute("nation", nation);
 		
-		
-		Customer loginCustomer = (Customer)session.getAttribute("custerLogin");
+		String decript = decription.substring(decription.indexOf("4.")+2, decription.indexOf("5."));
+		model.addAttribute("mota2", decript);
+		session.setAttribute("movieChoose", movieChoose);
+		Customer loginCustomer = (Customer)session.getAttribute("customerLogin");
 
-		System.out.println("custerLogin"+loginCustomer);
+		System.out.println("customerLogin"+loginCustomer);
 		
 		//List<Showtime> shotimeList= showtime.getByMovieId(movieID, theaterId);
 		
@@ -75,8 +92,26 @@ public class TicketController {
 	}
 
 	@GetMapping(value = { "/bill" })
-	public String bill() {
-		return "ticket/bill";
-	}
+    public String bill(Model model, HttpSession session) {
+        System.out.println("bill");
+        Movie movieChoose= (Movie)session.getAttribute("movieChoose");
+        Showtime theaterSel=(Showtime)session.getAttribute("selectedShowtime");
+        System.out.println("abcdef---------"+theaterSel);
+        System.out.println("abc"+movieChoose);
+        model.addAttribute("movieChoose", movieChoose);
+        model.addAttribute("theaterSel", theaterSel);
+        return "ticket/bill";
+    }
 
+	
+	@GetMapping(value = { "/searchMovie/{movieName}" })
+    public String searchMovie(Model model,@PathVariable("movieName") String movieName, HttpSession session) {
+        System.out.println("bill");
+        List<Movie> movieChoose= movie.findByMovieName(movieName);
+       
+        System.out.println("abc"+movieChoose);
+        model.addAttribute("movieChoose", movieChoose);
+       
+        return "home/searchMovie";
+    }
 }

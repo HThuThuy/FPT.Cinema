@@ -1,5 +1,6 @@
 package fa.training.controller;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.Random;
 
@@ -8,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fa.training.DTO.CustomerDTO;
 import fa.training.DTO.RegisterDTO;
 import fa.training.model.Customer;
 import fa.training.model.Users;
@@ -42,6 +47,7 @@ public class AccountController {
 	@Autowired
 	PasswordEncoder passEncode;
 
+	
 //	/**
 //	 * Project: FPT-Cinema Team: 1 Author : TraNLC Function/Class/JSP : thêm tài
 //	 * khoản

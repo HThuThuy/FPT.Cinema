@@ -1,21 +1,25 @@
 package fa.training.controller;
 
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Map;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import fa.training.model.Customer;
 import fa.training.model.Users;
@@ -30,6 +34,25 @@ public class LoginController {
 
 	@Autowired
 	private CustomerService customerService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@GetMapping(value = { "/api/checkAccount" })
+	public ResponseEntity<Boolean> checkAccount(@RequestParam("accountLogin") String accountLogin,
+			@RequestParam("passwordLogin") String passwordLogin) {
+		boolean isAccountValid = false;
+		Users user = userService.findByAccount(accountLogin);
+		if (user != null) {
+			isAccountValid = passwordEncoder.matches(passwordLogin, user.getPassword());
+		}
+
+		if (isAccountValid) {
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(false, HttpStatus.OK);
+		}
+	}
 
 	@GetMapping(value = "/role")
 	public String showByRole(Principal principal, HttpSession session) {
@@ -68,7 +91,7 @@ public class LoginController {
 //
 //	    return Collections.singletonMap("checkLogin", checkLogin);
 //	}
-	
+
 	// Chức năng đăng xuất khi người dùng có đăng nhập và điều hướng về màn hình
 	// đăng nhập ban đầu
 	@GetMapping(value = "/logout")

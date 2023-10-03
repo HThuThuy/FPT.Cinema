@@ -18,29 +18,23 @@ import fa.training.repository.UserRepository;
 public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
-
+	
 	@Override
 	public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-	    Users user = userRepository.findByAccount(account);
-	    System.out.println(userRepository.findByAccount(account));
-	    if (user == null) {
-	        throw new UsernameNotFoundException("Could not find user");
-	    }
+		Users user = userRepository.findByAccount(account);
+		System.out.println(userRepository.findByAccount(account));
+		if (user == null) {
+			throw new UsernameNotFoundException("Could not find user");
+		}
 
-	    System.out.println("id= "+user.getAccount());
-	    System.out.println("pass= "+user.getPassword());
-	    
-	    return new org.springframework.security.core.userdetails.User(user.getAccount(),
-	            user.getPassword(), 
-	            getAuthorities(user));
-	    
+		return new org.springframework.security.core.userdetails.User(user.getAccount(), user.getPassword(),
+				getAuthorities(user));
+
 	}
-	
-	
 
 	private static Collection<? extends GrantedAuthority> getAuthorities(Users users) {
-	    String userRole = "ROLE_" + users.getUserRole();
-	    Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRole);
-	    return authorities;
+		String userRole = "ROLE_" + users.getUserRole();
+		Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRole);
+		return authorities;
 	}
 }

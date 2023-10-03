@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fa.training.model.Movie;
 import fa.training.model.Seat;
 import fa.training.model.Services;
 import fa.training.model.Showtime;
@@ -51,6 +52,12 @@ public class BookingController {
         Showtime getShowtime = showtime.findById(selectedShowtime);
          System.out.println("Showtime---------------------"+ getShowtime);
          session.setAttribute("selectedShowtime", getShowtime);
+         Movie movieChoose= (Movie)session.getAttribute("movieChoose");
+         Showtime theaterSel=(Showtime)session.getAttribute("selectedShowtime");
+         System.out.println("abcdef---------"+theaterSel);
+         System.out.println("abc"+movieChoose);
+         model.addAttribute("movieChoose", movieChoose);
+         model.addAttribute("theaterSel", theaterSel);
 		return "ticket/payment";
 	}
 	
