@@ -12,26 +12,7 @@
 			style="display: flex; justify-content: center; align-items: center;">
 
 			<div class="col-lg-6 col-md-6">
-				<%-- <form:form class="row"
-					action="${pageContext.request.contextPath}/admin/search" method="get">
-					
-					<div class="col-lg-1 col-md-1">
-						
-					</div>
-
-					<div class="col-lg-6 col-md-6">
-						<input type="hidden" name="page" value="${1}" />
-						<input
-							id="nameCustomer" type="text" name="searchName"
-							class="form-control ml-1" value="${searchName}"
-							placeholder="Nhập tên phim">
-					</div>
-
-					<div class="col-lg-3 col-md-3">
-						<button type="submit" class="btn">Search</button>
-					</div>
-
-				</form:form> --%>
+				
 			</div>
 
 			<div class="col-lg-3 col-md-6"></div>
@@ -61,7 +42,7 @@
 					<tbody>
 						<c:forEach items="${suatchieuList}" var="item" varStatus="status">
 							<tr style="font-size: 15px" class="align-middle">
-								<td class="text-center">${status.count}</td>
+								<td class="text-center">${status.count+(currentPage-1)*5}</td>
 								<td class="d-none">${item.showtimeId}</td>								
 								<td>${item.room.theater.theaterName}</td>								
 								<td>${item.room.roomName}</td>

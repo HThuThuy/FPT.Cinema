@@ -13,8 +13,8 @@
 
 <style>
 	img {
-		height: 100px;
-		width: 100px;
+		height: 90px;
+		width: 90px;
 		border-radius: 5%;
 	}
 

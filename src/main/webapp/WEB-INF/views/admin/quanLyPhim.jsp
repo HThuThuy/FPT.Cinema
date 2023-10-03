@@ -64,7 +64,7 @@
 
 						<c:forEach items="${phimList}" var="item" varStatus="status">
 							<tr class="align-middle">
-								<td class="text-center">${status.count}</td>
+								<td class="text-center">${status.count+(currentPage-1)*5}</td>
 								<td class="d-none">${item.movieId}</td>
 								<td>${item.movieName}</td>
 								<td class="d-none">${item.movieDescription}</td>

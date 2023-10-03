@@ -33,10 +33,12 @@ public class AdminPhimController {
 	@Autowired
 	MovieService movieService;
 	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện tất cả phim trong DB
+	 */
 	@GetMapping(value = { "/quanLyPhim" })
 	public String admin(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
-		
-//		int noOfRecords = 30; 
+		//setup phân trang
 		int noOfRecords = movieService.getAll().size();
 		int recordsPerPage = 5;
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
@@ -46,7 +48,7 @@ public class AdminPhimController {
 			page = noOfRecords;
 		}
 		int start = page > 0 ? page - 1 : 0;
-		
+		//get data theo phân trang
 		List<Movie> list = movieService.getRecordsForCurrentPage((start) * recordsPerPage, recordsPerPage);
 		model.addAttribute("noOfPages", noOfPages);
 		model.addAttribute("currentPage", page);
@@ -55,14 +57,16 @@ public class AdminPhimController {
 		return "admin/quanLyPhim";
 	}
 	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Tìm kiếm phim trong DB theo tên
+	 */
 	@GetMapping("/search")
 	public String admin2(
 			@RequestParam(value = "searchName", required = true) String searchName,
 			@RequestParam(name = "page", defaultValue = "0") int page, Model model
 	) {
-		
+		//setup phân trang
 		int noOfRecords = movieService.searchMovie(searchName).size();
-		System.out.print("AAAAAAAAAAAAA: "+noOfRecords);
 		int recordsPerPage = 5;
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		if (page < 1) {
@@ -71,7 +75,7 @@ public class AdminPhimController {
 			page = noOfRecords;
 		}
 		int start = page > 0 ? page - 1 : 0;
-		
+		//get data theo phân trang
 		List<Movie> list = movieService.getRecordsForCurrentPage2(searchName,(start) * recordsPerPage, recordsPerPage);
 		model.addAttribute("searchName", searchName);
 		model.addAttribute("noOfPages", noOfPages);
@@ -80,6 +84,9 @@ public class AdminPhimController {
 		return "admin/quanLyPhim";
 	}
 	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Mở trang jsp thêm mới phim
+	 */
 	@GetMapping(value = { "/addPhim" })
 	public String admin2(Model model) {
 		Movie movie = new Movie();
@@ -90,6 +97,9 @@ public class AdminPhimController {
 		return "admin/addPhim";
 	}
 	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Thêm mới/update phim vào DB
+	 */
 	@PostMapping(value = { "/addPhim" })
 	public String admin4(@Valid @ModelAttribute("phim") Movie movie,
 			BindingResult bindingResult, Model model) {
@@ -100,8 +110,7 @@ public class AdminPhimController {
 			bindingResult.rejectValue("endDate", "xxx", "Ngày kết thúc phải lớn hơn ngày khởi chiếu");
 		} catch (Exception e) {
 			
-		}
-		
+		}		
 		
 		if(bindingResult.hasErrors()) {			
 			model.addAttribute("phim", movie);
@@ -114,25 +123,22 @@ public class AdminPhimController {
 			}
 			
 			return "admin/addPhim";
-		}
-		
-		
-		
-		//thêm mới hoặc updtate data
-		
-		if(movie.getMovieId().equals("123456")) {
-			movie.setMovieId(UUID.randomUUID().toString());
 		}		
 		
+		//thêm mới hoặc updtate data		
+		if (movie.getMovieId().equals("123456")) {
+			movie.setMovieId(UUID.randomUUID().toString());
+		}			
 		movieService.save(movie);
 		
 		return "redirect:/admin/quanLyPhim";
 	}
 	
-	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Mở trang jsp edit phim
+	 */
 	@GetMapping("/movie/{id}")
 	public String admin5(Model model, @PathVariable("id") String id) {
-//		lấy data
 		Movie movie = movieService.findById(id);
 		model.addAttribute("phim", movie);		
 		model.addAttribute("text", "Chi tiết");	
@@ -140,9 +146,11 @@ public class AdminPhimController {
 		return "admin/addPhim";
 	}	
 	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Xóa phim đã chọn
+	 */
 	@PostMapping("/deletePhim")
 	public String admin6(@RequestParam String movieId,  Model model, RedirectAttributes redirectAttributes) {
-		System.out.print("Xóa phim: " + movieId);
 
 		try {
 			movieService.deleteMV(Arrays.asList(movieId));

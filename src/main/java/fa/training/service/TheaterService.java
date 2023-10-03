@@ -43,16 +43,11 @@ public class TheaterService {
 	
 	public List<Theater>findByCity(String selectedCity) {
 		return repo.findAllByCity(selectedCity);
-	}
-	//LamNH23
-	public List<Theater> getRecordsForCurrentPage(int start, int recordsPerPage) {
-		List<Theater> list = new ArrayList<>();
-		list.add(new Theater("TT004", "Tên rạp 1", "Thành phố"));
-		list.add(new Theater("TT004", "Tên rạp 2", "Thành phố"));
-		return list;
-	}
+	}	
 	
-	// LamNH23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Xóa rạp đã chọn
+	 */
 	public void deleteTT(Iterable<String> ids) {		
 		repo.deleteAllByIdInBatch(ids);
 	}

@@ -47,47 +47,27 @@ public class ShowtimeService {
 		repo.deleteById(showtimeId);
 	}
 
-	// LamNH23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện tất cả suất chiếu trong DB
+	 */
 	public List<Showtime> getRecordsForCurrentPage(int start, int recordsPerPage) {
-//		List<Showtime> list = new ArrayList<>();
-//		for (int i = start + 1; i < (start + recordsPerPage + 1); i++) {
-//			list.add(new Showtime("ST"+i, new Movie("tên phim"), new Theater("abc", "Tên rạp", "TP"), new Room("Tên room"),
-//					LocalDate.of(2023, 9, 15), LocalTime.of(02, 30)));
-//		}
 		List<Showtime> list = repo.getRecordsForCurrentPage(start, recordsPerPage);
-		return list;
-		
-		
-	}
-
-	// LamNH23
-	public List<Showtime> getRecordsForCurrentPage2(int start, int recordsPerPage) {
-		List<Showtime> list = new ArrayList<>();
-//		for (int i = start + 1; i < (start + recordsPerPage + 1); i++) {
-//			list.add(new Showtime("ST"+i, new Movie("tên phim search"), new Theater("abc", "Tên rạp", "TP"),
-//					new Room("Tên room"), LocalDate.of(2023, 9, 15), LocalTime.of(02, 30)));
-//		}
-		return list;
-	}
-
-	// LamNH23
-	public int getRecordsForSearch(String id) {
-
-		return 25;
-	}
+		return list;		
+	}	
 	
-	// LamNH23
-		public List<String> getTimeByRoom(String roomId) {			
-			return repo.getTimeByRoom(roomId);
-		}
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện danh sách giờ chiếu khi chọn room
+	 */
+	public List<String> getTimeByRoom(String roomId) {			
+		return repo.getTimeByRoom(roomId);
+	}			
 		
-		
-		
-		// LamNH23
-		public void deleteST2(Iterable<String> ids) {
-			
-			repo.deleteAllByIdInBatch(ids);
-		}
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Xóa suất chiếu đã chọn
+	 */
+	public void deleteST2(Iterable<String> ids) {		
+		repo.deleteAllByIdInBatch(ids);
+	}
 
 	
 	//ThuyHtt14

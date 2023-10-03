@@ -23,6 +23,10 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
 	String sql2 = "select * from MOVIE where movieName like :searchName order by movieName offset :start ROWS FETCH FIRST :recordsPerPage ROWS ONLY";
 	String sql3 = "select * from MOVIE where movieName like :searchName";
 	
+	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Lấy tất cả phim trong DB có ngày kết thúc lớn hơn ngày hiện tại
+	 */
 	@Query(value = "select * from MOVIE where endDate > :now order by movieId;", nativeQuery = true)
 	List<Movie> getAllEnable(@Param("now") Date now);
 
@@ -36,15 +40,21 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
     
     List<Movie> findByMovieName(String movieName);
 		
-	//LamNH23
+    /**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Lấy tất cả phim trong DB
+	 */
 	@Query(value = sql1, nativeQuery = true)
 	List<Movie> getRecordsForCurrentPage(@Param("start") int start, @Param("recordsPerPage") int recordsPerPage);
 
-	//LamNH23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Tìm phim trong DB theo tên
+	 */
 	@Query(value = sql3, nativeQuery = true)
 	List<Movie> searchMovie(@Param("searchName") String searchName);
 	
-	//LamNH23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện tất cả phim trong DB
+	 */
 	@Query(value = sql2, nativeQuery = true)
 	List<Movie> getRecordsForCurrentPage2(@Param("searchName") String searchName, @Param("start") int start, @Param("recordsPerPage") int recordsPerPage);
 

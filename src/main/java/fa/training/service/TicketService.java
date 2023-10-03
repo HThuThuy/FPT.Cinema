@@ -55,18 +55,17 @@ public class TicketService {
 		repo.deleteById(ticketId);
 	}
 
-	// LamNH23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Lấy số lượng suất chiếu từ DB
+	 */
 	public int getNoOfShowTimes() {
 		return repo.getNumberShowtime().size();
 	}
 
-	// LamNH23
-	public List<ShowTimeDTO> getRecordsForCurrentPage(int start, int recordsPerPage) {
-//		List<ShowTimeDTO> list = new ArrayList<>();
-//		for (int i = start + 1; i < (start + recordsPerPage + 1); i++) {
-//			list.add(new ShowTimeDTO("Rạp" + i, "Phòng "+i, "09:00","Phim "+i, "22/09/2023", "25/09/2023", 350000));
-//		}
-		
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện tất cả suất chiếu trong DB kèm doanh thu
+	 */
+	public List<ShowTimeDTO> getRecordsForCurrentPage(int start, int recordsPerPage) {		
 		
 		List<Tuple> list2 = repo.getRecordsForCurrentPage(start, recordsPerPage);
 		List<ShowTimeDTO> list = list2.stream().map(t -> new ShowTimeDTO(
@@ -82,12 +81,16 @@ public class TicketService {
 		return list;
 	}
 
-	// LamNH23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Lấy số lượng phim từ DB
+	 */
 	public int getNoOfMovie() {
 		return repo.getNumberMovie().size();
 	}
 
-	// LamNH23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện tất cả phim trong DB kèm doanh thu
+	 */
 	public List<MovieDTO> getRecordsForCurrentPage2(int start, int recordsPerPage) {		
 		List<Tuple> list2 = repo.getRecordsForCurrentPage2(start, recordsPerPage);
 		List<MovieDTO> list = list2.stream().map(t -> new MovieDTO(
@@ -101,15 +104,20 @@ public class TicketService {
 		return list;
 	}
 	
-	// LamNH23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Lấy số lượng phim từ DB theo tên
+	 */
 	public int getNoOfMovieForName(String searchName) {
 		return repo.getNumberMovieForName("%" + searchName + "%").size();
 	}
 
-	// LamNH23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện phim trong DB kèm doanh thu theo tên
+	 */
 	public List<MovieDTO> getRecordsForCurrentPage2ForName(String searchName, int start, int recordsPerPage) {
 		List<Tuple> list2 = repo.getRecordsForCurrentPage2ForName("%" + searchName + "%", start, recordsPerPage);
-		List<MovieDTO> list = list2.stream().map(t -> new MovieDTO(t.get(0, String.class), // movieName
+		List<MovieDTO> list = list2.stream().map(t -> new MovieDTO(
+				t.get(0, String.class), // movieName
 				t.get(1, Date.class), // startDate
 				t.get(2, Date.class), // endDate
 				t.get(3, String.class), // posterUrl
@@ -120,7 +128,9 @@ public class TicketService {
 	}
 
 
-	// LamNH23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện tất cả rạp trong DB kèm doanh thu
+	 */
 	public List<TheaterDTO> getRecordsForCurrentPage3() {
 		
 		List<Tuple> list2 = repo.getRecordsForCurrentPage3();
@@ -135,19 +145,20 @@ public class TicketService {
 		return list;
 	}
 	
-	// LamNH23
-		public List<TheaterDTO> getRecordsForCurrentPage4(String searchDate, String searchDate2) {
-			
-			List<Tuple> list2 = repo.getRecordsForCurrentPage4(searchDate, searchDate2);
-			List<TheaterDTO> list = list2.stream().map(t -> new TheaterDTO(
-					t.get(0,String.class), //theaterName
-					t.get(1,String.class), //city
-					t.get(2,String.class), //address
-					t.get(3,String.class), //phone
-					t.get(4,Integer.class))) //doanhThu
-					.collect(Collectors.toList());
-			
-			return list;
-		}
-
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện tất cả rạp trong DB kèm doanh thu theo khoản thời gian
+	 */
+	public List<TheaterDTO> getRecordsForCurrentPage4(String searchDate, String searchDate2) {
+		
+		List<Tuple> list2 = repo.getRecordsForCurrentPage4(searchDate, searchDate2);
+		List<TheaterDTO> list = list2.stream().map(t -> new TheaterDTO(
+				t.get(0,String.class), //theaterName
+				t.get(1,String.class), //city
+				t.get(2,String.class), //address
+				t.get(3,String.class), //phone
+				t.get(4,Integer.class))) //doanhThu
+				.collect(Collectors.toList());
+		
+		return list;
+	}
 }

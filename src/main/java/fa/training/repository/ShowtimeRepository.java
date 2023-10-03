@@ -17,10 +17,15 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, String> {
 	String oldsql = "select * from SHOWTIME order by showtimeId offset :start ROWS FETCH FIRST :recordsPerPage ROWS ONLY;";
 	
 	
-	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện tất cả suất chiếu trong DB
+	 */
 	@Query(value = sql1, nativeQuery = true)
 	List<Showtime> getRecordsForCurrentPage(@Param("start") int start, @Param("recordsPerPage") int recordsPerPage);
 	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện danh sách giờ chiếu khi chọn room
+	 */
 	@Query(value = "select CONVERT(varchar(5), startTime, 120) from SHOWTIME where roomId like :roomId", nativeQuery = true)
 	List<String> getTimeByRoom(@Param("roomId") String roomId);
 
