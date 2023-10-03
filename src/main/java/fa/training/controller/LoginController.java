@@ -47,11 +47,11 @@ public class LoginController {
             session.setAttribute("account1", accountName);
             // Get customer name from CustomerService
             String customerName = customerService.getCustomerName(account.getCustomer().getCccd());
-            Customer custerLogin = customerService.findById(account.getCustomer().getCccd());
+            Customer customerLogin = customerService.findById(account.getCustomer().getCccd());
             
-            System.out.println("custerLogin"+custerLogin);
+            System.out.println("custerLogin"+customerLogin);
             
-            session.setAttribute("custerLogin", custerLogin);
+            session.setAttribute("customerLogin", customerLogin);
             
             session.setAttribute("customerName", customerName);
             session.setAttribute("loggedInUser", customerService.findById(account.getCustomer().getCccd()));

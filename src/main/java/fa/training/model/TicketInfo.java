@@ -49,8 +49,11 @@ public class TicketInfo {
 
 	@Override
 	public String toString() {
-		return "TicketInfo [ticketId=" + ticketId + ", status=" + status + ", showtimeTicket=" + showtimeTicket.getShowtimeId()
-				+ ", customer=" + customer.getCccd() + ", order=" + order.getOrderId() + "]";
+		return "TicketInfo [ticketId=" + ticketId + ", status="
+				+ status /*
+							 * + ", showtimeTicket=" + showtimeTicket.getShowtimeId() + ", customer=" +
+							 * customer.getCccd() + ", order=" + order.getOrderId() + "]"
+							 */;
 	}
 	
 	String QRCode;

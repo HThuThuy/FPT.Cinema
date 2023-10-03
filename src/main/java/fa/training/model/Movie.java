@@ -62,6 +62,8 @@ public class Movie {
 	
 	String posterUrl;
 	
+	String trailerUrl;
+	
 	String movieStatus;
 	
 	@OneToMany(mappedBy = "movie",fetch = FetchType.EAGER,cascade = CascadeType.ALL)

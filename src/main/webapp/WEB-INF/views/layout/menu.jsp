@@ -34,7 +34,7 @@
 					<div class="search-input">
 						<form id="search" action="#">
 							<input type="text" placeholder="Tìm tên phim, diễn viên"
-								id='searchText' name="searchKeyword" onkeypress="handle" /> <i
+								id="searchText" onkeypress="handleKeyPress(event)" /> <i
 								class="fa fa-search"></i>
 						</form>
 					</div>
@@ -42,7 +42,8 @@
 					<!-- ***** Menu Start ***** -->
 					<ul class="nav d-flex justify-content-center">
 						<li><a href="index.html" class="active">MUA VÉ</a></li>
-						<li><a href="${pageContext.request.contextPath}/customer/history">PHIM</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/customer/history">PHIM</a></li>
 						<li><a href="booking.html">RẠP/GIÁ VÉ</a></li>
 						<li><a href="streams.html">KHUYẾN MÃI</a></li>
 						<c:choose>
@@ -74,16 +75,31 @@
 </header>
 
 <script>
-    function logout() {
-        // Send an AJAX request to the server to logout
-        $.ajax({
-            url: "${pageContext.request.contextPath}/logout",
-            method: "POST",
-            success: function() {
-                // Refresh the page or redirect the user
-                location.reload();
-            }
-        });
-    }
+	function logout() {
+		// Send an AJAX request to the server to logout
+		$.ajax({
+			url : "${pageContext.request.contextPath}/logout",
+			method : "POST",
+			success : function() {
+				// Refresh the page or redirect the user
+				location.reload();
+			}
+		});
+	}
+	function handleKeyPress(event) {
+
+		  if (event.keyCode === 13) {
+
+		    event.preventDefault(); // Ngăn chặn hành vi mặc định của phím Enter trong form
+
+		    var searchText = document.getElementById('searchText').value;
+
+		    var url = '/FPT-Cinema/ticket/searchMovie/' + encodeURIComponent(searchText);
+
+		    window.location.href = url;
+
+		  }
+
+		}
 </script>
 <!-- ***** Header Area End ***** -->

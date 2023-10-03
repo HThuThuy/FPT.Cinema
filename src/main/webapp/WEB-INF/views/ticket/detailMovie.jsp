@@ -23,15 +23,13 @@
 								</div>
 								<div class="col-lg-4 align-self-center">
 									<div class="main-info header-text">
-										<span>Đang chiếu</span>
+										<span>${movieChoose.movieStatus}</span>
 										<h4>${movieChoose.movieName}</h4>
 										<input type="hidden" id="movieIDSelect"
 											value="${movieChoose.movieId}">
 										<p>
-											Đạo diễn: ${movieChoose.director} <br> Thể loại: Hài,
-											Gia Đình, Hành Động <br> Diễn viên: Kiều Minh Tuấn, Quốc
-											Trường, Vân Trang, Mạc Văn Khoa <br> Quốc gia: Việt Nam
-											<br> Ngày khởi chiếu: 25/8/2023
+											Đạo diễn: ${movieChoose.director} <br> Thể loại: ${genre} <br> Diễn viên: ${dienVien} <br> Quốc gia: ${nation} 
+											<br> Ngày khởi chiếu: ${movieChoose.startDate}
 
 										</p>
 
@@ -52,7 +50,7 @@
 												</div>
 											</div>
 
-											<p>${movieChoose.movieDescription}</p>
+											 <p>${mota2}</p>
 
 
 											<h4 class="mt-4">
@@ -202,6 +200,24 @@
 			        	result += '<a class="show_time_boder" value="' + list[i].showtimeId + '" href="#" onclick="sendSelectedShowtime(\'' + list[i].showtimeId + '\')">' + list[i].startTime + '</a>';
 			        }
 			        document.getElementById('showtime').innerHTML = result;
+			        let anchorElements = document.querySelectorAll('a.show_time_boder');
+			        let values = [];
+
+			        anchorElements.forEach((element) => {
+			          let value = element.innerText;
+			          values.push(value);
+			        });
+
+			        let formattedValues = values.map((value) => {
+			          let parts = value.split(',');
+			          let hours = parts[0].padStart(2, '0');
+			          let minutes = parts[1].padEnd(2, '0');
+			          return hours + ':' + minutes;
+			        });
+
+			        anchorElements.forEach((element, index) => {
+			          element.innerText = formattedValues[index];
+			        });
 			        console.log(list);
 			    } else {
 			        // Xử lý lỗi trạng thái phản hồi
@@ -214,7 +230,7 @@
 	}
 	//Validate ngày nhập vào:
      var usrInput = document.getElementById("usr");
-var movieEndInput = document.getElementById("movieEnd");
+     var movieEndInput = document.getElementById("movieEnd");
 
 
 var currentDate = new Date();

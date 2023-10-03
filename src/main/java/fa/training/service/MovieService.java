@@ -53,7 +53,9 @@ public class MovieService {
 	public void deleteById(String movie) {
 		repo.deleteById(movie);
 	}
-	
+	public List<Movie> findByMovieName(String movieName) {
+        return repo.findByMovieName(movieName);
+    }
 	//LamNH23
 	public List<Movie> getRecordsForCurrentPage(int start, int recordsPerPage) {
 //		List<Movie> list = new ArrayList<>();
