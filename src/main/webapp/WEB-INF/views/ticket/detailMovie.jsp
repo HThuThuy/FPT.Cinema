@@ -45,7 +45,7 @@
 											<div class="col-lg-12">
 												<div class="heading-section">
 													<h4>
-														<em>NỘI DUNG PHIM</em> Movie Details
+														<em>NỘI DUNG PHIM</em> 
 													</h4>
 												</div>
 											</div>
