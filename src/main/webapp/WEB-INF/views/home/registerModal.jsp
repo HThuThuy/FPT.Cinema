@@ -86,9 +86,10 @@
 	</div>
 </form:form>
 
- <script>
+<script>
 document.getElementById('registerForm').addEventListener('submit', function(e) {
     // Ngăn chặn hành vi mặc định của form
+    e.preventDefault();
 
     // Thu thập dữ liệu từ form
     var customerName = document.getElementById('customerName').value;
@@ -125,4 +126,4 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
             console.error(error);
         });
 });
-</script> 
+</script>

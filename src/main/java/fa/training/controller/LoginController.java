@@ -34,52 +34,25 @@ public class LoginController {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@GetMapping(value = { "/api/checkAccount" })
-	public ResponseEntity<Boolean> checkAccount(@RequestParam("accountLogin") String accountLogin, @RequestParam("passwordLogin") String passwordLogin) {
-	    boolean isAccountValid = false;
-	    Users user = userService.findByAccount(accountLogin);
-	    if (user != null) {
-	        isAccountValid = passwordEncoder.matches(passwordLogin, user.getPassword());
-	    }
+	public ResponseEntity<Boolean> checkAccount(@RequestParam("accountLogin") String accountLogin,
+			@RequestParam("passwordLogin") String passwordLogin) {
+		boolean isAccountValid = false;
+		Users user = userService.findByAccount(accountLogin);
+		if (user != null) {
+			isAccountValid = passwordEncoder.matches(passwordLogin, user.getPassword());
+		}
 
-	    if (isAccountValid) {
-	        return new ResponseEntity<>(true, HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<>(false, HttpStatus.OK);
-	    }
+		if (isAccountValid) {
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(false, HttpStatus.OK);
+		}
 	}
-
-//	@ResponseBody	
-//	@GetMapping(value = { "/api/checkAccount" })
-//	public ResponseEntity<Boolean> checkAccount(@RequestParam("accountLogin") String accountLogin, @RequestParam("passwordLogin") String passwordLogin) {
-//	    // Đoạn này cần thực hiện kiểm tra tài khoản trong cơ sở dữ liệu
-//	    boolean isAccountValid = true;
-//	    List<Users> listCheck = userService.findAll();
-//	    for (Users usersabc : listCheck) {
-//			if (usersabc.getAccount().equals(accountLogin)) {
-//				isAccountValid = true;
-//			} else {
-//				isAccountValid = false;
-//			}
-//		}
-//	    System.out.println("id"+accountLogin);
-//	    System.out.println("pass"+passwordLogin);
-//	    System.out.println("isAccountValid"+isAccountValid);
-//	    
-//	    if (isAccountValid) {
-//	        return new ResponseEntity<>(true, HttpStatus.OK);
-//	    } else {
-//	        return new ResponseEntity<>(false, HttpStatus.OK);
-//	    }
-//	}
-
-
-
-	
 
 	@GetMapping(value = "/role")
 	public String showByRole(Principal principal, HttpSession session) {
