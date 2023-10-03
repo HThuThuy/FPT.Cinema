@@ -84,6 +84,10 @@ button#applyDiscount {
 input#discountCode {
 	width: 200px;
 }
+
+.layout__seat--disabled {
+	pointer-events: none;
+}
 }
 </style>
 <div class="container2">
@@ -92,8 +96,6 @@ input#discountCode {
 			<div class="page-content">
 
 
-
-				<!-- ***** Details Start ***** -->
 				<div class="game-details">
 					<div class="row">
 						<div class="col-lg-12">
@@ -139,7 +141,7 @@ input#discountCode {
 																<div
 																	aria-label="Row 1, Seat ${status.index + 1} - Love seat left."
 																	aria-checked="false" aria-hidden="true"
-																	class="layout__seat layout__seat--love-seat-left"
+																	class="layout__seat layout__seat--love-seat-left layout__seat--disabled"
 																	role="checkbox" tabindex="-1" data-reactid="99"
 																	style="background: #aaa; color: black;">
 																	<span aria-hidden="false" class="layout__seat__name"
@@ -211,10 +213,12 @@ input#discountCode {
 											<div style="width: 60%; display: flex;">
 												Ghế bạn chọn:
 												<div
-													style="width: 20px; height: 20px; background: red; margin: 0px 20px;"></div>
+													style="width: 20px; height: 20px; background: red; margin: 0px 20px;">
+												</div>
 												Ghế đã có người chọn:
 												<div
-													style="width: 20px; height: 20px; background: #aaa; margin: 0px 20px;"></div>
+													style="width: 20px; height: 20px; background: #aaa; margin: 0px 20px;">
+												</div>
 												Ghế trống:
 												<div
 													style="width: 20px; height: 20px; background: white; margin: 0px 20px;">
@@ -272,8 +276,6 @@ input#discountCode {
 																	<td style="text-align: left;"><b>${sr.serviceName}</b>
 																		<br> ${sr.serviceDescription}</td>
 																	<td>
-																	
-																	
 																		<button type="button" class="minus">
 																			<i class="fas fa-minus-circle fa-lg"
 																				style="color: #ffffff;"></i>
@@ -284,13 +286,15 @@ input#discountCode {
 																				style="color: #ffffff;"></i>
 																		</button>
 																	</td>
-																	<td data-combo-price="${sr.servicePrice}">${sr.servicePrice}</td>
+																	<td data-combo-price="${sr.servicePrice}">
+																		${sr.servicePrice}</td>
 																	<td>
 																		<div class="total-price">
 																			<span id="price">0</span>
 																		</div>
 																	</td>
-																	<input type="hidden" class="serviceId" value="${sr.serviceId}">
+																	<input type="hidden" class="serviceId"
+																		value="${sr.serviceId}">
 																</tr>
 															</c:forEach>
 														</tbody>
@@ -304,18 +308,19 @@ input#discountCode {
 									<div class="content mt-4">
 										<div class="row">
 											<div class="col-lg-5">
-												<img
-													src="https://imagizer.imageshack.com/img922/9552/zAIqdi.jpg">
+												<div class="col-lg-5">
+													<img src="${movieChoose.posterUrl}">
+												</div>
 											</div>
 											<div class="col-lg-7">
 												<div class="row">
-													<h3>STAR WARS: ROGUE ONE</h3>
+													<h3>${movieChoose.movieName}</h3>
 												</div>
 												<div id="infor" class="row p-2 mt-4">
-													<span>Rạp: FPT Cinema Đà Nẵng | RẠP 2</span>
+													<span>Rạp: ${theaterSel.room.roomName}</span>
 												</div>
 												<div id="infor" class="row p-2">
-													<span>Suất chiếu: 19:30 | Thứ 2, 15/09/2023</span>
+													<span>Suất chiếu: ${theaterSel.startTime}</span>
 												</div>
 												<div id="infor" class="row p-2">
 													<span id="selectedSeatsForm">Ghế đã chọn: </span>
@@ -369,231 +374,259 @@ input#discountCode {
 
 <script>
 
-$(document).ready(function() {
-    // Phần chọn và tính tiền ghế 
-    const seats = $('.layout__seat');
-    let selectedSeats = [];
-    let totalSeatPrice = 0;
+                        $(document).ready(function () {
+                            let totalAmount = 0;
+                            // Phần chọn và tính tiền ghế 
+                            const seats = $('.layout__seat');
+                            let selectedSeats = [];
+                            let totalSeatPrice = 0;
 
-    seats.on('click', function() {
-        $(this).toggleClass('layout__seat--selected');
+                            seats.on('click', function () {
+                                $(this).toggleClass('layout__seat--selected');
 
-        if (!selectedSeats.includes(this)) {
-            selectedSeats.push(this);
-            totalSeatPrice += calculateSeatPrice(this);
-            $(this).addClass('selected');
-        } else {
-            selectedSeats = selectedSeats.filter(selectedSeat => selectedSeat !== this);
-            totalSeatPrice -= calculateSeatPrice(this);
-            $(this).removeClass('selected');
-        }
+                                if (!selectedSeats.includes(this)) {
+                                    selectedSeats.push(this);
+                                    totalSeatPrice += calculateSeatPrice(this);
+                                    $(this).addClass('selected');
+                                } else {
+                                    selectedSeats = selectedSeats.filter(selectedSeat => selectedSeat !== this);
+                                    totalSeatPrice -= calculateSeatPrice(this);
+                                    $(this).removeClass('selected');
+                                }
 
-        updateSelectedSeatsInfo();
-        updateTotalPrice();
-        updatePaymentInfo();
-    });
+                                updateSelectedSeatsInfo();
+                                updateTotalPrice();
+                                updatePaymentInfo();
+                            });
 
-    function calculateSeatPrice(seat) {
-        const isMiddleSeat = $(seat).hasClass('middle-seat');
-        const price = isMiddleSeat ? 90000 : 80000;
-        return price;
-    }
+                            function calculateSeatPrice(seat) {
+                                const isMiddleSeat = $(seat).hasClass('middle-seat');
+                                const price = isMiddleSeat ? 90000 : 80000;
+                                return price;
+                            }
 
-    function updateSelectedSeatsInfo() {
-        const selectedSeatsElement = $('#selectedSeats');
-        const selectedSeatsFormElement = $('#selectedSeatsForm');
-        const selectedSeatsText = selectedSeats.map(seat => $(seat).find('.layout__seat__name').text()).join(', ');
+                            function updateSelectedSeatsInfo() {
+                                const selectedSeatsElement = $('#selectedSeats');
+                                const selectedSeatsFormElement = $('#selectedSeatsForm');
+                                const selectedSeatsText = selectedSeats.map(seat => $(seat).find('.layout__seat__name').text()).join(', ');
 
-        selectedSeatsElement.text(selectedSeatsText);
-        selectedSeatsFormElement.text('Ghế đã chọn: ' + selectedSeatsText);
+                                selectedSeatsElement.text(selectedSeatsText);
+                                selectedSeatsFormElement.text('Ghế đã chọn: ' + selectedSeatsText);
 
-        const totalSelectedSeatsElement = $('#totalSelectedSeats');
-        totalSelectedSeatsElement.text(selectedSeats.length);
-    }
+                                const totalSelectedSeatsElement = $('#totalSelectedSeats');
+                                totalSelectedSeatsElement.text(selectedSeats.length);
+                            }
 
-    function updateTotalPrice() {
-        const totalPriceElement = $('#totalPrice');
-        totalPriceElement.text(formatNumber(totalSeatPrice) + ' VND');
-        updatePaymentInfo();
-    }
+                            function updateTotalPrice() {
+                                const totalPriceElement = $('#totalPrice');
+                                totalPriceElement.text(formatNumber(totalSeatPrice) + ' VND');
+                                updatePaymentInfo();
+                            }
 
-    // Cập nhật giá khi thay đổi số lượng combo
-    var comboQuantities = $('.combo-quantity');
-    comboQuantities.on('input', function() {
-        updateComboTotal(this);
-        updatePaymentInfo();
-        updateTotalPrice();
-    });
+                            // Cập nhật giá khi thay đổi số lượng combo
+                            var comboQuantities = $('.combo-quantity');
+                            comboQuantities.on('input', function () {
+                                updateComboTotal(this);
+                                updatePaymentInfo();
+                                updateTotalPrice();
+                            });
 
-    // Giảm số lượng combo
-    var minusButtons = $('.minus');
-    minusButtons.on('click', function() {
-        var quantityInput = $(this).next();
-        var quantityValue = parseInt(quantityInput.val());
-        if (quantityValue > 0) {
-            quantityInput.val(quantityValue - 1);
-            updateComboTotal(quantityInput);
-            updatePaymentInfo();
-        }
-    });
+                            // Giảm số lượng combo
+                            var minusButtons = $('.minus');
+                            minusButtons.on('click', function () {
+                                var quantityInput = $(this).next();
+                                var quantityValue = parseInt(quantityInput.val());
+                                if (quantityValue > 0) {
+                                    quantityInput.val(quantityValue - 1);
+                                    updateComboTotal(quantityInput);
+                                    updatePaymentInfo();
+                                }
+                            });
 
-    // Tăng số lượng combo
-    var plusButtons = $('.plus');
-    plusButtons.on('click', function() {
-        var quantityInput = $(this).prev();
-        var quantityValue = parseInt(quantityInput.val());
-        quantityInput.val(quantityValue + 1);
-        updateComboTotal(quantityInput);
-        updatePaymentInfo();
-    });
+                            // Tăng số lượng combo
+                            var plusButtons = $('.plus');
+                            plusButtons.on('click', function () {
+                                var quantityInput = $(this).prev();
+                                var quantityValue = parseInt(quantityInput.val());
+                                quantityInput.val(quantityValue + 1);
+                                updateComboTotal(quantityInput);
+                                updatePaymentInfo();
+                            });
 
-    // Cập nhật tổng tiền của combo
-    function updateComboTotal(input) {
-        var quantity = parseInt($(input).val());
-        var priceElement = $(input).parent().next();
-        var price = parseInt(priceElement.text().replace(',', ''));
-        var total = quantity * price;
-        var totalPriceElement = $(input).parent().next().next();
-        totalPriceElement.text(total);
-    }
+                            // Cập nhật tổng tiền của combo
+                            function updateComboTotal(input) {
+                                var quantity = parseInt($(input).val());
+                                var priceElement = $(input).parent().next();
+                                var price = parseInt(priceElement.text().replace(',', ''));
+                                var total = quantity * price;
+                                var totalPriceElement = $(input).parent().next().next();
+                                totalPriceElement.text(total);
+                            }
 
-    // Cập nhật thông tin thanh toán
-   function updatePaymentInfo() {
-    var comboQuantities = $('.combo-quantity');
-    var comboDetails = [];
-    var totalAmount = totalSeatPrice; // Initialize with total seat price
+                            // Cập nhật thông tin thanh toán
+                            function updatePaymentInfo() {
+                                var comboQuantities = $('.combo-quantity');
+                                var comboDetails = [];
+                                totalAmount = totalSeatPrice; // Initialize with total seat price
 
-    comboQuantities.each(function() {
-        var quantity = parseInt($(this).val());
-        if (quantity > 0) {
-        	var comboNameElement = $(this).parent().parent().find('td:nth-child(2)'); // Lấy cột thứ 2
-        	var comboNameText = comboNameElement.find('b').text().trim(); // Lấy nội dung của thẻ <b>
+                                comboQuantities.each(function () {
+                                    var quantity = parseInt($(this).val());
+                                    if (quantity > 0) {
+                                        var comboNameElement = $(this).parent().parent().find('td:nth-child(2)'); // Lấy cột thứ 2
+                                        var comboNameText = comboNameElement.find('b').text().trim(); // Lấy nội dung của thẻ <b>
 
-            var comboPrice = parseInt($(this).parent().next().text().replace(',', ''));
-            var totalComboPrice = quantity * comboPrice;
+                                        var comboPrice = parseInt($(this).parent().next().text().replace(',', ''));
+                                        var totalComboPrice = quantity * comboPrice;
 
-        	comboDetails.push({ name: comboNameText, quantity: quantity });
-            totalAmount += totalComboPrice;
-        }
-    });
+                                        comboDetails.push({ name: comboNameText, quantity: quantity });
+                                        totalAmount += totalComboPrice;
+                                    }
+                                });
 
-    var totalElement = $('#total');
-    var comboElement = $('#combo');
+                                var totalElement = $('#total');
+                                var comboElement = $('#combo');
 
-    comboElement.html(comboDetails.map(combo => combo.name + ' x ' + combo.quantity).join(', '));
+                                comboElement.html(comboDetails.map(combo => combo.name + ' x ' + combo.quantity).join(', '));
 
-    totalElement.text(formatNumber(totalAmount) + ' VND');
-}
-
-
-    // Hàm định dạng số thành dạng "80.000"
-    function formatNumber(number) {
-        const formattedNumber = number.toLocaleString('vi-VN');
-        return formattedNumber;
-    }
-});
-
-$(document).ready(function() {
-    $('#applyDiscount').on('click', function() {
-        var discountCode = $('#discountCode').val();
-
-        if (discountCode === 'MAGIAMGIA123') {
-            var totalElement = $('#total');
-            var totalPriceText = totalElement.text();
-            var totalPrice = parseFloat(totalPriceText.replace(' VND', '').replace(/\./g, '').replace(',', '.'));
-
-            var discountAmount = 15; // Phần trăm giảm giá
-            var newTotalPrice = totalPrice - (totalPrice * (discountAmount / 100));
-
-            // Định dạng lại số với dấu chấm phân cách phần nghìn
-           newTotalPrice = newTotalPrice.toLocaleString('vi-VN') + ' VND';
+                                totalElement.text(formatNumber(totalAmount) + ' VND');
+                            }
 
 
-            totalElement.text(newTotalPrice);
+                            // Hàm định dạng số thành dạng "80.000"
+                            function formatNumber(number) {
+                                const formattedNumber = number.toLocaleString('vi-VN');
+                                return formattedNumber;
+                            }
 
-            // Hiển thị thông báo
-            $('#discountMessage').text('Mã giảm giá đã được áp dụng!');
-        } else {
-            // Hiển thị thông báo
-            $('#discountMessage').text('Mã giảm giá không hợp lệ. Vui lòng kiểm tra lại!');
-        }
-    });
-});
+                            var totalSelectedSeats = document.getElementById("totalSelectedSeats").textContent;
 
+                            // Đặt giá trị đã lấy vào phần tử có id là "selectedSeatsForm"
+                            document.getElementById("selectedSeatsForm").textContent = "Ghế đã chọn: " + totalSelectedSeats;
 
-//Phần thanh toán
-let paymentInfo = {
-
-status: '',
-service:[],
-seat: []
-};
-//Lấy ghế
-const seatElements = document.querySelectorAll('.layout__seat');
-seatElements.forEach((divElement) => {
-  divElement.addEventListener('click', function() {
-    const seatId = this.querySelector('input[name="seatId"]').value;
-    const seatIndex = paymentInfo.seat.indexOf(seatId);
-
-    if (seatIndex === -1) {
-      paymentInfo.seat.push(seatId);
-      console.log(paymentInfo.seat);
-    } else {
-      paymentInfo.seat.splice(seatIndex, 1);
-      console.log(paymentInfo.seat);
-    }
-  });
-});
-	
-
-//Lấy serviceId khi dấu + chỗ combo được click
-
-var plusButtons = $('.plus');
-plusButtons.on('click', function() {
-  var quantityInput = $(this).prev();
-  var quantityValue = parseInt(quantityInput.val());
-
-  if (quantityValue >= 0) {
-    var serviceId = $(this).closest('tr').find('.serviceId').val();
-
-    if (!paymentInfo.service.includes(serviceId)) {
-      paymentInfo.service.push(serviceId);
-      console.log(paymentInfo.service);
-    }
-  }
-});
-
-var minusButtons = $('.minus');
-minusButtons.on('click', function() {
-  var quantityInput = $(this).next();
-  var quantityValue = parseInt(quantityInput.val());
-
-  if (quantityValue < 1) {
-    var serviceId = $(this).closest('tr').find('.serviceId').val();
-    paymentInfo.service = paymentInfo.service.filter(id => id !== serviceId);
-    console.log(paymentInfo.service);
-  }
-});
+                            $('#applyDiscount').on('click', function () {
+                                var discountCode = $('#discountCode').val();
+                                  console.log('abc');
+                                  var totalElement = $('#total');
+                                  var discountAmount = 0; // Phần trăm giảm giá
+                                  if (discountCode === 'P001') {
+                                      var discountAmount = 15; // Phần trăm giảm giá (20%)
+                                    } else if (discountCode === 'P002') {
+                                      var discountAmount = 20; // Phần trăm giảm giá (30%)
+                                    } else {
+                                      var discountAmount = 0; // Không giảm giá
+                                    }
+                                  
+                                totalAmount = totalAmount - (totalAmount * (discountAmount / 100));
+                                // Định dạng lại số với dấu chấm phân cách phần nghìn
+                                let printTotalPrice = totalAmount.toLocaleString('vi-VN') + ' VND';
+                                totalElement.text(printTotalPrice);
+                                
+                                if (discountAmount >0) {
+                                 
+                                   $('#discountMessage').text('Mã giảm giá đã được áp dụng!');
+                               } else {
+                                   // Hiển thị thông báo
+                                   $('#discountMessage').text('Mã giảm giá không hợp lệ. Vui lòng kiểm tra lại!');
+                               }
+                            });
 
 
-//Thanh toán
-let totalPrices = 100000; 
-document.getElementById('datVeButton').addEventListener('click', () => {
-	let currentDate = new Date();
-	let localDate = currentDate.toLocaleDateString();
-	let localTime = currentDate.toLocaleTimeString();
+                            //let discountCode = $('#discountCode').val();
+                            //Phần thanh toán
+                            let paymentInfo = {
 
-	
-	paymentInfo.status = 'Booked';
-  console.log(paymentInfo);
-  var jsonString = JSON.stringify(paymentInfo);
-  console.log(jsonString);
-	var url = 'http://localhost:6001/FPT-Cinema/payment/create?param1=' + encodeURIComponent(totalPrices) + '&param2=' + encodeURIComponent(jsonString);
-	console.log(url)
-	  // Redirect đến URL
-	window.location.href = url;
-  });
-  
-</script>
+                                status: '',
+                                promotion: '',
+                                service: [],
+                                seat: []
+                            };
+                            
+                            console.log(paymentInfo.promotion);
+                            //Lấy ghế
+                            document.querySelectorAll('.layout__seat').forEach((divElement) => {
+                                divElement.addEventListener('click', function () {
+                                    const seatId = this.querySelector('input[name="seatId"]').value;
+
+                                    // Kiểm tra xem ghế đã tồn tại trong mảng paymentInfo.seat hay chưa
+                                    const seatIndex = paymentInfo.seat.indexOf(seatId);
+
+                                    if (seatIndex === -1) {
+                                        // Ghế chưa tồn tại trong mảng, thêm vào paymentInfo.seat
+                                        paymentInfo.seat.push(seatId);
+                                        console.log(paymentInfo.seat);
+                                    } else {
+                                        // Ghế đã tồn tại trong mảng, loại bỏ khỏi paymentInfo.seat
+                                        paymentInfo.seat.splice(seatIndex, 1);
+                                        console.log(paymentInfo.seat);
+                                    }
+                                });
+                            });
+                                //Lấy service   
+                                var plusButtons = $('.plus');
+                                plusButtons.on('click', function () {
+                                    var quantityInput = $(this).prev();
+                                    var quantityValue = parseInt(quantityInput.val());
+
+                                    if (quantityValue >= 0) {
+                                        var serviceId = $(this).closest('tr').find('.serviceId').val();
+
+                                        // Kiểm tra xem serviceId đã tồn tại trong mảng paymentInfo.service hay chưa
+                                        const serviceIndex = paymentInfo.service.indexOf(serviceId);
+
+                                        if (serviceIndex === -1) {
+                                            // serviceId chưa tồn tại trong mảng, thêm vào paymentInfo.service
+                                            paymentInfo.service.push(serviceId);
+                                            console.log(paymentInfo.service);
+                                        }
+                                    }
+                                });
+
+                                var minusButtons = $('.minus');
+                                minusButtons.on('click', function () {
+                                    var quantityInput = $(this).next();
+                                    var quantityValue = parseInt(quantityInput.val());
+
+                                    if (quantityValue < 1) {
+                                        var serviceId = $(this).closest('tr').find('.serviceId').val();
+
+                                        // Kiểm tra xem serviceId đã tồn tại trong mảng paymentInfo.service hay chưa
+                                        const serviceIndex = paymentInfo.service.indexOf(serviceId);
+
+                                        if (serviceIndex !== -1) {
+                                            // serviceId đã tồn tại trong mảng, loại bỏ khỏi paymentInfo.service
+                                            paymentInfo.service.splice(serviceIndex, 1);
+                                            console.log(paymentInfo.service);
+                                        }
+                                    }
+                                });
 
 
+                                //Thanh toán
+
+                               
+                                let totalPrices = 100000;
+                               // paymentInfo.promotion = $('#discountCode').val();
+                                console.log(paymentInfo.promotion);
+                                document.getElementById('datVeButton').addEventListener('click', () => {
+                                    let currentDate = new Date();
+                                    let localDate = currentDate.toLocaleDateString();
+                                    let localTime = currentDate.toLocaleTimeString();
+
+                                    var discountCodes = document.getElementById("discountCode").value;
+
+                                    // Gán giá trị đã lấy vào thuộc tính "promotion" của đối tượng "paymentInfo"
+                                      paymentInfo.promotion = discountCodes;
+                                      console.log(paymentInfo.promotion+ 'abcd');
+
+                                    paymentInfo.status = 'Booked';
+                                    console.log(paymentInfo);
+                                    var jsonString = JSON.stringify(paymentInfo);
+                                    console.log(jsonString);
+                                    var url = 'http://localhost:6001/FPT-Cinema/payment/create?param1=' + encodeURIComponent(totalAmount) + '&param2=' + encodeURIComponent(jsonString);
+                                    console.log(url)
+                                    // Redirect đến URL
+                                    window.location.href = url;
+                                });
+
+                            });
+                    </script>
