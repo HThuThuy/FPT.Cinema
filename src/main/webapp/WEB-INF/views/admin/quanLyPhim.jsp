@@ -9,6 +9,7 @@
 
 	<div class="templatemo-content-container">
 		<h3 style="font-size: 35px; margin: 10px 10px 30px 5px;">QUẢN LÝ PHIM</h3>
+		
 		<div class="row"
 			style="display: flex; justify-content: center; align-items: center;">
 
@@ -39,6 +40,7 @@
 				<a class="btn " href="${pageContext.request.contextPath}/admin/addPhim">Thêm phim mới</a>
 			</div>
 		</div>
+		
 		<div class="templatemo-content-widget no-padding">
 			<div class="panel panel-default table-responsive">
 				<table

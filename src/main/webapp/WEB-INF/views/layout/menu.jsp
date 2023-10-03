@@ -2,8 +2,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 
+<link href="<c:url value="/resources/css/menu1.css" />" rel="stylesheet">
+
+
 <style>
 .dropdown:hover .dropdown-menu {
+	display: block;
 	display: block;
 }
 </style>
@@ -19,87 +23,96 @@
 <!-- ***** Preloader End ***** -->
 
 <!-- ***** Header Area Start ***** -->
-<header class="header-area header-sticky">
-	<div class="container">
-		<div class="row">
-			<div class="col-12 menu">
-				<nav class="main-nav">
-					<!-- ***** Logo Start ***** -->
-					<a href="/FPT-Cinema" class="logo"> <img
+<header class="site-navbar" role="banner">
+	<div class="container row-top">
+		<div class="row ">
+
+			<div class="col-2 col-md-2">
+				<h1 class="mb-0 site-logo">
+					<a href="/FPT-Cinema" class="logo1"> <img
 						src="${pageContext.request.contextPath}/resources/img/logo.png"
 						alt="">
 					</a>
-					<!-- ***** Logo End ***** -->
-					<!-- ***** Search End ***** -->
-					<div class="search-input">
-						<form id="search" action="#">
-							<input type="text" placeholder="Tìm tên phim, diễn viên"
-								id="searchText" onkeypress="handleKeyPress(event)" /> <i
-								class="fa fa-search"></i>
-						</form>
-					</div>
-					<!-- ***** Search End ***** -->
-					<!-- ***** Menu Start ***** -->
-					<ul class="nav d-flex justify-content-center">
-						<li><a href="index.html" class="active">MUA VÉ</a></li>
-						<li><a
-							href="${pageContext.request.contextPath}/customer/history">PHIM</a></li>
-						<li><a href="booking.html">RẠP/GIÁ VÉ</a></li>
-						<li><a href="streams.html">KHUYẾN MÃI</a></li>
+				</h1>
+			</div>
+			<div class="col-4">
+				<!-- ***** Search start ***** -->
+				<div class="search-input">
+					<form id="search" action="#">
+						<input type="text" placeholder="Tìm tên phim, diễn viên"
+							id='searchText' name="searchKeyword" onkeypress="handle" /> <i
+							class="fa fa-search"></i>
+					</form>
+				</div>
+				<!-- ***** Search End ***** -->
+			</div>
+			<div class="col-6 d-flex">
+				<nav class="site-navigation position-relative text-right"
+					role="navigation">
+					<ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
+						<!-- <li class="active"><a href="index.html"><span>TRANG CHỦ</span></a></li> -->
+						<li class="has-children"><a href="about.html"><span>PHIM</span></a>
+							<ul class="dropdown">
+								<li><a href="#">Menu One</a></li>
+								<li><a href="#">Menu Two</a></li>
+								<li><a href="#">Menu Three</a></li>
+							</ul></li>
+						<li><a href="about.html"><span>KHUYẾN MÃI</span></a></li>
+						<li><a href="${pageContext.request.contextPath}/login"><span>HỖ
+									TRỢ</span></a></li>
 						<c:choose>
 							<c:when test="${empty sessionScope.customerName}">
-								<li><a href="#" id="member-tab">ĐĂNG NHẬP <img
-										src="${pageContext.request.contextPath}/resources/img/profile-header.jpg"
-										alt=""></a></li>
+								<li class="has-children" id="login"><a href="#"
+									id="member-tab">ĐĂNG NHẬP </a></li>
 							</c:when>
 							<c:otherwise>
-								<li class="dropdown"><a href="#" class="dropdown-toggle"
-									id="member-tab" data-toggle="dropdown">${sessionScope.customerName}
-										<img
-										src="${pageContext.request.contextPath}/resources/img/profile-header.jpg"
-										alt="">
-								</a>
+								<li class="dropdown"><a
+									href="${pageContext.request.contextPath}/customer/history"
+									class="dropdown-toggle" id="member-tab" data-toggle="dropdown">
+
+										Chào mừng ${sessionScope.customerName} ! </a>
 									<div class="dropdown-menu" aria-labelledby="member-tab">
-										<a class="dropdown-item" href="user_account.html">Tài
-											khoản</a> <a class="dropdown-item" href="#"
-											onclick="logout(); return false;">Thoát</a>
+										<a class="dropdown-item"
+											href="${pageContext.request.contextPath}/customer/history">Tài
+											khoản</a> <a class="dropdown-item"
+											href="${pageContext.request.contextPath}/logout">Thoát</a>
 									</div></li>
 							</c:otherwise>
 						</c:choose>
-					</ul>
-					<!-- ***** Menu End ***** -->
 				</nav>
 			</div>
+
+			<div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3"
+				style="position: relative; top: 3px;">
+				<a href="#" class="site-menu-toggle js-menu-toggle text-white"><span
+					class="icon-menu h3"></span></a>
+			</div>
+
 		</div>
 	</div>
 </header>
 
+
 <script>
-	function logout() {
-		// Send an AJAX request to the server to logout
-		$.ajax({
-			url : "${pageContext.request.contextPath}/logout",
-			method : "POST",
-			success : function() {
-				// Refresh the page or redirect the user
-				location.reload();
-			}
-		});
-	}
-	function handleKeyPress(event) {
+	 function loginSuccess(customerName) {
+		    // Remove the login link
+		    $('#login').remove();
 
-		  if (event.keyCode === 13) {
-
-		    event.preventDefault(); // Ngăn chặn hành vi mặc định của phím Enter trong form
-
-		    var searchText = document.getElementById('searchText').value;
-
-		    var url = '/FPT-Cinema/ticket/searchMovie/' + encodeURIComponent(searchText);
-
-		    window.location.href = url;
-
+		    // Add the dropdown menu for the logged in user
+		    var dropdownMenu = `
+		      <li class="dropdown">
+		        <a href="${pageContext.request.contextPath}/customer/history" class="dropdown-toggle" id="member-tab">
+		          Chào mừng ${customerName} !
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="member-tab">
+		          <a class="dropdown-item" href="${pageContext.request.contextPath}/customer/history">Tài khoản</a>
+		          <a class="dropdown-item" href="#" onclick="logout(); return false;">Thoát</a>
+		        </div>
+		      </li>
+		    `;
+		    $('.site-menu').append(dropdownMenu);
 		  }
-
-		}
+		
 </script>
 <!-- ***** Header Area End ***** -->
+

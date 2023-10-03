@@ -72,7 +72,9 @@ public class AdminRapController {
 		if(bindingResult.hasErrors()) {
 			
 			model.addAttribute("rap", theater);
+			if(theater.getTheaterId().equals("123456"))
 			model.addAttribute("text", "Thêm mới ");
+			else model.addAttribute("text", "Thay đổi");
 			return "admin/addRap";
 		}
 		

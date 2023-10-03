@@ -1,5 +1,8 @@
 package fa.training.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -16,6 +19,7 @@ import fa.training.model.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, String> {
 
+	 
 	//Tranlc
 	@Transactional
 	@Modifying
@@ -30,7 +34,14 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
 		       "JOIN TI.order O " +
 		       "JOIN ST.movie M " +
 		       "JOIN TI.customer C " +
-		       "WHERE C.cccd = :cccd")
-		List<CustomerDTO> getRecordsForCurrentPage(@Param("cccd") String cccd);
+		       "WHERE C.cccd = :cccd " +
+		       "AND O.orderDate BETWEEN :startDate AND :endDate " +
+		       "ORDER BY O.orderId")
+		Page<CustomerDTO> getRecordsForCurrentPage(@Param("cccd") String cccd, @Param("startDate") LocalDate startDate, 
+		        @Param("endDate") LocalDate endDate, Pageable pageable);
 
+	
+	Customer findByPhone(String phone);
+
+	Customer findByEmail(String email);
 }

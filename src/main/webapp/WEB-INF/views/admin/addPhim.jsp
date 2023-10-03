@@ -34,7 +34,7 @@
 
 				<div class="col-lg-12 col-md-12 form-group">
 					<label for="inputmasuatchieu">Thời lượng</label>
-					<form:input path="duration" type="time" class="form-control"/>
+					<form:input path="duration" type="time" class="form-control" id="without_ampm"/>
 					<form:errors path="duration" cssClass="text-danger" />
 				</div>	
 				
@@ -45,7 +45,7 @@
 				</div>	
               
               <div class="col-lg-12 col-md-12 form-group">
-					<label for="inputmasuatchieu">Ngày bắt đầu</label>
+					<label for="inputmasuatchieu">Ngày khởi chiếu</label>
 					<form:input path="startDate" type="date" class="form-control"/>
 					<form:errors path="startDate" cssClass="text-danger" />
 				</div>	
@@ -60,15 +60,28 @@
 					<label for="inputmasuatchieu">Poster Url</label>
 					<form:input path="posterUrl" type="text" class="form-control"/>
 					<form:errors path="posterUrl" cssClass="text-danger" />
-				</div>              
+				</div> 
+				
+				<div class="col-lg-12 col-md-12 form-group">
+					<label for="inputmasuatchieu">Trailer Url</label>
+					<form:input path="trailerUrl" type="text" class="form-control"/>
+					<form:errors path="trailerUrl" cssClass="text-danger" />
+				</div>                
               
             </div>
 
-            <div class="form-group text-right">
-              <button type="submit" class="templatemo-blue-button">${text2}</button>
-              <button type="reset" class="templatemo-white-button">Tạo lại</button>
-            </div>
-          </form:form>
+				<div class="form-group text-right">
+					<button type="submit" class="templatemo-blue-button">${text2}</button>
+					<button type="reset" class="templatemo-white-button">Tạo
+						lại</button>
+				</div>
+			</form:form>
         </div>
       </div>
     </div>
+
+	<script>
+    
+	
+    
+    </script>

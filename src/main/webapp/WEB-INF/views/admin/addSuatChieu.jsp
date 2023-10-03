@@ -10,7 +10,8 @@
 		<div class="templatemo-content-widget white-bg">
 			<h3 class="margin-bottom-10">${text} suất chiếu</h3>
 			
-			<form:form action="${pageContext.request.contextPath}/admin/addSuatChieu" method="post" modelAttribute="suatChieu" class="templatemo-login-form">
+			<form:form action="${pageContext.request.contextPath}/admin/addSuatChieu" 			
+			method="post" modelAttribute="suatChieu" class="templatemo-login-form">
 				<div class="row form-group">
 					
 					<div class="col-lg-12 col-md-12 form-group d-none">
@@ -21,46 +22,50 @@
 					
 					<div class="col-lg-12 col-md-12 form-group">
 						<label class="control-label templatemo-block"> Chọn rạp</label> 
-						<form:select path="theaterId" id="theaterId" class="form-control" onchange="getA()">
+						<form:select path="theaterId" id="theaterId" class="form-control" onchange="getA()" name="rap">
 							<option value="">Mời chọn rạp</option>
 							<c:forEach items="${theaters}" var="item">
-								<option value="${item.theaterId}" ${item.theaterId == record.theaterId ? 'selected' : ''}>${item.theaterName}</option>
+								<option value="${item.theaterId}" ${item.theaterId == theaterselected ? 'selected' : ''}>${item.theaterName}</option>
 							</c:forEach>
 						</form:select>
 						<form:errors path="theaterId" cssClass="text-danger" />
+						<p id="rap1" class="text-danger"></p>
 					</div>	
 
 					<div class="col-lg-12 col-md-12 form-group">
 						<label class="control-label templatemo-block"> Chọn phòng</label> 
-						<form:select path="roomId" id="roomId" class="form-control" onchange="getA2()">
+						<form:select path="roomId" id="roomId" class="form-control" onchange="getA2()" name = "phong">
 							<option value="">Mời chọn phòng</option>
 							<c:forEach items="${rooms}" var="item">
 								<option value="${item.roomId}" ${item.roomId == record.roomId ? 'selected' : ''}>${item.roomName}</option>
 							</c:forEach>
 						</form:select>
 						<form:errors path="roomId" cssClass="text-danger" />
+						<p id="phong1" class="text-danger"></p>
 					</div>
 					
 					<div class="col-lg-12 col-md-12 form-group">
 						<label class="control-label templatemo-block"> Chọn giờ chiếu</label> 
-						<form:select path="startTime" id="startTime"  class="form-control">
+						<form:select path="startTime" id="startTime"  class="form-control" name = "giochieu">
 							<option value="">Mời chọn giờ chiếu</option>
 							<c:forEach items="${startTimes}" var="item">
 								<option value="${item}" ${item == record ? 'selected' : ''}>${item}</option>
 							</c:forEach>
 						</form:select>
 						<form:errors path="startTime" cssClass="text-danger" />
+						<p id="giochieu1" class="text-danger"></p>
 					</div>
 					
 					<div class="col-lg-12 col-md-12 form-group">
 						<label for="inputmasuatchieu">Chọn phim</label> 
-						<form:select path="movieId" class="form-control">
+						<form:select path="movieId" class="form-control" name="phim">
 							<option value="">Mời chọn phim</option>
 							<c:forEach items="${movies}" var="item">
 								<option value="${item.movieId}" ${item.movieId == record.movieId ? 'selected' : ''}>${item.movieName}</option>
 							</c:forEach>
 						</form:select>
 						<form:errors path="movieId" cssClass="text-danger" />
+						<p id="phim1" class="text-danger"></p>
 					</div>
 
 					<div class="form-group text-right">
@@ -76,6 +81,9 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
+
+	
+	
 	function getA() {
 		console.log('abc');
 		var selectedTheater = document.getElementById("theaterId").value; // Lấy giá trị được chọn từ dropdown
@@ -132,5 +140,6 @@
 	    // Xử lý lỗi
 	    console.log("Lỗi khi gọi API: " + error);
 		});
-	}
+	}	
+	
 </script>

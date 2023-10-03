@@ -38,16 +38,19 @@ public class Theater {
 	String theaterId;
 
 	@Column(columnDefinition = "Nvarchar(30)")
-//	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
+	@NotBlank(message = "Chưa nhập dữ liệu")
 	String theaterName;
 
 	@Column(columnDefinition = "Nvarchar(30)")
-//	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
+	@NotBlank(message = "Chưa nhập dữ liệu")
 	String city;
 	
+	@NotBlank(message = "Chưa nhập dữ liệu")
 	@Column(columnDefinition = "Nvarchar(255)")
 	String address;
 	
+//	@NotBlank(message = "Chưa nhập dữ liệu")
+	@Pattern(regexp = "^[0]{1}[0-9]{9,10}$", message = "Dữ liệu chưa chính xác")
 	@Column(columnDefinition = "Varchar(11)")
 	String phone;
 

@@ -28,7 +28,6 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="heading-section">
-						<h4>PHIM HOT TRONG THÁNG</h4>
 					</div>
 				</div>
 

@@ -47,6 +47,9 @@ public class TicketInfo {
 	@JoinColumn(name = "orderId")
 	Order order;
 
+	String QRCode;
+	
+	
 	@Override
 	public String toString() {
 		return "TicketInfo [ticketId=" + ticketId + ", status="
@@ -56,5 +59,5 @@ public class TicketInfo {
 							 */;
 	}
 	
-	String QRCode;
+
 }

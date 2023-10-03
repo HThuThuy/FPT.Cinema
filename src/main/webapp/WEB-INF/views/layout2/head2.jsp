@@ -15,7 +15,20 @@
 	img {
 		height: 100px;
 		width: 100px;
-		border-radius: 5%; 
+		border-radius: 5%;
+	}
+
+	#without_ampm::-webkit-datetime-edit-ampm-field {
+		display: none;
+	}
+	
+	input[type=time]::-webkit-clear-button {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		-o-appearance: none;
+		-ms-appearance: none;
+		appearance: none;
+		margin: -10px;
 	}
 </style>
 

@@ -12,13 +12,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TheaterDTO {
-	
-	String theaterId;
 
-	String theaterName;
-	
+	String theaterName;	
 	String city;
-	
-	int doanhThu;	
+	String address;
+	String phone;
+	Integer doanhThu;	
 
 }

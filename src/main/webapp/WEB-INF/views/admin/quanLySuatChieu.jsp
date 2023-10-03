@@ -45,7 +45,7 @@
 				<table 
 					class="table table-light table-striped table-bordered text-center">
 					<thead>
-						<tr>
+						<tr class="align-middle">
 							<th style="background-color: #e75e8d; color: white;">#</th>							
 							<th class="d-none" style="background-color: #e75e8d; color: white;">Mã suất chiếu</th>							
 							<th style="background-color: #e75e8d; color: white;">Tên rạp</th>

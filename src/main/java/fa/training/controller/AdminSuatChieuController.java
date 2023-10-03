@@ -130,6 +130,10 @@ public class AdminSuatChieuController {
 			model.addAttribute("suatChieu", qlShowTimeDTO);
 			model.addAttribute("text", "Thêm mới ");
 			model.addAttribute("text2", false);
+			
+//			model.addAttribute("theaterselected", qlShowTimeDTO.getTheaterId());
+			
+			
 			return "admin/addSuatChieu";
 		}
 		

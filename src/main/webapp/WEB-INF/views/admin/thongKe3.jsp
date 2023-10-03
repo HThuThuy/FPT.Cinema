@@ -2,45 +2,85 @@
 	pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="templatemo-content col-1 black-bg">
-	<div class="templatemo-content-container">
-		<h3 style="font-size: 35px; margin: 10px 10px 30px 5px;">THỐNG KÊ RẠP</h3>			
-		
-		<!-- TABLE -->
-		<!-- TABLE THỐNG KÊ THEO RẠP-->
-		<div class="templatemo-content-widget no-padding">
-			<div class="panel panel-default table-responsive">
-				<table
-					class="table table-light table-striped table-bordered text-center">
-					<thead>
-						<tr>
-							<th style="background-color: #e75e8d; color: white;">#</th>							
-							<th style="background-color: #e75e8d; color: white;">Mã rạp</th>
-							<th style="background-color: #e75e8d; color: white;">Têp rạp</th>
-							<th style="background-color: #e75e8d; color: white;">Thành phố</th>
-							<th style="background-color: #e75e8d; color: white;">Doanh thu</th>
-						</tr>						
-					</thead>
-					<tbody>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-						<c:forEach items="${theaterList}" var="item" varStatus="status">
-							<tr>
-								<td class="text-center">${status.count}</td>
-								<td>${item.theaterId}</td>
-								<td>${item.theaterName}</td>
-								<td>${item.city}</td>
-								<td>${item.doanhThu}</td>
-							</tr>
-						</c:forEach>
+  <div class="templatemo-content col-1 black-bg"> 
+  
+        <div class="templatemo-content-container">
+          <h3 style="font-size: 35px; margin: 10px 10px 10px 5px;">THỐNG KÊ RẠP</h3>       
+          <div class="row"
+			style="display: flex; justify-content: center; align-items: center;">
+
+			<div class="col ml-1">
+				<form class="row" 
+					style="display: flex; justify-content: center; align-items: flex-end;"
+					action="${pageContext.request.contextPath}/admin/thongKe3/search" method="get">
+					
+					<!-- <div class="col-lg-1 col-md-1">
 						
-					</tbody>
-				</table>
-			</div>
-		</div>		
-		<!-- TABLE -->
+					</div> -->
 
-	</div>
-</div>
+					<div class="col-lg-4 col-md-6">
+						<%-- <input type="hidden" name="page" value="${1}" />  --%>
+						<label style="font-weight:bold; font-size:18px; color: #e75e8d;">Ngày bắt đầu</label>
+						<input
+							id="nameCustomer" type="date" name="searchDate"
+							class="form-control ml-1" value="${searchDate}">
+					</div>					
+										
+					<div class="col-lg-4 col-md-6">
+						<input type="hidden" name="page" value="${1}" /> 
+						<label style="font-weight:bold; font-size:18px; color: #e75e8d;">Ngày kết thúc</label>
+						<input
+							id="nameCustomer" type="date" name="searchDate2"
+							class="form-control ml-1" value="${searchDate2}">
+					</div>
+
+					<div class="col-lg-3 col-md-3">
+						<button type="submit" class="btn">Search</button>
+					</div>
+
+				</form>
+			</div>			
+			
+		</div>
+          
+          <div class="templatemo-content-widget no-padding">
+            <div class="panel panel-default table-responsive">
+              <table class="table table-light table-striped table-bordered text-center">
+                <thead>
+                	<tr>
+						<th style="background-color: #e75e8d; color: white;">#</th>							
+						<th style="background-color: #e75e8d; color: white;">Têp rạp</th>
+						<th style="background-color: #e75e8d; color: white;">Thành phố</th>
+						<th style="background-color: #e75e8d; color: white;">Địa chỉ</th>
+						<th style="background-color: #e75e8d; color: white;">Hotline</th>
+						<th style="background-color: #e75e8d; color: white;">Doanh thu</th>
+					</tr>                  
+                </thead>
+                <tbody>
+
+					<c:forEach items="${rapList}" var="item" varStatus="status">
+						<tr class="align-middle">
+							<td class="text-center">${status.count}</td>
+							<td>${item.theaterName}</td>
+							<td>${item.city}</td>
+							<td>${item.address}</td>
+							<td>${item.phone}</td>	
+							<td><fmt:formatNumber value="${item.doanhThu}" pattern="###,###"/></td>							
+						</tr>
+					</c:forEach>
+                  
+                </tbody>
+              </table>    
+            </div>                          
+          </div> 
+        </div>
+      </div>      
+      
+      <script>
+      
+      </script>

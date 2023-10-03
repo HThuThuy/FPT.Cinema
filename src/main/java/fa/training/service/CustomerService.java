@@ -1,5 +1,6 @@
 package fa.training.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,7 @@ public class CustomerService {
 	CustomerRepository repo;
 
 	public String getCustomerName(String cccd) {
-		// Find the customer by cccd
 		Customer customer = repo.findById(cccd).get();
-		// Return the name of the customer
 		return customer != null ? customer.getCustomerName() : null;
 	}
 
@@ -39,6 +38,15 @@ public class CustomerService {
 	public Page<Customer> findAll(Pageable pageable) {
 		return repo.findAll(pageable);
 	}
+	
+	public Customer findByPhone(String phone) {
+		return repo.findByPhone(phone);
+	}
+	
+	public Customer findByEmail(String email) {
+		return repo.findByEmail(email);
+	}
+	
 
 	public void save(Customer customer) {
 		repo.save(customer);
@@ -48,8 +56,22 @@ public class CustomerService {
 		repo.deleteById(cccd);
 	}
 	
-	public List<CustomerDTO> getRecordsForCurrentPage(String cccd) {
-		List<CustomerDTO> list = repo.getRecordsForCurrentPage(cccd);
-		return list;
+	public Page<CustomerDTO> getRecordsForCurrentPage(String cccd, LocalDate startDate, LocalDate endDate, Pageable pageable) {
+	    return repo.getRecordsForCurrentPage(cccd, startDate, endDate, pageable);
 	}
+
+	public Customer updateCustomerInfo(String cccd, String phone, String address, String email) {
+        Customer customer = repo.findById(cccd).get();
+
+        if (customer != null) {
+            customer.setPhone(phone);
+            customer.setAddress(address);
+            customer.setEmail(email);
+
+            return repo.save(customer);
+        }
+
+        return null;
+    }
+
 }
