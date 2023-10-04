@@ -28,7 +28,7 @@ import fa.training.service.MovieService;
 
 @Controller
 @RequestMapping(value = { "/admin" })
-public class AdminPhimController {
+public class AdminMovieController {
 	
 	@Autowired
 	MovieService movieService;

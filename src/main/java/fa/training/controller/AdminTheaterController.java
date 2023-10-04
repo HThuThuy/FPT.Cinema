@@ -26,7 +26,7 @@ import fa.training.service.TheaterService;
 
 @Controller
 @RequestMapping(value = { "/admin" })
-public class AdminRapController {
+public class AdminTheaterController {
 	
 	@Autowired
 	TheaterService theaterService;
@@ -91,18 +91,18 @@ public class AdminRapController {
 			
 			Room room = new Room();
 			room.setRoomId(theater.getTheaterId()+"A");
-			room.setRoomName("Phòng nhỏ ("+theater.getTheaterName()+")");
+			room.setRoomName("Phòng nhỏ");
 			room.setSeatNumber(60);
 			room.setTheater(theater);
 			roomService.save(room);
 			
 			Room room2 = new Room();
 			room2.setRoomId(theater.getTheaterId()+"B");
-			room2.setRoomName("Phòng lớn ("+theater.getTheaterName()+")");
+			room2.setRoomName("Phòng lớn");
 			room2.setSeatNumber(80);
 			room2.setTheater(theater);
 			roomService.save(room2);
-		} else {
+		} else {			
 			theaterService.save(theater);
 		}
 		

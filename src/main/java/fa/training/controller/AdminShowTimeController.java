@@ -42,7 +42,7 @@ import fa.training.service.TicketService;
 
 @Controller
 @RequestMapping(value = { "/admin" })
-public class AdminSuatChieuController {
+public class AdminShowTimeController {
 	
 	@Autowired
 	private ShowtimeService showtimeService;

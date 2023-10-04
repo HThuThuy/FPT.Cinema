@@ -17,7 +17,7 @@ import fa.training.service.TicketService;
 
 @Controller
 @RequestMapping(value = { "/admin" })
-public class AdminThongKeController {
+public class AdminStatisticalController {
 	
 	@Autowired
 	private TicketService ticketService;
