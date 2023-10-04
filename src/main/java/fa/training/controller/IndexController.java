@@ -24,21 +24,12 @@ public class IndexController {
 	@RequestMapping(value= {"/"})
 	public String index(Model model) {
 		List<Movie> listDangChieu = movie.getMovieDangChieu();
-		for (Movie movies : listDangChieu) {
-			System.out.println("Dang chieu---------------"+ movies.getMovieId());
-		}
 		model.addAttribute("listMovieDangChieu", listDangChieu);
 		
 		List<Movie> listSapChieu = movie.getMovieSapChieu();
-		for (Movie movies2 : listSapChieu) {
-			System.out.println("Sap chieu---------------"+ movies2.getMovieId());
-		}
 		model.addAttribute("listMovieSapChieu", listSapChieu);
 		
 		List<Promotion> listPromotion = promotion.getAll();
-		for (Promotion movies3 : listPromotion) {
-			System.out.println("Promotion---------------"+ movies3.getPromotionId());
-		}
 		model.addAttribute("listPromotion", listPromotion);
 		
 		return "home/movie";

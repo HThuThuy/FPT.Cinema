@@ -72,7 +72,6 @@
 		</div>
 	</div>
 	<div class="mb-2">
-		<!-- <label for="disabledTextInput" class="form-label font-weight-bold" style="color: black;">Ngày sinh <span class="text-danger">(*)</span></label> -->
 		<input type="date" class="form-control" id="birthDate"
 			placeholder="Chọn ngày sinh"> <span id="birthDate-error"
 			style="color: red;"></span>

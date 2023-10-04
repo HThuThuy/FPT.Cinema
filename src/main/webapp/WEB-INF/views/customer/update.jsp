@@ -22,7 +22,7 @@ label {
 		<div class="templatemo-content-widget white-bg">
 
 			<form:form action="${pageContext.request.contextPath}/customer/update" onsubmit="return checkSubmit();" 
-			method="post" modelAttribute="customer" 
+			method="post" modelAttribute="customerForm" 
 			class="templatemo-login-form" >
 				<div class="row form-group">
 				
@@ -32,17 +32,17 @@ label {
 
 					<div class="col-lg-12 col-md-12 form-group mb-4">
 						<label for="inputFullName">Họ và Tên</label>
-						<input value="${customerName}" type="text" class="form-control" readonly="true">
+						<form:input path="customerName" type="text" class="form-control" readonly="true"/>
 					</div>
 
 					<div class="col-lg-12 col-md-12 form-group mb-4">
 						<label for="inputDateOfBirth">Ngày sinh</label>
-						<input value="${birthDate}" type="text" class="form-control" readonly="true">
+						<form:input path="birthDate" type="text" class="form-control" readonly="true"/>
 					</div>
 
 					<div class="col-lg-12 col-md-12 form-group mb-4 mt-2">
 						<label for="inputGender">Giới tính</label>
-						<input value="${gender}" type="text" class="form-control" readonly="true">
+						<form:input path="gender" type="text" class="form-control" readonly="true"/>
 					</div>
 
 					<div class="col-lg-12 col-md-12 form-group mb-3 mt-1">

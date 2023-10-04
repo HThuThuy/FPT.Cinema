@@ -28,8 +28,10 @@
 					</div>
 
 					<div class="mb-2">
-						<label for="email" class="form-label"></label> <input type="email"
-							class="form-control" id="email" placeholder="Email" required>
+						<label for="emailForgot" class="form-label"></label> <input
+							type="email" class="form-control" id="emailForgot"
+							placeholder="Email" required> <span
+							id="emailForgot-error" style="color: red;"></span>
 					</div>
 
 					<div class="mb-5">
@@ -38,21 +40,21 @@
 							disabled required>
 					</div>
 
-					<div class="mb-3" id="countdown"
-						style="display: none; color: black">
-						<span>Thời gian còn lại: <span id="countdownValue">60</span>
-							giây
-						</span>
+					<div id="countdown" style="display: none; color: red;">
+					    Thời gian còn lại: <span id="countdownValue"></span> giây
 					</div>
+
 
 					<div class="modal-footer"
 						style="display: flex; justify-content: center;">
 						<button type="button" class="btn btn-primary"
 							style="background-color: pink; border-color: pink; color: black;"
-							id="sendEmailButton">Gửi email</button>
-						<button type="submit" class="btn btn-primary" disabled
-							style="background-color: pink; border-color: pink; color: black;"
-							id="confirmButton">Xác nhận</button>
+							id="sendEmailButton"
+							onclick="if (checkExistEmail()) sendEmail();">Gửi email</button>
+
+						<a href="#" data-bs-toggle="modal" 
+							data-bs-target="#resetPasswordModal" style="color: black;">Xác
+							nhận đổi mật khẩu</a>
 					</div>
 
 					<div id="errorAlert" class="alert alert-danger" role="alert"
@@ -67,7 +69,53 @@
 	</div>
 </div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <script>
+// Hàm kiểm tra định dạng email
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function checkExistEmail() {
+    var emailForgot = document.getElementById("emailForgot").value;
+    var emailForgotError = document.getElementById("emailForgot-error");
+
+    // Kiểm tra email có giá trị không
+    if (!emailForgot.trim()) {
+        emailForgotError.innerText = "Vui lòng nhập địa chỉ email.";
+        return false;
+    }
+
+    // Kiểm tra email có hợp lệ không
+    if (!validateEmail(emailForgot)) {
+        emailForgotError.innerText = "Vui lòng nhập địa chỉ email hợp lệ.";
+        return false;
+    }
+
+    // Thực hiện kiểm tra thông tin đăng nhập
+    axios.get("${pageContext.request.contextPath}/api/checkExistEmail", {
+        params: {
+            emailForgot: emailForgot,
+        }
+    }).then(function(response) {
+        if (response.status === 200) {
+            var list = response.data;
+            if (list === false) {
+                emailForgotError.innerText = "Email không tồn tại, vui lòng kiểm tra lại!";
+            } else {
+            	sendEmail();
+            }
+        } else {
+            console.log("Lỗi khi gọi API");
+        }
+    }).catch(function(error) {
+        console.log("Lỗi khi gọi API: " + error);
+    });
+}
+
 function sendEmail() {
     // Disable the send email button
     document.getElementById('sendEmailButton').disabled = true;
@@ -110,21 +158,11 @@ function sendEmail() {
     });
 }
 
-function resetForm() {
-    document.getElementById('forgotPasswordForm').reset(); // Reset form inputs
-    document.getElementById('otp').disabled = true; // Disable OTP input
-    document.getElementById('confirmButton').disabled = true; // Disable confirm button
-    document.getElementById('countdown').style.display = 'none'; // Hide countdown
-    document.getElementById('sendEmailButton').textContent = "Gửi email"; // Reset send email button text
-    document.getElementById('sendEmailButton').disabled = false; // Enable send email button
-    document.getElementById('successAlert').style.display = 'none'; // Hide success alert
-    document.getElementById('errorAlert').style.display = 'none'; // Hide error alert
-}
-
-//Thêm sự kiện nhấp chuột cho nút "Gửi email"
-document.getElementById('sendEmailButton').addEventListener('click', sendEmail);
-
-// Thêm sự kiện khi modal ẩn để reset form
-$('#forgotPasswordModal').on('hidden.bs.modal', resetForm);
-
+// Gán sự kiện onclick cho nút "Gửi email"
+document.getElementById("sendEmailButton").onclick = function() {
+    checkExistEmail();
+};
 </script>
+
+
+

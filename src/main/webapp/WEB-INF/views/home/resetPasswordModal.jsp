@@ -16,22 +16,23 @@
 					aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<form id="resetPasswordForm">
+				<form id="resetPasswordForm" action="${pageContext.request.contextPath}/resetPassword" method="post"> 
 					<div class="mb-3">
-						<label for="new-password" class="form-label"></label> <input
-							type="password" class="form-control" id="new-password"
+						<label for="new-password" class="form-label"></label> 
+						<input name="passwordUpdate" type="password" id="passwordUpdate" class="form-control" id="new-password"
 							placeholder="Mật khẩu mới">
 					</div>
 					<div class="mb-5">
 						<label for="confirm-password" class="form-label"></label> <input
-							type="password" class="form-control" id="confirm-password"
+							type="password" id="repasswordUpdate"class="form-control" id="confirm-password"
 							placeholder="Xác nhận mật khẩu mới">
 					</div>
 					<div class="modal-footer"
 						style="display: flex; justify-content: center;">
 						<button type="submit" class="btn btn-primary"
 							style="background-color: pink; border-color: pink; color: black;">Xác
-							nhận</button>
+							nhận
+							</button>
 					</div>
 				</form>
 			</div>

@@ -2,7 +2,6 @@ package fa.training.controller;
 
 import java.util.List;
 
-import javax.faces.application.Application;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.function.EntityResponse;
 
 import fa.training.model.Theater;
-import fa.training.repository.TicketRepository;
 import fa.training.response.TicketResponse;
 import fa.training.service.TheaterService;
 

@@ -18,12 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import fa.training.DTO.QLShowTimeDTO;
-import fa.training.DTO.ShowTimeDTO;
 import fa.training.model.Movie;
-import fa.training.model.Room;
-import fa.training.model.Showtime;
-import fa.training.model.Theater;
 import fa.training.service.MovieService;
 
 @Controller

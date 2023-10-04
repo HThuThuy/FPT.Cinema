@@ -52,7 +52,7 @@ label {
 					</div>
 
 					<div class="form-group text-right">
-					<a	href="${pageContext.request.contextPath}/customer/update">
+					<a	href="${pageContext.request.contextPath}/customer/update/${customer.cccd}">
 										<button class="templatemo-blue-button">
 											Cập nhật
 										</button>

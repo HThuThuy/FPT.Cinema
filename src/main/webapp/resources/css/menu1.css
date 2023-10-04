@@ -21,12 +21,8 @@
     opacity: 1;
     visibility: visible; }*/
 
-.col-lg-12 {
-    margin-top: 60px;
-}
-
-.container.row-top {
-    margin-top: -25px;
+.modal-content {
+    margin-top: 34%;
 }
 
 ul.site-menu.js-clone-nav.mr-auto.d-none.d-lg-block {

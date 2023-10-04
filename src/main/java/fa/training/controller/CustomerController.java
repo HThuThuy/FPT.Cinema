@@ -12,8 +12,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,14 +51,34 @@ public class CustomerController {
 	@Autowired
 	PromotionService promotionService;
 
-	
+	/**
+	 * Project:FPT-Cinema
+	 * Team 1
+	 * @author TraNLC 
+	 * Phương thức get thông tin Customer từ session
+	 */
+	private Customer getCustomerFromSession(HttpSession session) {
+		Customer customer = (Customer) session.getAttribute("customerLogin");
+		if (customer == null) {
+			throw new RuntimeException("Không tìm thấy khách hàng");
+		}
+		return customer;
+	}
+
+	/**
+	 * Project:FPT-Cinema
+	 * Team 1
+	 * @author TraNLC 
+	 * Phương thức hiển thông tin đặt vé của khách hàng
+	 * Mục đích: Hiển thị lịch sử đặt vé của khách hàng trong một khoảng thời gian cụ thể.
+	 */
 	@GetMapping(value = { "/history" })
 	public String checkHistory(Model model,
 			@RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
 			@RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
 			@RequestParam(name = "page", defaultValue = "1") int page, HttpSession session) {
 
-		Customer customer = (Customer) session.getAttribute("customerLogin");
+		Customer customer = getCustomerFromSession(session);
 		String cccd = customer.getCccd();
 
 		Page<CustomerDTO> customerDTOPage = customerService.getRecordsForCurrentPage(cccd, startDate, endDate,
@@ -69,40 +91,34 @@ public class CustomerController {
 		return "customer/history";
 	}
 
-	@GetMapping("/info")
-	public String showCustomerInfo(Model model, HttpSession session) {
-		Customer customer2 = (Customer) session.getAttribute("customerLogin");
-		String cccd2 = customer2.getCccd();
-		System.out.println("cccd là" + cccd2);
-
-		Customer customer1 = customerService.findById(cccd2);
-
-		if (customer1 != null) {
-			model.addAttribute("customer", customer1);
-		} else {
-			System.out.println("Không tìm thấy khách hàng");
-		}
-
-		return "customer/info";
-	}
-
-	@GetMapping("/update")
-	public String showCustomerInfo2(Model model, HttpSession session) {
-		Customer customer = (Customer) session.getAttribute("customerLogin");
+	/**
+	 * Project:FPT-Cinema
+	 * Team 1
+	 * @author TraNLC 
+	 * Phương thức cập nhật thông tin khách hàng
+	 * Mục đích: Hiển thị thông tin của khách hàng hoặc cho phép khách hàng cập nhật thông tin cá nhân.
+	 */
+	@GetMapping("/{page:(?:info|update)}")
+	public String showCustomerInfo(Model model, HttpSession session, @PathVariable String page) {
+		Customer customer = getCustomerFromSession(session);
 		String cccd = customer.getCccd();
-		System.out.println("cccd là" + cccd);
+		Customer customerFromDb = customerService.findById(cccd);
 
-		Customer customer1 = customerService.findById(cccd);
-
-		if (customer1 != null) {
-			model.addAttribute("customer", customer1);
+		if (customerFromDb != null) {
+			model.addAttribute("customer", customerFromDb);
 		} else {
-			System.out.println("Không tìm thấy khách hàng");
+			System.out.println("Không tìm thấy khách hàng"); // Consider using a logger here
 		}
-
-		return "customer/update";
+		return "customer/" + page;
 	}
 
+	/**
+	 * Project:FPT-Cinema
+	 * Team 1
+	 * @author TraNLC 
+	 * Phương thức hiện thị trang FAQ
+	 * Mục đích: Hiển thị trang FAQ (Câu hỏi thường gặp).
+	 */
 	@GetMapping("/faq")
 	public String showFaq(Model model) {
 
@@ -110,56 +126,39 @@ public class CustomerController {
 	}
 
 	/**
-	 * Project: FPT-Cinema Team: 1 Author : Tranlc update thông tin khách hàng,
-	 * check validate
+	 * Project:FPT-Cinema
+	 * Team 1
+	 * @author TraNLC 
+	 * Mục đích: Hiển thị trang cập nhật thông tin của khách hàng.
 	 */
-
-	@PostMapping("/update")
-	public String updateCustomerInfo(@RequestParam("cccd") String cccd, @RequestParam("phone") String phone,
-			@RequestParam("address") String address, @RequestParam("email") String email, Model model,
-			@Valid @ModelAttribute("customer") Customer customer, BindingResult result, RedirectAttributes redirectAttr,
-			HttpSession session) {
-
-		Customer customerupdate = (Customer) session.getAttribute("customerLogin");
-		String cccdUpdate = customerupdate.getCccd();
-		LocalDate birthDate = customerupdate.getBirthDate();
-		String customerName = customerupdate.getCustomerName();
-		String gender = customerupdate.getGender();
-
-		session.setAttribute("cccd", cccdUpdate);
-		session.setAttribute("birthDate", birthDate);
-		session.setAttribute("customerName", customerName);
-		session.setAttribute("gender", gender);
-
-		Customer existingCustomerByPhone = customerService.findByPhone(phone);
-		Customer existingCustomerByEmail = customerService.findByEmail(email);
-
-		if (existingCustomerByPhone != null && !existingCustomerByPhone.getCccd().equals(cccd)) {
-			result.rejectValue("phone", "exist",
-					"Số điện thoại đã tồn tại trong hệ thống, vui lòng kiểm tra lại hoặc chọn lại số khác!");
-			return "customer/update";
-		}
-
-		if (existingCustomerByEmail != null && !existingCustomerByEmail.getCccd().equals(cccd)) {
-			result.rejectValue("email", "exist",
-					"Email đã tồn tại trong hệ thống, vui lòng kiểm tra lại hoặc chọn lại email khác!");
-			return "customer/update";
-		}
-		Customer updatedCustomer = customerService.updateCustomerInfo(cccd, phone, address, email);
-
-		if (updatedCustomer != null) {
-			System.out.println("Lưu thành công thông tin khách hàng");
-		} else {
-			System.out.println("Lưu Không thành công thông tin khách hàng");
-		}
-		return "redirect:/customer/info";
+	@GetMapping("/update/{cccd}")
+	public String updateCustomerInfo(Model model, @PathVariable("cccd") String cccd, HttpSession session) {
+		session.setAttribute("cccd", cccd);
+	    Customer customerUpdate = customerService.findById(cccd);              
+	    System.out.println("customerUpdate"+customerUpdate);
+	    
+	    model.addAttribute("customerForm", customerUpdate);
+	    return "customer/update"; 
 	}
-}
 
-//
-//	@RequestMapping("/khuyenmaiinfo")
-//	public String myHandler(Model model) {
-//		model.addAttribute("allKM", khuyenMaiService.findAll());
-//		return "/khachhang/KM00001"; // Trả về tên của tệp JSP mà bạn muốn hiển thị
-//	}
-//}
+	/**
+	 * Project:FPT-Cinema
+	 * Team 1
+	 * @author TraNLC 
+	 * Phương thức cập nhật thông tin khách hàng
+	 * Mục đích: Xử lý thông tin được cập nhật của khách hàng và lưu vào cơ sở dữ liệu.
+	 */
+	@PostMapping("/update")
+	public String doPostUpdate(@Valid @ModelAttribute("customerForm") Customer customer, BindingResult result, RedirectAttributes redirectAttr) {
+	    if (result.hasErrors()) {
+	        for (ObjectError objectError : result.getAllErrors()) {
+	            System.out.println(objectError);
+	            System.out.println(objectError.getCode());
+	        }
+	        return "customer/update"; 
+	    }
+	    customerService.save(customer);
+	    return "redirect:/customer/info";
+	}
+
+}
