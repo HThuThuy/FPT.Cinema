@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%-- <%@ page errorPage="errorPage.jsp"%> --%>
+<%@ page errorPage="errorPage.jsp"%>
 
 <!DOCTYPE html>
 <html>

@@ -10,7 +10,7 @@
 			trình thành viên FPT Cinema</h6>
 	</div>
 	<span id="accountLogin-error" style="color: red;"></span>
-	<div class="mb-1">
+	<div class="mb-4 mt-2">
 		<input type="text" class="form-control" id="account-login"
 			name="account" placeholder="Tên đăng nhập"> <span
 			id="accountLogin2-error" style="color: red;"></span>

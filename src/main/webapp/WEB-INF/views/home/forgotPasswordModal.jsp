@@ -45,16 +45,10 @@
 					</div>
 
 
-					<div class="modal-footer"
-						style="display: flex; justify-content: center;">
-						<button type="button" class="btn btn-primary"
-							style="background-color: pink; border-color: pink; color: black;"
-							id="sendEmailButton"
-							onclick="if (checkExistEmail()) sendEmail();">Gửi email</button>
-
-						<a href="#" data-bs-toggle="modal" 
-							data-bs-target="#resetPasswordModal" style="color: black;">Xác
-							nhận đổi mật khẩu</a>
+					<div class="modal-footer" style="display: flex; justify-content: center;">
+					    <button type="button" class="btn btn-primary" id="sendEmailButton" style="background-color: pink; border-color: pink; color: black;" onclick="if (checkExistEmail()) sendEmail();">Gửi email</button>
+					
+					    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resetPasswordModal" style="background-color: pink; border-color: pink; color: black;">Xác nhận đổi mật khẩu</button>
 					</div>
 
 					<div id="errorAlert" class="alert alert-danger" role="alert"
