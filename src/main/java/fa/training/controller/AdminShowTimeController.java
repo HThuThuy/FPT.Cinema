@@ -42,7 +42,7 @@ import fa.training.service.TicketService;
 
 @Controller
 @RequestMapping(value = { "/admin" })
-public class AdminSuatChieuController {
+public class AdminShowTimeController {
 	
 	@Autowired
 	private ShowtimeService showtimeService;
@@ -56,12 +56,12 @@ public class AdminSuatChieuController {
 	@Autowired
 	private TheaterService theaterService;
 	
-	
-	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện tất cả suất chiếu trong DB
+	 */
 	@GetMapping(value = { "/quanLySuatChieu" })
 	public String admin(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
-		
-//		int noOfRecords = 20; 
+		//setup phân trang
 		int noOfRecords =showtimeService.getAll().size();
 		int recordsPerPage = 5;
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
@@ -71,39 +71,17 @@ public class AdminSuatChieuController {
 			page = noOfRecords;
 		}
 		int start = page > 0 ? page - 1 : 0;
-		
+		//get data theo phân trang
 		List<Showtime> list = showtimeService.getRecordsForCurrentPage((start) * recordsPerPage, recordsPerPage);
-		
 		model.addAttribute("noOfPages", noOfPages);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("suatchieuList", list);
 		return "admin/quanLySuatChieu";
-	}
+	}	
 	
-	@GetMapping("/searchSuatChieu")
-	public String admin2(
-			@RequestParam(value = "searchName", required = true) String searchName,
-			@RequestParam(name = "page", defaultValue = "0") int page, Model model
-	) {
-		
-		int noOfRecords = showtimeService.getRecordsForSearch("searchName");
-		int recordsPerPage = 5;
-		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-		if (page < 1) {
-			page = 1;
-		} else if (page > noOfRecords) {
-			page = noOfRecords;
-		}
-		int start = page > 0 ? page - 1 : 0;
-		
-		List<Showtime> list = showtimeService.getRecordsForCurrentPage2((start) * recordsPerPage, recordsPerPage);
-		
-		model.addAttribute("noOfPages", noOfPages);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("suatchieuList", list);
-		return "admin/quanLySuatChieu";
-	}
-	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Mở trang jsp thêm mới suất chiếu
+	 */
 	@GetMapping(value = { "/addSuatChieu" })
 	public String admin3(Model model) {
 		List<Movie> list = movieService.getAllEnable();
@@ -116,10 +94,12 @@ public class AdminSuatChieuController {
 		return "admin/addSuatChieu";
 	}
 	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Thêm mới suất chiếu vào DB
+	 */
 	@PostMapping(value = { "/addSuatChieu" })
 	public String admin4(@Valid @ModelAttribute("suatChieu") QLShowTimeDTO qlShowTimeDTO,
 			BindingResult bindingResult, Model model) {
-		System.out.print("Suất chiếu: " + qlShowTimeDTO);
 		
 		//check valid
 		if(bindingResult.hasErrors()) {
@@ -129,10 +109,7 @@ public class AdminSuatChieuController {
 			model.addAttribute("theaters", list2);
 			model.addAttribute("suatChieu", qlShowTimeDTO);
 			model.addAttribute("text", "Thêm mới ");
-			model.addAttribute("text2", false);
-			
-//			model.addAttribute("theaterselected", qlShowTimeDTO.getTheaterId());
-			
+			model.addAttribute("text2", false);			
 			
 			return "admin/addSuatChieu";
 		}
@@ -149,12 +126,14 @@ public class AdminSuatChieuController {
 		return "redirect:/admin/quanLySuatChieu";
 	}
 	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Mở trang jsp edit suất chiếu
+	 */
 	@GetMapping("/{id}")
 	public String admin5(Model model, @PathVariable("id") String id) {
-//		lấy data
+		//lấy data
 		Showtime showtime = showtimeService.findById(id);
-		
-//		QLShowTimeDTO qlShowTimeDTO = new QLShowTimeDTO(id,"MV001","TT001", "R003",LocalTime.of(12, 02));
+		//gán data cho DTO
 		QLShowTimeDTO qlShowTimeDTO = new QLShowTimeDTO();
 		qlShowTimeDTO.setShowtimeId(showtime.getShowtimeId());		
 		Room room = showtime.getRoom();
@@ -175,19 +154,24 @@ public class AdminSuatChieuController {
 		return "admin/editSuatChieu";
 	}	
 	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Xóa suất chiếu đã chọn
+	 */
 	@PostMapping("/delete")
 	public String admin6(@RequestParam String showtimeId,  Model model, RedirectAttributes redirectAttributes) {
-		System.out.print("Xóa Suất chiếu: " + showtimeId);
-//		showtimeService.deleteById(showtimeId);
+		try {
+			showtimeService.deleteST2(Arrays.asList(showtimeId));
+			redirectAttributes.addFlashAttribute("message", "Xóa suất chiếu thành công");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("message", "Thất bại! Suất chiếu hiện đã được đặt vé");
+		}
 		
-//		Showtime showtime = showtimeService.findById(showtimeId);
-//		Showtime showtime = new Showtime();
-//		showtime.setShowtimeId(showtimeId);
-		showtimeService.deleteST2(Arrays.asList(showtimeId));
-		redirectAttributes.addFlashAttribute("message", "Xóa suất chiếu thành công");
 		return "redirect:/admin/quanLySuatChieu";
 	}	
 	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện danh sách room khi chọn rạp
+	 */
 	@ResponseBody	
 	@GetMapping(value = { "/theater" })
 	public ResponseEntity<List<Room>> show(Model model, @RequestParam("theater") String theaterId) {
@@ -198,6 +182,9 @@ public class AdminSuatChieuController {
 		return new ResponseEntity<List<Room>>(list, HttpStatus.OK);
 	}
 	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Hiện danh sách giờ chiếu khi chọn room
+	 */
 	@ResponseBody	
 	@GetMapping(value = { "/room" })
 	public ResponseEntity<List<String>> show2(Model model, @RequestParam("room") String roomId) {

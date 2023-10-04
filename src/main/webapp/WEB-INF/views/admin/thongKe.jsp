@@ -39,7 +39,7 @@
 					<tbody>
 						<c:forEach items="${suatchieuList}" var="item" varStatus="status">
 							<tr style="font-size: 15px" class="align-middle">
-								<td class="text-center">${status.count}</td>							
+								<td class="text-center">${status.count+(currentPage-1)*5}</td>							
 								<td>${item.theaterName}</td>								
 								<td>${item.roomName}</td>
 								<td>${item.startTime}</td>

@@ -56,37 +56,43 @@ public class MovieService {
 	public List<Movie> findByMovieName(String movieName) {
         return repo.findByMovieName(movieName);
     }
-	//LamNH23
+	
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Lấy tất cả phim trong DB
+	 */
 	public List<Movie> getRecordsForCurrentPage(int start, int recordsPerPage) {
-//		List<Movie> list = new ArrayList<>();
-//		for(int i = start+1;i<(start+recordsPerPage+1);i++) {
-//			list.add(new Movie("Movie "+i, "Tên phim", "Mô tả", "Đạo diễn", LocalDate.of(2023, 9, 14), LocalDate.of(2023, 9, 24), LocalTime.of(02, 30),"Url poster",new HashSet<Showtime>()));
-//		}	
 		List<Movie> list = repo.getRecordsForCurrentPage(start, recordsPerPage);
 		return list;
 	}
 	
-	//LamNH23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Lấy tất cả phim trong DB có ngày kết thúc lớn hơn ngày hiện tại
+	 */
 	public List<Movie> getAllEnable() {
 		List<Movie> list = repo.getAllEnable(new Date (System.currentTimeMillis() ));		
 		return list;
 	}
 	
-	//LamNh23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Lấy tất cả phim trong DB theo tên
+	 */
 	public List<Movie> searchMovie(String searchName) {
 		return repo.searchMovie ("%" + searchName + "%");		
 	}
 	
 	
-	// LamNH23
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Tìm kiếm phim trong DB theo tên
+	 */
 	public List<Movie> getRecordsForCurrentPage2(String searchName, int start, int recordsPerPage) {
 		List<Movie> list = repo.getRecordsForCurrentPage2("%" + searchName + "%",start, recordsPerPage);
 		return list;
 	}
 	
-	// LamNH23
-	public void deleteMV(Iterable<String> ids) {
-		
+	/**
+	 * Project: FPT Cinema Team: 2 Author :LamNH23 Method: Xóa phim đã chọn
+	 */
+	public void deleteMV(Iterable<String> ids) {		
 		repo.deleteAllByIdInBatch(ids);
 	}
 }

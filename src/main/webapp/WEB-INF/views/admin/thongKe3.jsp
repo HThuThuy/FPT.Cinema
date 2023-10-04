@@ -39,14 +39,16 @@
 							class="form-control ml-1" value="${searchDate2}">
 					</div>
 
-					<div class="col-lg-3 col-md-3">
-						<button type="submit" class="btn">Search</button>
+					<div class="col-lg-4 col-md-3">
+						<button type="submit" class="btn">Thống kê doanh thu</button>
 					</div>
 
 				</form>
 			</div>			
 			
 		</div>
+		
+		<input value="${rapList.size()}" id="size" hidden="true">
           
           <div class="templatemo-content-widget no-padding">
             <div class="panel panel-default table-responsive">
@@ -62,25 +64,92 @@
 					</tr>                  
                 </thead>
                 <tbody>
-
 					<c:forEach items="${rapList}" var="item" varStatus="status">
 						<tr class="align-middle">
 							<td class="text-center">${status.count}</td>
-							<td>${item.theaterName}</td>
+							<td id="name${status.count}">${item.theaterName}</td>
 							<td>${item.city}</td>
 							<td>${item.address}</td>
 							<td>${item.phone}</td>	
-							<td><fmt:formatNumber value="${item.doanhThu}" pattern="###,###"/></td>							
+							<%-- <td id="doanhthu${status.count}">${item.doanhThu}</td> --%>
+							<td id="doanhthu${status.count}"><fmt:formatNumber value="${item.doanhThu}" pattern="###,###"/></td>	 						
 						</tr>
 					</c:forEach>
                   
                 </tbody>
               </table>    
             </div>                          
-          </div> 
-        </div>
-      </div>      
-      
-      <script>
-      
-      </script>
+          </div>
+
+		<div>
+
+			<!-- Website Traffic -->
+			<div class="card">
+				<div class="card-body pb-0">
+					<div id="trafficChart" style="min-height: 400px;" class="echart"></div>						
+				</div>
+			</div>
+			<!-- End Website Traffic -->			
+			
+		</div>
+
+
+	</div>
+      </div>
+
+<script>							
+    document.addEventListener("DOMContentLoaded", () => { 
+    	
+    	/* var series2='[{"value": 100, "name": "bar"}, {"value": 200, "name":"bar2"}]' */
+    	
+    	var series2='['
+    	
+    	for (var i = 1; i <= $('#size').val(); i++) {
+            var nameId = "name" + i;
+            var doanhthuId = "doanhthu" + i;
+
+            var nameValue = document.getElementById(nameId).textContent;
+            var doanhthuValue = document.getElementById(doanhthuId).textContent.replace(/\./g, '');
+
+            console.log("Giá trị của " + nameId + ": " + nameValue);
+            console.log("Giá trị của " + doanhthuId + ": " + doanhthuValue);
+            
+            if(i == $('#size').val()) 
+            	 series2+='{"value": '+doanhthuValue+', "name": "'+nameValue+'"}]'
+    		else series2+='{"value": '+doanhthuValue+', "name": "'+nameValue+'"},'  
+        }   	
+    	
+    	
+        echarts.init(document.querySelector("#trafficChart")).setOption({
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                show: true,
+                top: '5%',
+                left: 'center'
+            },
+            series: [{
+                name: 'Doanh Thu',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '18',
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: JSON.parse(series2)                
+            }]
+        });
+    });
+</script>
