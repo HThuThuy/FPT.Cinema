@@ -13,7 +13,7 @@
 		<div class="row"
 			style="display: flex; justify-content: center; align-items: center;">
 
-			<div class="col-lg-6 col-md-6">
+			<div class="col-lg-7 col-md-6">
 				<form:form class="row"
 					action="${pageContext.request.contextPath}/admin/search" method="get">
 					
@@ -21,21 +21,21 @@
 						
 					</div>
 
-					<div class="col-lg-6 col-md-6">
+					<div class="col-lg-5 col-md-6">
 						<input type="hidden" name="page" value="${1}" /> <input
 							id="nameCustomer" type="text" name="searchName"
 							class="form-control ml-1" value="${searchName}"
 							placeholder="Nhập tên phim">
 					</div>
 
-					<div class="col-lg-3 col-md-3">
-						<button type="submit" class="btn">Search</button>
+					<div class="col-lg-4 col-md-3">
+						<button type="submit" class="btn">Tìm kiếm</button>
 					</div>
 
 				</form:form>
 			</div>			
 			
-			<div class="col-lg-3 col-md-6"></div>
+			<div class="col-lg-2 col-md-6"></div>
 			<div class="col-lg-3 col-md-6">
 				<a class="btn " href="${pageContext.request.contextPath}/admin/addPhim">Thêm phim mới</a>
 			</div>

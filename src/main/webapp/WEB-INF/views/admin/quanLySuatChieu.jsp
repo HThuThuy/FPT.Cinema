@@ -80,7 +80,8 @@
 					<li>
 						<c:if test="${currentPage!=1}">
 							<a href="?page=${currentPage - 1}&searchName=${searchName}"><span aria-hidden="true"><i class="fa-solid fa-caret-left"></i></span></a>
-						</c:if> <c:if test="${currentPage==1}">
+						</c:if> 
+						<c:if test="${currentPage==1}">
 							<a ><span aria-hidden="true"><i class="fa-solid fa-caret-left"></i></span></a>
 						</c:if>
 					</li>

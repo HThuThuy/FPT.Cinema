@@ -15,7 +15,7 @@
 		<div class="row"
 			style="display: flex; justify-content: center; align-items: center;">
 
-			<div class="col-lg-6 col-md-6">
+			<div class="col-lg-7 col-md-6">
 				<form:form class="row"
 					action="${pageContext.request.contextPath}/admin/thongKe2/search" method="get">
 					
@@ -31,13 +31,13 @@
 					</div>
 
 					<div class="col-lg-3 col-md-3">
-						<button type="submit" class="btn">Search</button>
+						<button type="submit" class="btn">Tìm kiếm</button>
 					</div>
 
 				</form:form>
 			</div>			
 			
-			<div class="col-lg-3 col-md-6"></div>
+			<div class="col-lg-2 col-md-6"></div>
 			<div class="col-lg-3 col-md-6">
 				
 			</div>

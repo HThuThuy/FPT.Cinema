@@ -39,8 +39,8 @@
 							class="form-control ml-1" value="${searchDate2}">
 					</div>
 
-					<div class="col-lg-3 col-md-3">
-						<button type="submit" class="btn">Search</button>
+					<div class="col-lg-4 col-md-3">
+						<button type="submit" class="btn">Thống kê doanh thu</button>
 					</div>
 
 				</form>
