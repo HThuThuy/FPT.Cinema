@@ -104,18 +104,7 @@ input#discountCode {
 						<div class="col-lg-12">
 							<div class="content">
 								<div class="row">
-									<div class="col-lg-12">
-										<div class="main-profile ">
-											<div class="row">
-												<div class="col-lg-4 align-self-center">
-													<img src="assets/images/profile.jpg" alt=""
-														style="border-radius: 23px;">
-												</div>
-
-
-											</div>
-										</div>
-									</div>
+									<h4 style="text-align: center;">Màn hình</h4>
 								</div>
 							</div>
 							<div class="row">
@@ -155,10 +144,10 @@ input#discountCode {
 																<div
 																	aria-label="Row 1, Seat ${status.index + 1} - Love seat left."
 																	aria-checked="false" aria-hidden="true"
-																	class="layout__seat layout__seat--love-seat-left"
+																	class="layout__seat layout__seat--love-seat-left middle-seat"
 																	role="checkbox" tabindex="-1" data-reactid="99"
 																	style="background: rgb(93, 57, 164); color: black;">
-																	<span aria-hidden="false" class="layout__seat__name"
+																	<span aria-hidden="false" class="layout__seat__name middle-seat"
 																		data-reactid="100"> ${se.seatPosition} </span> <input
 																		type="hidden" name="seatId"
 																		value="${se.seatId.seatId}" />

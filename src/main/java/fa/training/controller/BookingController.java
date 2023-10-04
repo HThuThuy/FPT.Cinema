@@ -32,13 +32,20 @@ public class BookingController {
 	@Autowired
 	private ShowtimeService showtime;
 	
+	/**
+	 * Project: FPT Cinema 
+	 * Team: 1 
+	 * Author : ThuyHTT14 
+	 * Method: Lấy thông tin suất
+	 * chiếu, rạp và xử lý lưu dữ liệu vào database
+	 */
 	@GetMapping(value= {"/booking"})
 	public String booking(Model model,@RequestParam("showtimeId") String selectedShowtime,HttpSession session) {
-		List<Seat> listaList= seat.getAll();
+		//List<Seat> listaList= seat.getAll();
 //		for (Seat seats : listaList) {
 //			System.out.println(seats.getSeatPositon());
 //		}
-		model.addAttribute("listSeat", seat.getAll());
+		
 		model.addAttribute("seatAdd", new Seat());
 		
 		List<Services> list = SerService.getAll();
@@ -50,7 +57,11 @@ public class BookingController {
 		System.out.println("Id--------"+selectedShowtime);
 		//Showtime
         Showtime getShowtime = showtime.findById(selectedShowtime);
-         System.out.println("Showtime---------------------"+ getShowtime);
+         System.out.println("Showtime-getRoom---------------------"+ getShowtime.getRoom().getRoomId());
+         
+         List<Seat> listaList= seat.getAllByRoomId(getShowtime.getRoom().getRoomId());
+         
+         model.addAttribute("listSeat", listaList);
          session.setAttribute("selectedShowtime", getShowtime);
          Movie movieChoose= (Movie)session.getAttribute("movieChoose");
          Showtime theaterSel=(Showtime)session.getAttribute("selectedShowtime");

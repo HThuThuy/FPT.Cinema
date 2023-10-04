@@ -15,6 +15,6 @@ public interface TheaterRepository extends JpaRepository<Theater, String> {
     //ThuyHTT14
 	@Query(value = "select * from THEATER t WHERE t.city= :'N'selectedCity ", nativeQuery = true)
 	List<Theater> findCity(@Param("selectedCity") String selectedCity);
-	
+    //ThuyHTT14
 	List<Theater> findAllByCity(String city);
 }

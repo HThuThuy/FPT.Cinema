@@ -35,9 +35,11 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
     @Query(value = "select * from Movie m WHERE m.startDate  < GETDATE() AND m.endDate  > GETDATE();", nativeQuery = true)
     List<Movie> findDangChieu();
     
+    //ThuyHTT14 
     @Query(value = "select * from Movie m WHERE m.startDate  > GETDATE() ", nativeQuery = true)
     List<Movie> findSapChieu();
     
+    //ThuyHTT14 
     List<Movie> findByMovieName(String movieName);
 		
     /**

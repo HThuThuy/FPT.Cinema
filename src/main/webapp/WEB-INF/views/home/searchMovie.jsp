@@ -20,20 +20,7 @@
 <!-- ***** New Password End ***** -->
 
 
-<div class="row filmhot">
-    <div class="col-lg-12 ">
-        <div class="page-content">
 
-            <!-- ***** Banner Start ***** -->
-            <div class="row">
-                
-
-
-            </div>
-
-        </div>
-    </div>
-</div>
 <div class="container">
 
     <!-- ***** Banner End ***** -->

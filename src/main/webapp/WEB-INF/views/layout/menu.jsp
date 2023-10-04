@@ -36,15 +36,17 @@
 				</h1>
 			</div>
 			<div class="col-4">
-				<!-- ***** Search start ***** -->
-				<div class="search-input">
-					<form id="search" action="#">
-						<input type="text" placeholder="Tìm tên phim, diễn viên"
-							id='searchText' name="searchKeyword" onkeypress="handle" /> <i
-							class="fa fa-search"></i>
-					</form>
-				</div>
-				<!-- ***** Search End ***** -->
+				<!-- ***** Search Start ***** -->
+					<div class="search-input">
+						<form id="search" action="#">
+							<input type="text" placeholder="Tìm tên phim, diễn viên"
+								id="searchText" onkeypress="handleKeyPress(event)" /> <i
+								class="fa fa-search"></i>
+						</form>
+					</div>
+					
+					
+					<!-- ***** Search End ***** -->
 			</div>
 			<div class="col-6 d-flex">
 				<nav class="site-navigation position-relative text-right"
@@ -95,6 +97,22 @@
 
 
 <script>
+
+function handleKeyPress(event) {
+
+	  if (event.keyCode === 13) {
+
+	    event.preventDefault(); // Ngăn chặn hành vi mặc định của phím Enter trong form
+
+	    var searchText = document.getElementById('searchText').value;
+
+	    var url = '/FPT-Cinema/searchMovie/' + encodeURIComponent(searchText);
+
+	    window.location.href = url;
+
+	  }
+
+	}
 	 function loginSuccess(customerName) {
 		    // Remove the login link
 		    $('#login').remove();
@@ -114,6 +132,8 @@
 		    $('.site-menu').append(dropdownMenu);
 		  }
 		
+	
+	 
 </script>
 <!-- ***** Header Area End ***** -->
 

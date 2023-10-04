@@ -55,5 +55,7 @@ public class Order {
 	
 //	@Range(min = 0, message = "Số lượng không được nhỏ hơn 0")
 	int totalPrice;
+	
+	
 
 }

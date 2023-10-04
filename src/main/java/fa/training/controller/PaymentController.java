@@ -79,8 +79,11 @@ public class PaymentController {
 	@Autowired
 	private PromotionService promotions;
 
-	/*
-	 * Project: FPT Cinema Team: 2 Author :ThuyHtt14 Method: Tạo đơn thanh toán
+	/**
+	 * Project: FPT Cinema 
+	 * Team: 1 
+	 * Author :ThuyHtt14 
+	 * Method: Tạo đơn thanh toán
 	 */
 	@GetMapping("/create")
 	public String createPayment(@RequestParam("param1") String soTien, @RequestParam("param2") String orderInfo)
@@ -172,8 +175,11 @@ public class PaymentController {
 		return "redirect:" + paymentUrl;
 	}
 
-	/*
-	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: Lấy thông tin thanh
+	/**
+	 * Project: FPT Cinema 
+	 * Team: 1 
+	 * Author : ThuyHTT14 
+	 * Method: Lấy thông tin thanh
 	 * toán và xử lý lưu dữ liệu vào database
 	 */
 	@GetMapping("/return")
@@ -182,6 +188,7 @@ public class PaymentController {
 			@RequestParam(value = "vnp_OrderInfo") String orderInfo, Model model, HttpSession session) {
 		int maSuatChieu = 0;
 		String ghe = "";
+		TicketInfo buyTicketInfo = new TicketInfo();
 		try {
 			// Tạo một ObjectMapper
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -198,7 +205,7 @@ public class PaymentController {
 
 			Showtime showtimeGets = (Showtime) session.getAttribute("selectedShowtime");
 			System.out.println("abc-------------------------" + showtimeGets);
-
+			
 			if (status.equals("00")) {
 				JsonNode seatNode = jsonNode.get("seat");
 				JsonNode serviceNode = jsonNode.get("service");
@@ -224,11 +231,15 @@ public class PaymentController {
 				String promotion = jsonNode.get("promotion").asText();
 				System.out.println("promotion"+promotion);
 			//	String pro = "P001";
-				Promotion proTicket = promotions.findById(promotion);
+				if (promotion.equals("")) {
+					getOrder.setPromotion(null);
+				}else {
+					Promotion proTicket = promotions.findById(promotion);
+					getOrder.setPromotion(proTicket);
+				}
+				
 				int intValue = Integer.parseInt(amount);
 				getOrder.setTotalPrice(intValue);
-				getOrder.setPromotion(proTicket);
-
 				orders.save(getOrder);
 				//insert tab orderService
 				for (String serviceOrder : serviceList) {
@@ -249,7 +260,7 @@ public class PaymentController {
 				System.out.println("custerLogin------------" + loginCustomer);
 
                 // ticket
-				TicketInfo buyTicketInfo = new TicketInfo();
+				
 				buyTicketInfo.setCustomer(loginCustomer);
 				buyTicketInfo.setShowtimeTicket(showtimeGets);
 				buyTicketInfo.setOrder(getOrder);
@@ -269,26 +280,28 @@ public class PaymentController {
 				for (int i = 0; i < seatNode.size(); i++) {
 					seatList[i] = seatNode.get(i).asText();
 				}
-	            //Update trang thai seat khi da dat
+	            //Update trang thai seat khi da  huy
 				for (String seatUpdate : seatList) {
 					System.out.println("ghe-------"+seatUpdate);
 					seat.updateSeatCancel(seatUpdate);
-					System.out.println("huy thanh cong seat");
+					System.out.println("Thanh toán không thành công, hủy seat");
 
 				}
 
-				return "ticket/payment";
+				return "redirect:/";
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//lấy data cho bill
 		Movie movieChoose= (Movie)session.getAttribute("movieChoose");
         Showtime theaterSel=(Showtime)session.getAttribute("selectedShowtime");
         System.out.println("abcdef---------"+theaterSel);
         System.out.println("abc"+movieChoose);
         model.addAttribute("movieChoose", movieChoose);
         model.addAttribute("theaterSel", theaterSel);
+        model.addAttribute("order", buyTicketInfo);
 		return "ticket/bill";
 	}
 }

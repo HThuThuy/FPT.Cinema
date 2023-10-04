@@ -31,18 +31,20 @@ public class TicketController {
 
 	@Autowired
 	private MovieService movie;
-	
+
 	@Autowired
 	private ShowtimeService showtime;
 
-	
-	/*
-	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: Lấy thông tin suất
+	/**
+	 * Project: FPT Cinema 
+	 * Team: 1 
+	 * Author : ThuyHTT14 
+	 * Method: Lấy thông tin suất
 	 * chiếu, rạp và xử lý lưu dữ liệu vào database
 	 */
 	@GetMapping(value = { "/showtime/{movieID}" })
 	public String ticket(Model model, @PathVariable("movieID") String movieID, HttpSession session) {
-
+        // Rạp 
 		List<Theater> listaList = theater.getAll();
 		for (Theater theaters : listaList) {
 			System.out.println(theaters);
@@ -50,41 +52,39 @@ public class TicketController {
 
 		model.addAttribute("listTheater", theater.getAll());
 		model.addAttribute("theaterAdd", new Theater());
-	//	String movieID = request.getParameter("movieID");
+		// String movieID = request.getParameter("movieID");
 		System.out.println("MovieID:-----------" + movieID);
 		Movie movieChoose = movie.findById(movieID);
-		 System.out.println("Movie:-----------"+ movieChoose);
+		System.out.println("Movie:-----------" + movieChoose);
 		model.addAttribute("movieChoose", movieChoose);
-		//Movie
+		// Movie
 		String decription = movieChoose.getMovieDescription();
-		 System.out.println("decription:-----------"+ decription);
-		String actor = decription.substring(decription.indexOf("1.")+2, decription.indexOf("2."));
+		System.out.println("decription:-----------" + decription);
+		String actor = decription.substring(decription.indexOf("1.") + 2, decription.indexOf("2."));
 		model.addAttribute("dienVien", actor);
-		String genre = decription.substring(decription.indexOf("2.")+2, decription.indexOf("3."));
+		String genre = decription.substring(decription.indexOf("2.") + 2, decription.indexOf("3."));
 		model.addAttribute("genre", genre);
-		System.out.println("decription:-----------"+ genre);
-		String nation = decription.substring(decription.indexOf("3.")+2, decription.indexOf("4."));
+		System.out.println("decription:-----------" + genre);
+		String nation = decription.substring(decription.indexOf("3.") + 2, decription.indexOf("4."));
 		model.addAttribute("nation", nation);
-		
-		String decript = decription.substring(decription.indexOf("4.")+2, decription.indexOf("5."));
+
+		String decript = decription.substring(decription.indexOf("4.") + 2, decription.indexOf("5."));
 		model.addAttribute("mota2", decript);
 		session.setAttribute("movieChoose", movieChoose);
-		Customer loginCustomer = (Customer)session.getAttribute("customerLogin");
+		Customer loginCustomer = (Customer) session.getAttribute("customerLogin");
 
-		System.out.println("customerLogin"+loginCustomer);
-		
-		//List<Showtime> shotimeList= showtime.getByMovieId(movieID, theaterId);
-		
-		
+		System.out.println("customerLogin" + loginCustomer);
+
 		return "ticket/detailMovie";
 	}
 
-	@ResponseBody	
+	@ResponseBody
 	@GetMapping(value = { "/theaterId" })
-	public ResponseEntity<List<Showtime>> showTheater(Model model,@RequestParam("movieId") String selectedMovieId, @RequestParam("theaterId") String selectedTheater) {
-		
-		List<Showtime> shotimeList= showtime.getByMovieId(selectedMovieId, selectedTheater);
-		
+	public ResponseEntity<List<Showtime>> showTheater(Model model, @RequestParam("movieId") String selectedMovieId,
+			@RequestParam("theaterId") String selectedTheater) {
+		// Lấy suất chiếu theo pram nhận đc
+		List<Showtime> shotimeList = showtime.getByMovieId(selectedMovieId, selectedTheater);
+
 		for (Showtime showtime : shotimeList) {
 			System.out.println(showtime);
 		}
@@ -92,26 +92,15 @@ public class TicketController {
 	}
 
 	@GetMapping(value = { "/bill" })
-    public String bill(Model model, HttpSession session) {
-        System.out.println("bill");
-        Movie movieChoose= (Movie)session.getAttribute("movieChoose");
-        Showtime theaterSel=(Showtime)session.getAttribute("selectedShowtime");
-        System.out.println("abcdef---------"+theaterSel);
-        System.out.println("abc"+movieChoose);
-        model.addAttribute("movieChoose", movieChoose);
-        model.addAttribute("theaterSel", theaterSel);
-        return "ticket/bill";
-    }
+	public String bill(Model model, HttpSession session) {
+		System.out.println("bill");
+		Movie movieChoose = (Movie) session.getAttribute("movieChoose");
+		Showtime theaterSel = (Showtime) session.getAttribute("selectedShowtime");
+		System.out.println("abcdef---------" + theaterSel);
+		System.out.println("abc" + movieChoose);
+		model.addAttribute("movieChoose", movieChoose);
+		model.addAttribute("theaterSel", theaterSel);
+		return "ticket/bill";
+	}
 
-	
-	@GetMapping(value = { "/searchMovie/{movieName}" })
-    public String searchMovie(Model model,@PathVariable("movieName") String movieName, HttpSession session) {
-        System.out.println("bill");
-        List<Movie> movieChoose= movie.findByMovieName(movieName);
-       
-        System.out.println("abc"+movieChoose);
-        model.addAttribute("movieChoose", movieChoose);
-       
-        return "home/searchMovie";
-    }
 }

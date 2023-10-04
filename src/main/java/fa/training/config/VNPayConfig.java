@@ -1,10 +1,5 @@
-/*
- * Project: FPT-Cinema
- * Team: 1
- * Author : ThuyHTT14
- * Class: Cấu hình thanh toán cho cổng thanh toán VNPay
- */
 
+ 
 package fa.training.config;
 
 import java.io.UnsupportedEncodingException;
@@ -21,7 +16,12 @@ import java.util.Random;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
-
+/**
+ * Project: FPT Cinema 
+ * Team: 1 
+ * Author : ThuyHTT14 
+ * Method: config vnpay phần tích hợp thanh toán
+ */
 public class VNPayConfig {
 	public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
 	public static String vnp_Returnurl = "http://localhost:6001/FPT-Cinema/payment/return";
@@ -58,7 +58,12 @@ public class VNPayConfig {
 		}
 		return digest;
 	}
-
+	/**
+	 * Project: FPT Cinema 
+	 * Team: 1 
+	 * Author : ThuyHTT14 
+	 * Method: config vnpay phần tích hợp thanh toán
+	 */
 	public static String Sha256(String message) {
 		String digest = null;
 		try {
@@ -78,6 +83,13 @@ public class VNPayConfig {
 	}
 
 	// Util for VNPAY
+	
+	/**
+	 * Project: FPT Cinema 
+	 * Team: 1 
+	 * Author : ThuyHTT14 
+	 * Method: config vnpay phần tích hợp thanh toán
+	 */
 	public static String hashAllFields(Map fields) {
 		List fieldNames = new ArrayList(fields.keySet());
 		Collections.sort(fieldNames);
@@ -97,7 +109,12 @@ public class VNPayConfig {
 		}
 		return hmacSHA512(vnp_HashSecret, sb.toString());
 	}
-
+	/**
+	 * Project: FPT Cinema 
+	 * Team: 1 
+	 * Author : ThuyHTT14 
+	 * Method: config vnpay phần tích hợp thanh toán
+	 */
 	public static String hmacSHA512(final String key, final String data) {
 		try {
 
@@ -120,7 +137,12 @@ public class VNPayConfig {
 			return "";
 		}
 	}
-
+	/**
+	 * Project: FPT Cinema 
+	 * Team: 1 
+	 * Author : ThuyHTT14 
+	 * Method: config vnpay phần tích hợp thanh toán
+	 */
 	public static String getIpAddress(HttpServletRequest request) {
 		String ipAdress;
 		try {

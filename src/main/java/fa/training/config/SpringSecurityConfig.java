@@ -40,9 +40,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	        //CSRF cho phép kẻ tấn công thực hiện các yêu cầu từ phía client mà không cần sự đồng ý của người dùng.
             .csrf().disable()
             .authorizeRequests()
+<<<<<<< Updated upstream
             	// Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
                 .antMatchers("/home", "/", "/ticket/**").permitAll()
                 // Chỉ người dùng có vai trò "ADMIN" mới được truy cập vào "/admin/**"
+=======
+<<<<<<< HEAD
+                .antMatchers("/home", "/", "/ticket/**").permitAll()
+=======
+            	// Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
+                .antMatchers("/home", "/", "/ticket/**").permitAll()
+                // Chỉ người dùng có vai trò "ADMIN" mới được truy cập vào "/admin/**"
+>>>>>>> 28b0def15ec3512f9fc364f0c0e8ec30536abafe
+>>>>>>> Stashed changes
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 // Người dùng có vai trò "ADMIN" hoặc "USER" đều có thể truy cập vào "/customer/**"
                 .antMatchers("/customer/**").hasAnyRole("ADMIN", "USER")

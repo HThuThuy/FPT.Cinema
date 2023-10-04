@@ -14,7 +14,7 @@ import fa.training.model.Showtime;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, String> {
 	
-
+     //LamNH23
 	@Query(value = "select * from ROOM where theaterId like :theaterId order by roomId;", nativeQuery = true)
 	List<Room> getAllByTheater(@Param("theaterId") String theaterId);
 

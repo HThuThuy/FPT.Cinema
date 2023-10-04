@@ -259,7 +259,7 @@ bill-movie {
                                                     src="https://external-preview.redd.it/cg8k976AV52mDvDb5jDVJABPrSZ3tpi1aXhPjgcDTbw.png?auto=webp&s=1c205ba303c1fa0370b813ea83b9e1bddb7215eb"
                                                     alt="QR code">
                                             </div>
-                                            <p class="ticket-number">#20030220</p>
+                                            <p class="ticket-number">#${order.ticketId}</p>
                                             
                                         </div>
                                     </div>

@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
@@ -34,40 +33,35 @@ public class Movie {
 	@Id
 	@Column(columnDefinition = "varchar(255)")
 //	@Pattern(regexp = "^PH[0-9]{5}$", message = "mã phim không đúng định dạng PHxxxxx")
-	@NotBlank(message = "Chưa nhập dữ liệu")
+//	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String movieId;
 	
 	@Column(columnDefinition = "Nvarchar(50)")
-	@NotBlank(message = "Chưa nhập dữ liệu")
+//	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 //	@Length(min = 3,max = 50,message = "Tên phim từ 3 kí tự và không quá 50 kí tự")
 	String movieName;
 	
 	@Column(columnDefinition = "Ntext")
-	@NotBlank(message = "Chưa nhập dữ liệu")
+//	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String movieDescription;
 	
 	@Column(columnDefinition = "Nvarchar(50)")
-	@NotBlank(message = "Chưa nhập dữ liệu")
+//	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 //	@Length(min = 3,max = 50,message = "Tên phim từ 3 kí tự và không quá 50 kí tự")
 	String director;
 	
-	@NotNull(message = "Chưa nhập dữ liệu")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	LocalDate startDate;
 	
-	@NotNull(message = "Chưa nhập dữ liệu")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	LocalDate endDate;
 	
-	@NotNull(message = "Chưa nhập dữ liệu")
 	@DateTimeFormat(pattern = "HH:mm")
 	@Column(columnDefinition = "Time")
 	LocalTime duration;
 	
-	@NotBlank(message = "Chưa nhập dữ liệu")
 	String posterUrl;
 	
-//	@NotBlank(message = "Chưa nhập dữ liệu")
 	String trailerUrl;
 	
 	String movieStatus;
