@@ -40,6 +40,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	        //CSRF cho phép kẻ tấn công thực hiện các yêu cầu từ phía client mà không cần sự đồng ý của người dùng.
             .csrf().disable()
             .authorizeRequests()
+<<<<<<< HEAD
 
             	// Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
                 .antMatchers("/home", "/", "/ticket/**").permitAll()
@@ -51,6 +52,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home", "/", "/ticket/**").permitAll()
                 // Chỉ người dùng có vai trò "ADMIN" mới được truy cập vào "/admin/**"
 
+=======
+            	// Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
+                .antMatchers("/home", "/", "/ticket/**").permitAll()
+                // Chỉ người dùng có vai trò "ADMIN" mới được truy cập vào "/admin/**"
+                .antMatchers("/home", "/", "/ticket/**").permitAll()
+            	// Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
+                .antMatchers("/home", "/", "/ticket/**").permitAll()
+                // Chỉ người dùng có vai trò "ADMIN" mới được truy cập vào "/admin/**"
+>>>>>>> d4d2451a744e7f870bef91db7fbddb6a13c66d7e
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 // Người dùng có vai trò "ADMIN" hoặc "USER" đều có thể truy cập vào "/customer/**"
                 .antMatchers("/customer/**").hasAnyRole("ADMIN", "USER")

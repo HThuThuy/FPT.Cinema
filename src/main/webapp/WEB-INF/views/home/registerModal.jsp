@@ -123,6 +123,20 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
         .catch(function (error) {
             // Xử lý khi yêu cầu thất bại
             console.error(error);
+            if(error.response) {
+                // Kiểm tra xem lỗi có từ phía server hay không
+                var errorMessages = error.response.data;
+                // Hiển thị lỗi lên màn hình
+                for (var key in errorMessages) {
+                    if (errorMessages.hasOwnProperty(key)) {
+                        // Tìm span tương ứng để hiển thị lỗi
+                        var errorSpan = document.getElementById(key + '-error');
+                        if (errorSpan) {
+                            errorSpan.textContent = errorMessages[key];
+                        }
+                    }
+                }
+            }
         });
 });
 </script>

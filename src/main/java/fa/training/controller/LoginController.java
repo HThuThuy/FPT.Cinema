@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -162,6 +163,24 @@ public class LoginController {
 	 */
 	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(@RequestBody RegisterDTO registerDTO) {
+	    // Kiểm tra trùng lặp cccd
+	    Customer existingCustomer = customerService.findById(registerDTO.getCccd());
+	    if (existingCustomer != null) {
+	        return ResponseEntity.badRequest().body("Error: Căn cước công dân đã tồn tại!");
+	    }
+
+	    // Kiểm tra trùng lặp email
+	    Customer existingCustomerEmail = customerService.findByEmail(registerDTO.getEmail());
+	    if (existingCustomerEmail != null) {
+	        return ResponseEntity.badRequest().body("Error: Email đã tồn tại!");
+	    }
+
+	    // Kiểm tra trùng lặp tên đăng nhập
+	    Users existingUser = userService.findByAccount(registerDTO.getAccount());
+	    if (existingUser != null) {
+	        return ResponseEntity.badRequest().body("Error: Tên đăng nhập đã tồn tại!");
+	    }
+
 	    // Tạo và lưu Customer
 	    Customer customer = new Customer();
 	    customer.setCccd(registerDTO.getCccd());
@@ -173,7 +192,7 @@ public class LoginController {
 	    customer.setUserType("Thường");
 
 	    customerService.save(customer);
-	    
+
 	    // Tạo và lưu User
 	    Users newUser = new Users();
 	    newUser.setAccount(registerDTO.getAccount());
@@ -182,7 +201,6 @@ public class LoginController {
 	    newUser.setStatus("active");
 	    newUser.setCustomer(customer);
 
-	    // mã hóa password 
 	    userService.save(newUser);
 	    return ResponseEntity.ok("User registered successfully");
 	}
@@ -229,4 +247,26 @@ public class LoginController {
 			return true;
 		}
 	}
+	
+//	@PostMapping("/otp")
+//	public String quenPass(@ModelAttribute("emailtk") String email, HttpServletRequest request,
+//			HttpServletResponse response) {
+//		HttpSession sessionOTP = request.getSession();
+//		Users user = userService.searchCustomer(email);
+//		if (user == null) {
+//			request.setAttribute("messageEmail", "Email chưa đăng ký cho tài khoản nào!");
+//			return "/home/forgotPasswordModal";
+//		} else {
+//			System.out.println(user.getAccount());
+//			sessionOTP.setAttribute("account", user.getAccount());
+//			boolean flag = emailService.sendOtpEmail(email, sessionOTP);
+//			if (flag) {
+//				sessionOTP.setMaxInactiveInterval(300);
+//				return "/home/otp";
+//			} else {
+//				request.setAttribute("messageEmailcorrect", "Hệ Thống Đang Lỗi, Vui lòng Chờ Ít Phút !");
+//				return "/home/forgotPasswordModal";
+//			}
+//		}
+//	}
 }
