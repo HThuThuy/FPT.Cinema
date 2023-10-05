@@ -207,7 +207,7 @@ bill-movie {
                 <div class="game-details">
                     <div class="row" style="justify-content: center;">
 
-                        <h2>TICKETS ORDER</h2>
+                        <h2 style="margin-top: 30px;">TICKETS ORDER</h2>
                         <div class="col-8">
                             <div class="row bill-movie">
                                 <div class="ticket-bill">
