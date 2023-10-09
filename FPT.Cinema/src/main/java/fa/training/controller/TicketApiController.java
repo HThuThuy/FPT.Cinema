@@ -18,37 +18,50 @@ import org.springframework.web.bind.annotation.RestController;
 import fa.training.model.Theater;
 import fa.training.response.TicketResponse;
 import fa.training.service.TheaterService;
-
+/**
+ * TicketApiController
+ * 
+ * Version 1.0
+ * 
+ * Date: 09-10-2023
+ * 
+ * Copyright
+ * 
+ * Modification Logs:
+ * DATE         AUTHOR      DESCRIPTION
+ * --------------------------------
+ * 09-10-2023   THUYHTT14     Create
+ */
 @RestController
 @RequestMapping("api")
 public class TicketApiController {
 	@Autowired
 	private TheaterService theater;
 
+	/**
+	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: Lấy thông tin suất
+	 * chiếu, rạp và xử lý lưu dữ liệu vào database
+	 * 
+	 * @param city
+	 * @return
+	 */
 	@PostMapping(value = "show-rap", produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TicketResponse> showRap(@Valid String city) {
 		List<Theater> listaList = theater.getAll();
-		for (Theater theaters : listaList) {
-			System.out.println(theaters);
-		}
-
 		List<Theater> listCity = theater.findByCity(city);
-		for (Theater theater : listCity) {
-			System.out.println("abc" + theater);
-		}
-
 		TicketResponse response = new TicketResponse();
 		response.setCityList(listCity);
-
-		// model.addAttribute("listTheater", listCity); // Thay đổi thành listCity để
-		// hiển thị danh sách rạp chiếu phim
-//														// theo thành phố đã chọn
-//		model.addAttribute("listCity", listaList); // Thay đổi thành listaList để hiển thị danh sách thành phố trong
-//													// dropdown
-//		model.addAttribute("theaterAdd", new Theater());
 		return new ResponseEntity<TicketResponse>(response, HttpStatus.OK);
 	}
-	
+
+	/**
+	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: Lấy thông tin suất
+	 * chiếu, rạp và xử lý lưu dữ liệu vào database
+	 * 
+	 * @param model
+	 * @param selectedCity
+	 * @return
+	 */
 	@GetMapping(value = { "/city" })
 	public ResponseEntity<List<Theater>> showCity(Model model, @RequestParam("city") String selectedCity) {
 		List<Theater> listCity = theater.findByCity(selectedCity);

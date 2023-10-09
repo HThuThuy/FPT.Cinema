@@ -41,24 +41,24 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = { "fa.training.repository" })
 public class MVCconfig implements WebMvcConfigurer {
-//	
-//	@Bean
-//	public JavaMailSender getJavaMailSender() {
-//	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-//	    mailSender.setHost("smtp.gmail.com");
-//	    mailSender.setPort(587);
-//	 
-//	    mailSender.setUsername("fptcinema@gmail.com");
-//	    mailSender.setPassword("diuwgnqlxnmhqnnt");
-//	 
-//	    Properties props = mailSender.getJavaMailProperties();
-//	    props.put("mail.transport.protocol", "smtp");
-//	    props.put("mail.smtp.auth", "true");
-//	    props.put("mail.smtp.starttls.enable", "true");
-//	    props.put("mail.debug", "true");
-//	 
-//	    return mailSender;
-//	}
+	
+	@Bean
+	public JavaMailSender getJavaMailSender() {
+	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+	    mailSender.setHost("smtp.gmail.com");
+	    mailSender.setPort(587);
+	 
+	    mailSender.setUsername("fptcinema@gmail.com");
+	    mailSender.setPassword("diuwgnqlxnmhqnnt");
+	 
+	    Properties props = mailSender.getJavaMailProperties();
+	    props.put("mail.transport.protocol", "smtp");
+	    props.put("mail.smtp.auth", "true");
+	    props.put("mail.smtp.starttls.enable", "true");
+	    props.put("mail.debug", "true");
+	 
+	    return mailSender;
+	}
 	
 	@Bean
 	public InternalResourceViewResolver getInternalResourceViewResolver() {
@@ -69,106 +69,124 @@ public class MVCconfig implements WebMvcConfigurer {
 		return resourceView;
 	}
 
-	/**
-	 * Configure TilesConfigurer.
-	 */
-	@Bean
-	public TilesConfigurer tilesConfigurer() {
-		TilesConfigurer tilesConfigurer = new TilesConfigurer();
-		tilesConfigurer.setDefinitions(new String[] { "/WEB-INF/views/**/tiles.xml" });
-		tilesConfigurer.setCheckRefresh(true);
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("fptcinema@gmail.com");
+        mailSender.setPassword("diuwgnqlxnmhqnnt");
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+        return mailSender;
+    }
 
-		return tilesConfigurer;
-	}
+    @Bean
+    public InternalResourceViewResolver getInternalResourceViewResolver() {
+        InternalResourceViewResolver resourceView = new InternalResourceViewResolver();
+        resourceView.setViewClass(JstlView.class);
+        resourceView.setPrefix("/WEB-INF/views/");
+        resourceView.setSuffix(".jsp");
+        return resourceView;
+    }
 
-	/**
-	 * Configure ViewResolvers to deliver preferred views.
-	 */
-	public void configureViewResolvers(ViewResolverRegistry registry) {
-		TilesViewResolver viewResolver = new TilesViewResolver();
-		registry.viewResolver(viewResolver);
-	}
+    /**
+     * Configure TilesConfigurer.
+     */
+    @Bean
+    public TilesConfigurer tilesConfigurer() {
+        TilesConfigurer tilesConfigurer = new TilesConfigurer();
+        tilesConfigurer.setDefinitions(new String[] { "/WEB-INF/views/**/tiles.xml" });
+        tilesConfigurer.setCheckRefresh(true);
+        return tilesConfigurer;
+    }
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		System.out.println("WebMvcConfig - addResourceHandlers");
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-	}
+    /**
+     * Configure ViewResolvers to deliver preferred views.
+     */
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        TilesViewResolver viewResolver = new TilesViewResolver();
+        registry.viewResolver(viewResolver);
+    }
 
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		System.out.println("configureDefaultServletHandling");
-		configurer.enable();
-	}
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        System.out.println("WebMvcConfig - addResourceHandlers");
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    }
 
-	@Autowired
-	private Environment environment;
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        System.out.println("configureDefaultServletHandling");
+        configurer.enable();
+    }
 
-	@Bean("sessionFactory")
-	public LocalSessionFactoryBean sessionFactory() {
-		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan(new String[] { "fa.training.model" });
-		sessionFactory.setHibernateProperties(hibernateProperties());
-		return sessionFactory;
-	}
+    @Autowired
+    private Environment environment;
 
-	@Bean("dataSource")
-	public DataSource dataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-		dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-		dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-		dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-		return dataSource;
-	}
+    @Bean("sessionFactory")
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource());
+        sessionFactory.setPackagesToScan(new String[] { "fa.training.model" });
+        sessionFactory.setHibernateProperties(hibernateProperties());
+        return sessionFactory;
+    }
 
-	private Properties hibernateProperties() {
-		Properties properties = new Properties();
-		properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-		properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-		properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
-		properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
-		return properties;
-	}
+    @Bean("dataSource")
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
+        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
+        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
+        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+        return dataSource;
+    }
 
-	@Bean("hibernateTransactionManager")
-	public HibernateTransactionManager getTransactionManager() {
-		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-		transactionManager.setSessionFactory(sessionFactory().getObject());
-		return transactionManager;
-	}
+    private Properties hibernateProperties() {
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+        properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
+        properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
+        return properties;
+    }
 
-	@Bean("entityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean getEntityManagerFactory(DataSource dataSource) {
-		LocalContainerEntityManagerFactoryBean obj = new LocalContainerEntityManagerFactoryBean();
-		obj.setDataSource(dataSource);
-		obj.setPackagesToScan("fa.training.model");
+    @Bean("hibernateTransactionManager")
+    public HibernateTransactionManager getTransactionManager() {
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(sessionFactory().getObject());
+        return transactionManager;
+    }
 
-		HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-		adapter.setShowSql(true); // setting đè giá trị dòng show_sql ở dưới
-		obj.setJpaVendorAdapter(adapter);
+    @Bean("entityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean getEntityManagerFactory(DataSource dataSource) {
+        LocalContainerEntityManagerFactoryBean obj = new LocalContainerEntityManagerFactoryBean();
+        obj.setDataSource(dataSource);
+        obj.setPackagesToScan("fa.training.model");
+        HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
+        adapter.setShowSql(true); // setting đè giá trị dòng show_sql ở dưới
+        obj.setJpaVendorAdapter(adapter);
+        Properties properties = new Properties();
+        // Environment.SHOW_SQL;
+        properties.setProperty("hibernate.show_sql", "false");
+        obj.setJpaProperties(properties);
+        return obj;
+    }
 
-		Properties properties = new Properties();
-		// Environment.SHOW_SQL;
-		properties.setProperty("hibernate.show_sql", "false");
-		obj.setJpaProperties(properties);
+    // Bean : Transaction Manager : Enable the transaction support
+    @Bean("transactionManager")
+    public JpaTransactionManager getTransactionManager(EntityManagerFactory entityManagerFactory) {
+        JpaTransactionManager obj = new JpaTransactionManager();
+        obj.setEntityManagerFactory(entityManagerFactory);
+        return obj;
+    }
 
-		return obj;
-	}
-
-	// Bean : Transaction Manager : Enable the transaction support
-	@Bean("transactionManager")
-	public JpaTransactionManager getTransactionManager(EntityManagerFactory entityManagerFactory) {
-		JpaTransactionManager obj = new JpaTransactionManager();
-		obj.setEntityManagerFactory(entityManagerFactory);
-		return obj;
-	}
-	
-	@Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-
-	  converters.add(new MappingJackson2HttpMessageConverter());
-
-	}
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+      converters.add(new MappingJackson2HttpMessageConverter());
+    }
 }

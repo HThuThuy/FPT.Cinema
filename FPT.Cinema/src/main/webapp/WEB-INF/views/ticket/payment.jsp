@@ -614,7 +614,13 @@ input#discountCode {
                                     var url = 'http://localhost:6001/FPT-Cinema/payment/create?param1=' + encodeURIComponent(totalAmount) + '&param2=' + encodeURIComponent(jsonString);
                                     console.log(url)
                                     // Redirect đến URL
-                                    window.location.href = url;
+                                   if (totalAmount > 0) {
+                                	   window.location.href = url;
+                                     }
+                                   else {
+                                	   alert("Vui lòng chọn dịch vụ hoặc ghế");
+                                	 }
+                                   
                                 });
 
                             });

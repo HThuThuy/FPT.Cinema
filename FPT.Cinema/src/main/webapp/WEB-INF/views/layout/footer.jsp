@@ -13,11 +13,7 @@ img.logo-img {
 <div class="most-popular">
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="heading-section tab-content mb-3">
-				<a href="index.html"> <img class="logo-img"
-					src="${pageContext.request.contextPath}/resources/img/logo.png">
-				</a>
-			</div>
+			
 			<div class="row">
 				<div class="footer-col pb-3">
 					<h4>FPT-Cinema</h4>

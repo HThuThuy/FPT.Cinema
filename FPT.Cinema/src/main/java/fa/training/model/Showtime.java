@@ -43,7 +43,7 @@ public class Showtime {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "movieId")
 	Movie movie;
-//		
+	
 	@JsonBackReference
 	@JoinColumn(name = "roomId")
 	@ManyToOne(fetch = FetchType.EAGER)
