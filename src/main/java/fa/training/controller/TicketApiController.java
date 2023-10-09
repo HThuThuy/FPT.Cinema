@@ -21,6 +21,13 @@ import fa.training.service.TheaterService;
 
 @RestController
 @RequestMapping("api")
+/**
+ * Project: FPT Cinema 
+ * Team: 1 
+ * Author : ThuyHTT14 
+ * Method: Lấy thông tin suất
+ * chiếu, rạp và xử lý lưu dữ liệu vào database
+ */
 public class TicketApiController {
 	@Autowired
 	private TheaterService theater;

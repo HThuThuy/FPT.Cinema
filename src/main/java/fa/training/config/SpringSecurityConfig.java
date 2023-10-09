@@ -53,6 +53,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .authorizeRequests()
                 // Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
+
+            	// Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
+                .antMatchers("/home", "/", "/ticket/**").permitAll()
+                // Chỉ người dùng có vai trò "ADMIN" mới được truy cập vào "/admin/**"
+
+                .antMatchers("/home", "/", "/ticket/**").permitAll()
+
+            	// Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
+                .antMatchers("/home", "/", "/ticket/**").permitAll()
+                // Chỉ người dùng có vai trò "ADMIN" mới được truy cập vào "/admin/**"
+
+            	// Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
                 .antMatchers("/home", "/", "/ticket/**").permitAll()
                 // Chỉ người dùng có vai trò "ADMIN" mới được truy cập vào "/admin/**"
                 .antMatchers("/home", "/", "/ticket/**").permitAll()
