@@ -1,3 +1,18 @@
+/**
+ * SpringSecurityConfig
+ *
+ * Version 1.0
+ *
+ * Date: 09-10-2023
+ *
+ * Copyright
+ * 
+ * Modification Logs:
+ * DATE                 AUTHOR            DESCRIPTION
+ * -----------------------------------------------------------------------
+ * 09-10-2023           TraNLC            Config Spring security
+ */
+
 package fa.training.config;
 
 import java.util.concurrent.TimeUnit;
@@ -24,27 +39,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    
     /**
-	 * Project:FPT-Cinema
-	 * Team 1
-	 * @author TraNLC 
-	 * Config security
-	 */
+     * Cấu hình các quyền truy cập và các chức năng liên quan đến bảo mật như login, logout, remember me.
+     * @param http Đối tượng HttpSecurity dùng để cấu hình bảo mật.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-	        .formLogin().disable()
-	        .httpBasic().disable()
-	        //CSRF - Cross-Site Request Forgery là một dạng tấn công bảo mật trong đó kẻ tấn công lợi dụng quyền của người dùng đối với một website. 
-	        //CSRF cho phép kẻ tấn công thực hiện các yêu cầu từ phía client mà không cần sự đồng ý của người dùng.
+            .formLogin().disable()
+            .httpBasic().disable()
+            //CSRF - Cross-Site Request Forgery là một dạng tấn công bảo mật trong đó kẻ tấn công lợi dụng quyền của người dùng đối với một website. 
+            //CSRF cho phép kẻ tấn công thực hiện các yêu cầu từ phía client mà không cần sự đồng ý của người dùng.
             .csrf().disable()
             .authorizeRequests()
-            	// Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
+                // Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
                 .antMatchers("/home", "/", "/ticket/**").permitAll()
                 // Chỉ người dùng có vai trò "ADMIN" mới được truy cập vào "/admin/**"
                 .antMatchers("/home", "/", "/ticket/**").permitAll()
-            	// Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
+                // Cho phép tất cả mọi người truy cập vào "/home", "/", "/ticket/**"
                 .antMatchers("/home", "/", "/ticket/**").permitAll()
                 // Chỉ người dùng có vai trò "ADMIN" mới được truy cập vào "/admin/**"
                 .antMatchers("/admin/**").hasRole("ADMIN")
@@ -54,7 +66,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             // Xử lý exception liên quan đến quyền truy cập
             .exceptionHandling().accessDeniedPage("/dang-nhap?error=403")
                 .authenticationEntryPoint((request, response, authException) -> {
-                	// Trả về mã lỗi 401 khi xác thực thất bại
+                    // Trả về mã lỗi 401 khi xác thực thất bại
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); 
                 })
             .and()
@@ -75,30 +87,20 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/");
     }
-    
+
     /**
-	 * Project:FPT-Cinema
-	 * Team 1
-	 * @author TraNLC 
-	 * Tạo bean cho PasswordEncoder
-     * Mục đích: PasswordEncoder là một interface cung cấp cơ chế để mã hóa mật khẩu.
-     * Trong trường hợp này, chúng ta sử dụng BCryptPasswordEncoder, một implementation của PasswordEncoder.
-	 */
+     * Tạo bean cho PasswordEncoder, sử dụng để mã hóa mật khẩu.
+     * @return Đối tượng PasswordEncoder.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     /**
-  	 * Project:FPT-Cinema
-  	 * Team 1
-  	 * @author TraNLC 
-  	 * Tạo bean cho DaoAuthenticationProvider:
-     * - Mục đích: DaoAuthenticationProvider là một implementation của AuthenticationProvider trong Spring Security.
-     * - Nó sử dụng UserDetailsService và PasswordEncoder đã được cấu hình để xác thực thông tin người dùng.
-     * - Khi một yêu cầu xác thực đến, DaoAuthenticationProvider sẽ sử dụng UserDetailsService để lấy thông tin về người dùng dựa trên username,
-     * - sau đó nó sẽ sử dụng PasswordEncoder để so sánh mật khẩu đã nhập với mật khẩu được mã hóa trong thông tin người dùng.
-  	 */
+     * Tạo bean cho DaoAuthenticationProvider, sử dụng để xác thực thông tin người dùng.
+     * @return Đối tượng DaoAuthenticationProvider.
+     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -109,26 +111,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-  	 * Project:FPT-Cinema
-  	 * Team 1
-  	 * @author TraNLC 
-  	 * Tạo bean cho AuthenticationManager từ WebSecurityConfigurerAdapter
-     * - Mục đích: AuthenticationManagerBuilder được sử dụng để tạo ra một AuthenticationManager.
-     * - AuthenticationManager là thành phần quan trọng trong Spring Security, nó xử lý quá trình xác thực người dùng.
-  	 */
+     * Cấu hình AuthenticationManagerBuilder, sử dụng để xây dựng AuthenticationManager.
+     * @param auth Đối tượng AuthenticationManagerBuilder.
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
 
     /**
-  	 * Project:FPT-Cinema
-  	 * Team 1
-  	 * @author TraNLC 
-  	 * Tạo bean cho AuthenticationManager từ WebSecurityConfigurerAdapter
-     * - Mục đích: AuthenticationManager là thành phần quan trọng trong Spring Security, nó xử lý quá trình xác thực người dùng.
-     * - Phương thức này trả về một bean AuthenticationManager để nó có thể được tiêm vào bất kỳ đâu trong ứng dụng.
-  	 */
+     * Tạo bean cho AuthenticationManager, sử dụng để quản lý quá trình xác thực người dùng.
+     * @return Đối tượng AuthenticationManager.
+     */
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
