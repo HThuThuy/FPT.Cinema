@@ -1,5 +1,4 @@
 
- 
 package fa.training.config;
 
 import java.io.UnsupportedEncodingException;
@@ -16,31 +15,38 @@ import java.util.Random;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
+
 /**
- * Project: FPT Cinema 
- * Team: 1 
- * Author : ThuyHTT14 
- * Method: config vnpay phần tích hợp thanh toán
+ * VNPayConfig
+ * 
+ * Version 1.0
+ * 
+ * Date: 09-10-2023
+ * 
+ * Copyright
+ * 
+ * Modification Logs:
+ * DATE         AUTHOR      DESCRIPTION
+ * --------------------------------
+ * 09-10-2023   THUYHTT14     Create
  */
+
 public class VNPayConfig {
 	public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
 	public static String vnp_Returnurl = "http://localhost:6001/FPT-Cinema/payment/return";
 	public static String vnp_TmnCode = "X1YAEN0D";
 	public static String vnp_HashSecret = "RDRFDPLITXCRLFUAATQPNPKORFDGUOUU";
-	//API hoàn trả
+	// API hoàn trả
 	public static String vnp_apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/merchant.html";
 	public static String vnp_Version = "2.1.0";
 	public static String vnp_Command = "pay";
 	public static String bankCode = "NCB";
-	
-	//thay đổi ip để vào được 
-	//IP máy Thủy
-//	public static String vnp_IpAddr = "192.168.48.158";
-	//IP máy Trà
+	// thay đổi ip để vào được
+	// IP máy Thủy
+    // public static String vnp_IpAddr = "192.168.48.158";
+	// IP máy Trà
 	public static String vnp_IpAddr = "10.141.62.47";
-	
 	public static String secretKey = "";
-
 	public static String md5(String message) {
 		String digest = null;
 		try {
@@ -58,12 +64,14 @@ public class VNPayConfig {
 		}
 		return digest;
 	}
+
 	/**
-	 * Project: FPT Cinema 
-	 * Team: 1 
-	 * Author : ThuyHTT14 
-	 * Method: config vnpay phần tích hợp thanh toán
+	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: config vnpay phần tích
+	 * hợp thanh toán
+	 * @param message
+	 * @return String
 	 */
+	
 	public static String Sha256(String message) {
 		String digest = null;
 		try {
@@ -83,13 +91,14 @@ public class VNPayConfig {
 	}
 
 	// Util for VNPAY
-	
+
 	/**
-	 * Project: FPT Cinema 
-	 * Team: 1 
-	 * Author : ThuyHTT14 
-	 * Method: config vnpay phần tích hợp thanh toán
+	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: config vnpay phần tích
+	 * hợp thanh toán
+	 * @param fields
+	 * @return String
 	 */
+	
 	public static String hashAllFields(Map fields) {
 		List fieldNames = new ArrayList(fields.keySet());
 		Collections.sort(fieldNames);
@@ -109,12 +118,14 @@ public class VNPayConfig {
 		}
 		return hmacSHA512(vnp_HashSecret, sb.toString());
 	}
+
 	/**
-	 * Project: FPT Cinema 
-	 * Team: 1 
-	 * Author : ThuyHTT14 
-	 * Method: config vnpay phần tích hợp thanh toán
+	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: config vnpay phần tích
+	 * hợp thanh toán
+	 * @param key, data
+	 * @return String
 	 */
+	
 	public static String hmacSHA512(final String key, final String data) {
 		try {
 
@@ -137,11 +148,12 @@ public class VNPayConfig {
 			return "";
 		}
 	}
+
 	/**
-	 * Project: FPT Cinema 
-	 * Team: 1 
-	 * Author : ThuyHTT14 
-	 * Method: config vnpay phần tích hợp thanh toán
+	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: config vnpay phần tích
+	 * hợp thanh toán
+	 * @param request
+	 * @return
 	 */
 	public static String getIpAddress(HttpServletRequest request) {
 		String ipAdress;
@@ -156,6 +168,13 @@ public class VNPayConfig {
 		return ipAdress;
 	}
 
+	
+	/**
+	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: config vnpay phần tích
+	 * hợp thanh toán
+	 * @param len
+	 * @return
+	 */
 	public static String getRandomNumber(int len) {
 		Random rnd = new Random();
 		String chars = "0123456789";

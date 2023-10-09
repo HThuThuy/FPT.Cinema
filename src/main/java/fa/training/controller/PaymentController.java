@@ -51,7 +51,20 @@ import fa.training.service.SeatService;
 import fa.training.service.SerService;
 import fa.training.service.ShowtimeService;
 import fa.training.service.TicketService;
-
+/**
+ * PaymentController
+ * 
+ * Version 1.0
+ * 
+ * Date: 09-10-2023
+ * 
+ * Copyright
+ * 
+ * Modification Logs:
+ * DATE         AUTHOR      DESCRIPTION
+ * --------------------------------
+ * 09-10-2023   THUYHTT14     Create
+ */
 @Controller
 @RequestMapping(value = "/payment")
 public class PaymentController {
@@ -69,7 +82,7 @@ public class PaymentController {
 
 	@Autowired
 	private OrderService orders;
-	
+
 	@Autowired
 	private OrderSer orderSer;
 
@@ -80,17 +93,15 @@ public class PaymentController {
 	private PromotionService promotions;
 
 	/**
-	 * Project: FPT Cinema 
-	 * Team: 1 
-	 * Author :ThuyHtt14 
-	 * Method: Tạo đơn thanh toán
+	 * Project: FPT Cinema Team: 1 Author :ThuyHtt14 Method: Tạo đơn thanh toán
+	 * @param soTien
+	 * @param orderInfo
+	 * @return
+	 * @throws UnsupportedEncodingException
 	 */
 	@GetMapping("/create")
 	public String createPayment(@RequestParam("param1") String soTien, @RequestParam("param2") String orderInfo)
 			throws UnsupportedEncodingException {
-		System.out.println(">>>so tien : " + soTien);
-		System.out.println(orderInfo);
-		
 		long amount = Long.parseLong(soTien) * 100;
 		String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
 		Map<String, String> vnp_Params = new HashMap<>();
@@ -109,25 +120,21 @@ public class PaymentController {
 		try {
 			// Tạo một ObjectMapper
 			ObjectMapper objectMapper = new ObjectMapper();
-
 			// Đọc chuỗi JSON thành JsonNode
 			JsonNode jsonNode = objectMapper.readTree(orderInfo);
-
 			// Lấy giá trị từ JsonNode
 //			String[] maGhe = objectMapper.convertValue(jsonNode.get("maGhe"), String[].class);
 			JsonNode seatNode = jsonNode.get("seat");
-            System.out.println("seatNode: " + seatNode.toString());
-          
+			System.out.println("seatNode: " + seatNode.toString());
 			String[] seatList = new String[seatNode.size()];
 			for (int i = 0; i < seatNode.size(); i++) {
 				seatList[i] = seatNode.get(i).asText();
 			}
-            //Update trang thai seat khi da dat
+			// Update trang thai seat khi da dat
 			for (String seatUpdate : seatList) {
-				System.out.println("ghe-------"+seatUpdate);
+				System.out.println("ghe-------" + seatUpdate);
 				seat.updateSeatStatus(seatUpdate);
 				System.out.println("Update thanh cong seat");
-
 			}
 
 			LocalDate ngaySuDung = LocalDate.now();
@@ -138,11 +145,9 @@ public class PaymentController {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		String vnp_CreateDate = formatter.format(cld.getTime());
 		vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
-
 		cld.add(Calendar.MINUTE, 15);
 		String vnp_ExpireDate = formatter.format(cld.getTime());
 		vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
-
 		List fieldNames = new ArrayList(vnp_Params.keySet());
 		Collections.sort(fieldNames);
 		StringBuilder hashData = new StringBuilder();
@@ -174,13 +179,16 @@ public class PaymentController {
 
 		return "redirect:" + paymentUrl;
 	}
-
+	
 	/**
-	 * Project: FPT Cinema 
-	 * Team: 1 
-	 * Author : ThuyHTT14 
-	 * Method: Lấy thông tin thanh
+	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: Lấy thông tin thanh
 	 * toán và xử lý lưu dữ liệu vào database
+	 * @param amount
+	 * @param status
+	 * @param orderInfo
+	 * @param model
+	 * @param session
+	 * @return
 	 */
 	@GetMapping("/return")
 	public String getPaymentInfo(@RequestParam(value = "vnp_Amount") String amount,
@@ -192,25 +200,19 @@ public class PaymentController {
 		try {
 			// Tạo một ObjectMapper
 			ObjectMapper objectMapper = new ObjectMapper();
-
 			// Đọc chuỗi JSON thành JsonNode
 			JsonNode jsonNode = objectMapper.readTree(orderInfo);
-
 			// Lấy giá trị từ JsonNode
-
 			LocalDate ngaySuDung = LocalDate.now();
 			LocalTime gioSuDung = LocalTime.now();
-
 			String statusTicket = jsonNode.get("status").asText();
-
 			Showtime showtimeGets = (Showtime) session.getAttribute("selectedShowtime");
-			System.out.println("abc-------------------------" + showtimeGets);
-			
-			if (status.equals("00")) {
+			final String MY_CONSTANT_STATUS = "00";
+			if (MY_CONSTANT_STATUS.equals(status)) {
 				JsonNode seatNode = jsonNode.get("seat");
 				JsonNode serviceNode = jsonNode.get("service");
-	            System.out.println("seatNode: " + seatNode.toString());
-	            System.out.println("serviceNode: " + serviceNode.toString());
+				System.out.println("seatNode: " + seatNode.toString());
+				System.out.println("serviceNode: " + serviceNode.toString());
 				String[] seatList = new String[seatNode.size()];
 				for (int i = 0; i < seatNode.size(); i++) {
 					seatList[i] = seatNode.get(i).asText();
@@ -220,7 +222,6 @@ public class PaymentController {
 				for (int i = 0; i < serviceNode.size(); i++) {
 					serviceList[i] = serviceNode.get(i).asText();
 				}
-
 				// Order
 				Order getOrder = new Order();
 				Random random = new Random();
@@ -229,43 +230,38 @@ public class PaymentController {
 				getOrder.setOrderTime(gioSuDung);
 				getOrder.setOrderId(randomNumber);
 				String promotion = jsonNode.get("promotion").asText();
-				System.out.println("promotion"+promotion);
-			//	String pro = "P001";
+				System.out.println("promotion" + promotion);
+				// String pro = "P001";
 				if (promotion.equals("")) {
 					getOrder.setPromotion(null);
-				}else {
+				} else {
 					Promotion proTicket = promotions.findById(promotion);
 					getOrder.setPromotion(proTicket);
 				}
-				
 				int intValue = Integer.parseInt(amount);
 				getOrder.setTotalPrice(intValue);
 				orders.save(getOrder);
-				//insert tab orderService
+				// insert tab orderService
 				for (String serviceOrder : serviceList) {
 					System.out.println("dv------" + serviceOrder);
 					OrderServied ordService = new OrderServied();
-					OrderServiceId ordServiceId= new OrderServiceId();
+					OrderServiceId ordServiceId = new OrderServiceId();
 					ordServiceId.setOrderId(randomNumber);
 					ordServiceId.setServiceId(serviceOrder);
 					ordService.setOrderServiceId(ordServiceId);
 					orderSer.save(ordService);
-					
 					System.out.println("insert thanh cong ordService");
-					
 				}
-				
-                //Customer
+				// Customer
 				Customer loginCustomer = (Customer) session.getAttribute("customerLogin");
 				System.out.println("custerLogin------------" + loginCustomer);
-
-                // ticket
-				
+				// ticket
 				buyTicketInfo.setCustomer(loginCustomer);
 				buyTicketInfo.setShowtimeTicket(showtimeGets);
 				buyTicketInfo.setOrder(getOrder);
 				buyTicketInfo.setStatus(statusTicket);
-				buyTicketInfo.setQRCode("https://external-preview.redd.it/cg8k976AV52mDvDb5jDVJABPrSZ3tpi1aXhPjgcDTbw.png?auto=webp&s=1c205ba303c1fa0370b813ea83b9e1bddb7215eb");
+				buyTicketInfo.setQRCode(
+						"https://external-preview.redd.it/cg8k976AV52mDvDb5jDVJABPrSZ3tpi1aXhPjgcDTbw.png?auto=webp&s=1c205ba303c1fa0370b813ea83b9e1bddb7215eb");
 				System.out.println(buyTicketInfo + "ticketInfor");
 				tickets.save(buyTicketInfo);
 
@@ -274,34 +270,29 @@ public class PaymentController {
 				model.addAttribute("tinhTrang", "thanh toan khong thanh cong");
 				System.out.println("Thanh toan khong thanh cong");
 				JsonNode seatNode = jsonNode.get("seat");
-	            System.out.println("seatNode: " + seatNode.toString());
-	          
+				System.out.println("seatNode: " + seatNode.toString());
 				String[] seatList = new String[seatNode.size()];
 				for (int i = 0; i < seatNode.size(); i++) {
 					seatList[i] = seatNode.get(i).asText();
 				}
-	            //Update trang thai seat khi da  huy
+				// Update trang thai seat khi da huy
 				for (String seatUpdate : seatList) {
-					System.out.println("ghe-------"+seatUpdate);
+					System.out.println("ghe-------" + seatUpdate);
 					seat.updateSeatCancel(seatUpdate);
 					System.out.println("Thanh toán không thành công, hủy seat");
-
 				}
-
 				return "redirect:/";
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//lấy data cho bill
-		Movie movieChoose= (Movie)session.getAttribute("movieChoose");
-        Showtime theaterSel=(Showtime)session.getAttribute("selectedShowtime");
-        System.out.println("abcdef---------"+theaterSel);
-        System.out.println("abc"+movieChoose);
-        model.addAttribute("movieChoose", movieChoose);
-        model.addAttribute("theaterSel", theaterSel);
-        model.addAttribute("order", buyTicketInfo);
+		// lấy data cho bill
+		Movie movieChoose = (Movie) session.getAttribute("movieChoose");
+		Showtime theaterSel = (Showtime) session.getAttribute("selectedShowtime");
+		model.addAttribute("movieChoose", movieChoose);
+		model.addAttribute("theaterSel", theaterSel);
+		model.addAttribute("order", buyTicketInfo);
 		return "ticket/bill";
 	}
 }

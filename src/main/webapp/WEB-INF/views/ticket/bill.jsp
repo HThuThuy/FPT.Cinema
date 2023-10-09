@@ -204,10 +204,10 @@ bill-movie {
             <div class="page-content2">
 
                 <!-- ***** Details Start ***** -->
-                <div class="game-details">
+                <div class="game-details" style="margin-top: 20px;">
                     <div class="row" style="justify-content: center;">
 
-                        <h2 style="margin-top: 30px;">TICKETS ORDER</h2>
+                        <h2>TICKETS ORDER</h2>
                         <div class="col-8">
                             <div class="row bill-movie">
                                 <div class="ticket-bill">
@@ -227,11 +227,11 @@ bill-movie {
                                             </div>
                                             <div class="time">
                                                 <p>
-                                                    Giờ bắt đầu: <span>TO</span> ${theaterSel.startTime} 
+                                                    Giờ bắt đầu: <span>From</span> ${theaterSel.startTime} 
                                                     
                                                 </p>
                                                 <p>
-                                                    ${theaterSel.room.roomName} <span>@</span> ${theaterSel.room.roomType}
+                                                    ${theaterSel.room.roomName} <%-- <span>@</span> ${theaterSel.room.roomType} --%>
                                                 </p>
                                                 
                                             </div>
@@ -259,7 +259,7 @@ bill-movie {
                                                     src="https://external-preview.redd.it/cg8k976AV52mDvDb5jDVJABPrSZ3tpi1aXhPjgcDTbw.png?auto=webp&s=1c205ba303c1fa0370b813ea83b9e1bddb7215eb"
                                                     alt="QR code">
                                             </div>
-                                            <p class="ticket-number">#${order.ticketId}</p>
+                                            <p class="ticket-number">#20030220</p>
                                             
                                         </div>
                                     </div>
