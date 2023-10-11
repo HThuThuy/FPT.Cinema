@@ -25,27 +25,17 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RegisterDTO {
 
-	@Pattern(regexp = "^[a-zA-ZÀ-ỹỲ-ỹĐđ]+(\\s[a-zA-ZÀ-ỹỲ-ỹĐđ]+)+{3,50}$", message = "Họ tên ít nhất phải có 2 từ và dài từ 3-50 kí tự")
-	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String customerName;
 
-	@Pattern(regexp = "0[0-9]{9}", message = "Số điện thoại phải bắt đầu bằng 0 và có 10 số")
-	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String phone;
 
-	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Địa chỉ email không đúng định dạng")
-	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String email;
 
-	@Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9_]{2,15}$", message = "Account từ 3-16 kí tự, chỉ chứa dấu gạch dưới và không có kí tự đặc biệt")
-	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
 	String account;
 
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])[a-zA-Z\\d!@#$%^&*]{8,300}$", message = "xxxx")
-	@NotBlank(message = "Xin hãy nhập thông tin vào trường này")
-	String password;
+	String passwordRegister;
 
-	String repassword;
+	String repasswordRegister;
 
 	String gender;
 
@@ -58,7 +48,7 @@ public class RegisterDTO {
 	@Override
 	public String toString() {
 		return "RegisterDTO [customerName=" + customerName + ", phone=" + phone + ", email=" + email + ", account="
-				+ account + ", password=" + password + ", repassword=" + repassword + ", gender=" + gender
+				+ account + ", password=" + passwordRegister + ", repassword=" + repasswordRegister + ", gender=" + gender
 				+ ", birthDate=" + birthDate + ", cccd=" + cccd + "]";
 	}
 	

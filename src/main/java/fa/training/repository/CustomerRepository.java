@@ -1,11 +1,11 @@
 package fa.training.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.awt.print.Pageable;
 import java.time.LocalDate;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -35,9 +35,11 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
                "AND O.orderDate BETWEEN :startDate AND :endDate " +
                "ORDER BY O.orderId")
         Page<CustomerDTO> getRecordsForCurrentPage(@Param("cccd") String cccd, @Param("startDate") LocalDate startDate, 
-                @Param("endDate") LocalDate endDate, Pageable pageable);
+                @Param("endDate") LocalDate endDate, org.springframework.data.domain.Pageable pageable);
 
     Customer findByPhone(String phone);
 
     Customer findByEmail(String email);
+
+	Customer findByCccd(String cccd);
 }

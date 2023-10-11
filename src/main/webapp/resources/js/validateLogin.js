@@ -33,14 +33,27 @@ $(document).ready(function() {
 		  $('#phone-error').text('');
 		}
 		
+		// Validate cccd
+		var cccd = $('#cccd').val();
+		var cccdRegex = /^[0-9]{12}$/;
+		if (cccd == "") {
+		  $('#cccd-error').text('Vui lòng nhập căn cước công dân');
+		  isValid = false;
+		} else if (!cccdRegex.test(cccd)) {
+		  $('#cccd-error').text('CCCD Sai Định Dạng !');
+		  isValid = false;
+		} else {
+		  $('#cccd-error').text('');
+		}
+		
 		// Validate giới tính
-		  var gender = $('#gender').val();
-	        if (gender == "Chọn giới tính") {
-	            $('#gender-error').text('Vui lòng chọn giới tính');
-	            isValid = false;
-	        } else {
-	            $('#gender-error').text('');
-	        }
+		var gender = $('#gender').val();
+		if (gender == "") {
+		  $('#gender-error').text('Vui lòng chọn giới tính');
+		  isValid = false;
+		} else {
+		  $('#gender-error').text('');
+		}
 	        
 		// Validate email
 		var email = $('#email').val();
@@ -67,41 +80,37 @@ $(document).ready(function() {
 		} else {
 		  $('#account-error').text('');
 		}
-
-		// Validate password
-		var password = $('#register-password').val();
-		var passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
-		if (password == "") {
-		  $('#password-error').text('Vui lòng nhập Mật khẩu');
-		  isValid = false;
-		/* } else if (!passwordRegex.test(password)) {
-		  $('#password-error').text('Mật Khẩu Phải Bao Gồm 1 Kí Tự Viết Hoa, Viết Thường Và 1 Ký Tự Đặc Biệt !');
-		  isValid = false; */
-		} else {
-		  $('#password-error').text('');
-		}
-
 		
-		// Validate confirm password
-		var repassword = $('#repassword').val();
-		if (repassword == "") {
-		  $('#repassword-error').text('Vui lòng nhập lại mật khẩu');
-		  isValid = false;
-		} else if (password != confirmPassword) {
-		  $('#repassword-error').text('Mật Khẩu Phải Trùng Với Mật Khẩu Bạn Đã Nhập !');
+		// Validate password
+		var password = $('#passwordRegister').val();
+		if (password == "") {
+		  $('#passwordRegister-error').text('Vui lòng nhập Mật khẩu');
 		  isValid = false;
 		} else {
-		  $('#repassword-error').text('');
+		  $('#passwordRegister-error').text('');
+		}
+	
+		// Validate repassword
+		var password = $('#passwordRegister').val();
+		var repasswordRegister = $('#repasswordRegister').val();
+		if (repasswordRegister == "") {
+		  $('#repasswordRegister-error').text('Vui lòng nhập lại mật khẩu');
+		  isValid = false;
+		} else if (repasswordRegister != password) {
+		  $('#repasswordRegister-error').text('Mật Khẩu Phải Trùng Với Mật Khẩu Bạn Đã Nhập !');
+		  isValid = false;
+		} else {
+		  $('#repasswordRegister-error').text('');
 		}
 
 		// Validate birth date
 		var birthDate = new Date($('#birthDate').val());
 		var today = new Date();
-
-		if (birthdate == "") {
+		
+		if (isNaN(birthDate.getTime())) {
 		    $('#birthDate-error').text('Vui lòng nhập Ngày sinh');
 		    isValid = false;
-		} else if (birthdate >= today) {
+		} else if (birthDate >= today) {
 		    $('#birthDate-error').text('Ngày sinh phải nhỏ hơn ngày hiện tại');
 		    isValid = false;
 		} else {

@@ -58,6 +58,10 @@ public class CustomerService {
     public Customer findById(String cccd) {
         return repo.findById(cccd).orElseThrow(() -> new IllegalArgumentException("Invalid Customer Id: " + cccd));
     }
+    
+    public Customer findByCccd(String cccd) {
+        return repo.findByCccd(cccd);
+    }
 
     /**
      * Kiểm tra sự tồn tại của khách hàng theo id.
