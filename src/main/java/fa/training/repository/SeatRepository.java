@@ -30,5 +30,7 @@ public interface SeatRepository extends JpaRepository<Seat, SeatId> {
 	
 	@Query(value = "select * from seat where roomId= :roomId ", nativeQuery = true)
 	List<Seat> getAllByRoom(@Param("roomId") String roomId);
+	
+	
 
 }

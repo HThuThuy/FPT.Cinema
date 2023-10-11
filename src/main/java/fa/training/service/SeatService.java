@@ -24,6 +24,7 @@ public class SeatService {
 	public List<Seat> getAllByRoomId(String roomId ) {
 		return repo.getAllByRoom(roomId);
 	}
+	
 
 	public Seat findById(SeatId seatId) {
 		return repo.findById(seatId).orElseThrow(() -> new IllegalArgumentException("Invalid seat Id: " + seatId));

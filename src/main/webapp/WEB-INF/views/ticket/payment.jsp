@@ -497,14 +497,21 @@ input#discountCode {
                                   console.log('abc');
                                   var totalElement = $('#total');
                                   var discountAmount = 0; // Phần trăm giảm giá
-                                  if (discountCode === 'P001') {
-                                      var discountAmount = 15; // Phần trăm giảm giá (20%)
-                                    } else if (discountCode === 'P002') {
-                                      var discountAmount = 20; // Phần trăm giảm giá (30%)
-                                    } else {
-                                      var discountAmount = 0; // Không giảm giá
-                                    }
+                                  var currentDate = new Date();
+                                  var startDate = new Date('2023-09-15');
+                                  var endDate = new Date('2023-10-09');
                                   
+                                  var startDate2 = new Date('2023-09-30');
+                                  var endDate2 = new Date('2023-10-20');
+
+                                  
+                                  if (currentDate >= startDate && currentDate <= endDate && discountCode === 'P001') {
+                                	   
+                                	      discountAmount = 15; // Phần trăm giảm giá (15%)
+                                	    } else if (currentDate >= startDate2 && currentDate <= endDate2 && discountCode === 'P002') {
+                                	      discountAmount = 20; // Phần trăm giảm giá (20%)
+                                	    }
+                                	  
                                 totalAmount = totalAmount - (totalAmount * (discountAmount / 100));
                                 // Định dạng lại số với dấu chấm phân cách phần nghìn
                                 let printTotalPrice = totalAmount.toLocaleString('vi-VN') + ' VND';
@@ -515,9 +522,11 @@ input#discountCode {
                                    $('#discountMessage').text('Mã giảm giá đã được áp dụng!');
                                } else {
                                    // Hiển thị thông báo
-                                   $('#discountMessage').text('Mã giảm giá không hợp lệ. Vui lòng kiểm tra lại!');
+                                   $('#discountMessage').text('Mã giảm giá không hợp lệ hoặc đã hết hạn. Vui lòng kiểm tra lại!');
                                }
                             });
+                            
+                            
 
 
                             //let discountCode = $('#discountCode').val();

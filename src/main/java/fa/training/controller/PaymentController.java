@@ -41,6 +41,8 @@ import fa.training.model.Order;
 import fa.training.model.OrderServiceId;
 import fa.training.model.OrderServied;
 import fa.training.model.Promotion;
+import fa.training.model.Seat;
+import fa.training.model.SeatId;
 import fa.training.model.Showtime;
 import fa.training.model.TicketInfo;
 import fa.training.service.CustomerService;
@@ -124,19 +126,7 @@ public class PaymentController {
 			JsonNode jsonNode = objectMapper.readTree(orderInfo);
 			// Lấy giá trị từ JsonNode
 //			String[] maGhe = objectMapper.convertValue(jsonNode.get("maGhe"), String[].class);
-			JsonNode seatNode = jsonNode.get("seat");
-			System.out.println("seatNode: " + seatNode.toString());
-			String[] seatList = new String[seatNode.size()];
-			for (int i = 0; i < seatNode.size(); i++) {
-				seatList[i] = seatNode.get(i).asText();
-			}
-			// Update trang thai seat khi da dat
-			for (String seatUpdate : seatList) {
-				System.out.println("ghe-------" + seatUpdate);
-				seat.updateSeatStatus(seatUpdate);
-				System.out.println("Update thanh cong seat");
-			}
-
+		
 			LocalDate ngaySuDung = LocalDate.now();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -217,7 +207,25 @@ public class PaymentController {
 				for (int i = 0; i < seatNode.size(); i++) {
 					seatList[i] = seatNode.get(i).asText();
 				}
-
+				// Update trang thai seat khi thanh toan thanh cong
+				for (String seatUpdate : seatList) {
+					Showtime theaterSel = (Showtime) session.getAttribute("selectedShowtime");
+					SeatId seatId= new SeatId();
+					seatId.setRoomId(theaterSel.getRoom().getRoomId());
+					seatId.setSeatId(seatUpdate);
+					Seat seatChoose=seat.findById(seatId);
+					System.out.println(seatChoose+"sjasdkskf");
+					if ("Da dat".equals(seatChoose.getSeatStatus()) ) {
+						System.out.println("ghe-------" + seatUpdate+ "da co nguoi dat");
+						model.addAttribute("seatOrder", "Ghế đã có người đặt trước đó , FPT Cinema sẽ hoàn tiền cho quý khách trong 24h tới");
+						return "redirect:/";
+					} else {
+						System.out.println("ghe-------" + seatUpdate);
+						seat.updateSeatStatus(seatUpdate);
+						System.out.println("Update thanh cong seat");
+					}
+					
+				}
 				String[] serviceList = new String[serviceNode.size()];
 				for (int i = 0; i < serviceNode.size(); i++) {
 					serviceList[i] = serviceNode.get(i).asText();
@@ -269,18 +277,7 @@ public class PaymentController {
 
 				model.addAttribute("tinhTrang", "thanh toan khong thanh cong");
 				System.out.println("Thanh toan khong thanh cong");
-				JsonNode seatNode = jsonNode.get("seat");
-				System.out.println("seatNode: " + seatNode.toString());
-				String[] seatList = new String[seatNode.size()];
-				for (int i = 0; i < seatNode.size(); i++) {
-					seatList[i] = seatNode.get(i).asText();
-				}
-				// Update trang thai seat khi da huy
-				for (String seatUpdate : seatList) {
-					System.out.println("ghe-------" + seatUpdate);
-					seat.updateSeatCancel(seatUpdate);
-					System.out.println("Thanh toán không thành công, hủy seat");
-				}
+				
 				return "redirect:/";
 			}
 
