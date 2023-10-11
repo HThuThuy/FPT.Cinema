@@ -23,20 +23,6 @@ import fa.training.service.MovieService;
 import fa.training.service.ShowtimeService;
 import fa.training.service.TheaterService;
 
-/**
- * TicketController
- * 
- * Version 1.0
- * 
- * Date: 09-10-2023
- * 
- * Copyright
- * 
- * Modification Logs:
- * DATE         AUTHOR      DESCRIPTION
- * --------------------------------
- * 09-10-2023   THUYHTT14     Create
- */
 @Controller
 @RequestMapping(value = { "/ticket" })
 public class TicketController {
@@ -50,24 +36,26 @@ public class TicketController {
 	private ShowtimeService showtime;
 
 	/**
-	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: Lấy thông tin suất
+	 * Project: FPT Cinema 
+	 * Team: 1 
+	 * Author : ThuyHTT14 
+	 * Method: Lấy thông tin suất
 	 * chiếu, rạp và xử lý lưu dữ liệu vào database
-	 * 
-	 * @param model
-	 * @param movieID
-	 * @param session
-	 * @return
 	 */
 	@GetMapping(value = { "/showtime/{movieID}" })
 	public String ticket(Model model, @PathVariable("movieID") String movieID, HttpSession session) {
-		// Rạp
+        // Rạp 
 		List<Theater> listaList = theater.getAll();
 		for (Theater theaters : listaList) {
 			System.out.println(theaters);
 		}
+
 		model.addAttribute("listTheater", theater.getAll());
 		model.addAttribute("theaterAdd", new Theater());
+		// String movieID = request.getParameter("movieID");
+		System.out.println("MovieID:-----------" + movieID);
 		Movie movieChoose = movie.findById(movieID);
+		System.out.println("Movie:-----------" + movieChoose);
 		model.addAttribute("movieChoose", movieChoose);
 		// Movie
 		String decription = movieChoose.getMovieDescription();
@@ -84,42 +72,32 @@ public class TicketController {
 		model.addAttribute("mota2", decript);
 		session.setAttribute("movieChoose", movieChoose);
 		Customer loginCustomer = (Customer) session.getAttribute("customerLogin");
+
+		System.out.println("customerLogin" + loginCustomer);
+
 		return "ticket/detailMovie";
 	}
 
-	/**
-	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: Lấy thông tin suất
-	 * chiếu, rạp và xử lý lưu dữ liệu vào database
-	 * 
-	 * @param model
-	 * @param selectedMovieId
-	 * @param selectedTheater
-	 * @return
-	 */
 	@ResponseBody
 	@GetMapping(value = { "/theaterId" })
 	public ResponseEntity<List<Showtime>> showTheater(Model model, @RequestParam("movieId") String selectedMovieId,
 			@RequestParam("theaterId") String selectedTheater) {
 		// Lấy suất chiếu theo pram nhận đc
 		List<Showtime> shotimeList = showtime.getByMovieId(selectedMovieId, selectedTheater);
+
 		for (Showtime showtime : shotimeList) {
 			System.out.println(showtime);
 		}
 		return new ResponseEntity<>(shotimeList, HttpStatus.OK);
 	}
 
-	/**
-	 * Project: FPT Cinema Team: 1 Author : ThuyHTT14 Method: Lấy thông tin suất
-	 * chiếu, rạp và xử lý lưu dữ liệu vào database
-	 * 
-	 * @param model
-	 * @param session
-	 * @return
-	 */
 	@GetMapping(value = { "/bill" })
 	public String bill(Model model, HttpSession session) {
+		System.out.println("bill");
 		Movie movieChoose = (Movie) session.getAttribute("movieChoose");
 		Showtime theaterSel = (Showtime) session.getAttribute("selectedShowtime");
+		System.out.println("abcdef---------" + theaterSel);
+		System.out.println("abc" + movieChoose);
 		model.addAttribute("movieChoose", movieChoose);
 		model.addAttribute("theaterSel", theaterSel);
 		return "ticket/bill";

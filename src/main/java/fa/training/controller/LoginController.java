@@ -16,6 +16,8 @@
 package fa.training.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -80,7 +82,6 @@ public class LoginController {
         Customer customer = customerService.findByEmail(emailForgot);
         session.setAttribute("customer", customer);
         boolean isEmailValid = (customer != null) ? true : false;
-        System.out.println("isEmailValid" + isEmailValid);
         return new ResponseEntity<>(isEmailValid, HttpStatus.OK);
     }
 
@@ -159,26 +160,53 @@ public class LoginController {
     }
 
     /**
+     * Check tồn tại của phone, email, cccd, user lúc đăng ký tài khoản mới phía sever
+     * @param phone
+     * @param email
+     * @param cccd:
+     * @param account
+     * @param response: HttpServletResponse
+     * @return String: Đường dẫn chuyển hướng (trang chủ)
+     */
+    @GetMapping(value = { "/api/checkRegister" })
+    public ResponseEntity<Map<String, Boolean>> checkRegister(@RequestParam("phone") String phone, 
+                                                              @RequestParam("email") String email, 
+                                                              @RequestParam("cccd") String cccd, 
+                                                              @RequestParam("account") String account,
+                                                              HttpSession session) {
+        Customer customerEmail = customerService.findByEmail(email);
+        session.setAttribute("email", customerEmail);
+        boolean isEmailValid = (customerEmail != null);
+        Customer customerPhone = customerService.findByPhone(phone);
+        session.setAttribute("phone", customerPhone);
+        boolean isPhoneValid = (customerPhone != null);
+        Customer customerCccd = customerService.findByCccd(cccd);
+        session.setAttribute("customer", customerCccd);
+        boolean isCccdValid = (customerCccd != null);
+        Users userAccount = userService.findByAccount(account);
+        session.setAttribute("user", userAccount);
+        boolean isAccountValid = (userAccount != null);
+        System.out.println("isAccountValid"+isAccountValid);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("email", isEmailValid);
+        response.put("phone", isPhoneValid);
+        response.put("cccd", isCccdValid);
+        response.put("account", isAccountValid);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
+    /**
      * Đăng ký tài khoản mới
      * @param registerDTO: Đối tượng chứa thông tin đăng ký
      * @return ResponseEntity: Trả về thông báo lỗi hoặc thành công
      */
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterDTO registerDTO) {
-        // Kiểm tra trùng lặp cccd
-        Customer existingCustomer = customerService.findById(registerDTO.getCccd());
-        if (existingCustomer != null) {
-            return ResponseEntity.badRequest().body("Error: Căn cước công dân đã tồn tại!");
-        }
-        // Kiểm tra trùng lặp email
-        Customer existingCustomerEmail = customerService.findByEmail(registerDTO.getEmail());
-        if (existingCustomerEmail != null) {
-            return ResponseEntity.badRequest().body("Error: Email đã tồn tại!");
-        }
-        // Kiểm tra trùng lặp tên đăng nhập
-        Users existingUser = userService.findByAccount(registerDTO.getAccount());
-        if (existingUser != null) {
-            return ResponseEntity.badRequest().body("Error: Tên đăng nhập đã tồn tại!");
+    	 // Kiểm tra trùng lặp sđt
+        Customer existingCustomerPhone = customerService.findByPhone(registerDTO.getPhone());
+        System.out.println("existingCustomerPhone"+existingCustomerPhone);
+        if (existingCustomerPhone != null) {
+            return new ResponseEntity<>(new Error("Số điện thoại đã tồn tại!"), HttpStatus.BAD_REQUEST);
         }
         // Tạo và lưu Customer
         Customer customer = new Customer();
@@ -193,7 +221,7 @@ public class LoginController {
         // Tạo và lưu User
         Users newUser = new Users();
         newUser.setAccount(registerDTO.getAccount());
-        newUser.setPassword(passwordEncoder.encode(registerDTO.getPassword())); // Mã hóa mật khẩu
+        newUser.setPassword(passwordEncoder.encode(registerDTO.getPasswordRegister())); // Mã hóa mật khẩu
         newUser.setUserRole("USER");
         newUser.setStatus("active");
         newUser.setCustomer(customer);

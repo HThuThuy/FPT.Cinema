@@ -41,14 +41,20 @@
 					</div>
 
 					<div id="countdown" style="display: none; color: red;">
-					    Thời gian còn lại: <span id="countdownValue"></span> giây
+						Thời gian còn lại: <span id="countdownValue"></span> giây
 					</div>
 
 
-					<div class="modal-footer" style="display: flex; justify-content: center;">
-					    <button type="button" class="btn btn-primary" id="sendEmailButton" style="background-color: pink; border-color: pink; color: black;" onclick="if (checkExistEmail()) sendEmail();">Gửi email</button>
-					
-					    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resetPasswordModal" style="background-color: pink; border-color: pink; color: black;">Xác nhận đổi mật khẩu</button>
+					<div class="modal-footer"
+						style="display: flex; justify-content: center;">
+						<button type="button" class="btn btn-primary" id="sendEmailButton"
+							style="background-color: pink; border-color: pink; color: black;"
+							onclick="if (checkExistEmail()) sendEmail();">Gửi email</button>
+
+						<button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#resetPasswordModal"
+							style="background-color: pink; border-color: pink; color: black;">Xác
+							nhận đổi mật khẩu</button>
 					</div>
 
 					<div id="errorAlert" class="alert alert-danger" role="alert"
@@ -77,6 +83,7 @@ function checkExistEmail() {
     var emailForgot = document.getElementById("emailForgot").value;
     var emailForgotError = document.getElementById("emailForgot-error");
 
+    console.log("emailForgot"+emailForgot)
     // Kiểm tra email có giá trị không
     if (!emailForgot.trim()) {
         emailForgotError.innerText = "Vui lòng nhập địa chỉ email.";
@@ -100,7 +107,17 @@ function checkExistEmail() {
             if (list === false) {
                 emailForgotError.innerText = "Email không tồn tại, vui lòng kiểm tra lại!";
             } else {
-            	sendEmail();
+                // Email tồn tại, gửi yêu cầu GET đến /sendOTP
+                axios.get("${pageContext.request.contextPath}/sendOTP", {
+                    params: {
+                        emailForgot: emailForgot
+                    }
+                }).then(function(response) {
+                    console.log(response);
+                    // Xử lý kết quả từ máy chủ nếu cần
+                }).catch(function(error) {
+                    console.log("Lỗi khi gọi API: " + error);
+                });
             }
         } else {
             console.log("Lỗi khi gọi API");
@@ -110,52 +127,14 @@ function checkExistEmail() {
     });
 }
 
-function sendEmail() {
-    // Disable the send email button
-    document.getElementById('sendEmailButton').disabled = true;
 
-    // Show the OTP input and change text to "Xác nhận"
-    document.getElementById('otp').disabled = false;
-    document.getElementById('confirmButton').disabled = false;
-
-    // Show the countdown and start the timer
-    document.getElementById('countdown').style.display = 'block';
-    var countdownValue = 60;
-    var countdownElement = document.getElementById('countdownValue');
-
-    var countdownInterval = setInterval(function() {
-        countdownValue--;
-        countdownElement.textContent = countdownValue;
-        if (countdownValue <= 0) {
-            clearInterval(countdownInterval);
-            document.getElementById('countdown').style.display = 'none';
-            document.getElementById('sendEmailButton').disabled = false;
-            document.getElementById('sendEmailButton').textContent = "Gửi lại email";
-        }
-    }, 1000);
-
-    // Lấy giá trị của email từ trường nhập liệu
-    var email = document.getElementById('email').value;
-
-    // Gửi dữ liệu đến máy chủ
-    axios.post('${pageContext.request.contextPath}/forgotPassword', {
-        email: email
-
-    })
-    .then(function (response) {
-        // Xử lý kết quả từ máy chủ nếu cần
-        console.log(response);
-    })
-    .catch(function (error) {
-        // Xử lý lỗi nếu có
-        console.error(error);
-    });
-}
 
 // Gán sự kiện onclick cho nút "Gửi email"
 document.getElementById("sendEmailButton").onclick = function() {
     checkExistEmail();
 };
+
+
 </script>
 
 
