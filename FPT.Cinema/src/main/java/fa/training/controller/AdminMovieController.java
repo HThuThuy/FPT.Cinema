@@ -169,13 +169,19 @@ public class AdminMovieController {
 	 * @return
 	 */
 	@PostMapping("/deletePhim")
-	public String deleteMovie(@RequestParam String movieId, Model model, RedirectAttributes redirectAttributes) {
-		try {
-			movieService.deleteMV(Arrays.asList(movieId));
-			redirectAttributes.addFlashAttribute("message", "Xóa phim thành công");
-		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("message", "Thất bại! Xóa suất chiếu có phim trước");
-		}
+	public String deleteMovie(@RequestParam String movieId,@RequestParam String movieState, Model model, RedirectAttributes redirectAttributes) {
+//		try {
+//			movieService.deleteMV(Arrays.asList(movieId));
+//			redirectAttributes.addFlashAttribute("message", "Xóa phim thành công");
+//		} catch (Exception e) {
+//			redirectAttributes.addFlashAttribute("message", "Thất bại! Xóa suất chiếu có phim trước");
+//		}
+		
+		Movie movie = movieService.findById(movieId);
+		if(movieState.equals("1")) movie.setMovieState("2");
+		else movie.setMovieState("1");
+		movieService.save(movie);
+		
 		return "redirect:/admin/quanLyPhim";
 	}
 }

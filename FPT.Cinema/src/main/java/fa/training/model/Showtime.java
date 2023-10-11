@@ -56,6 +56,8 @@ public class Showtime {
 	@DateTimeFormat(pattern = "HH:mm")
 	@Column(columnDefinition = "Time")
 	LocalTime startTime;
+	
+	String showtimeState = "1";
 
 	public Showtime(String showtimeId, Movie movie, Room room, LocalTime startTime) {
 		super();

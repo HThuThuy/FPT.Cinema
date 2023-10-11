@@ -181,13 +181,17 @@ public class AdminShowTimeController {
 	 * @return
 	 */
 	@PostMapping("/delete")
-	public String deleteShowtime(@RequestParam String showtimeId, Model model, RedirectAttributes redirectAttributes) {
-		try {
-			showtimeService.deleteST2(Arrays.asList(showtimeId));
-			redirectAttributes.addFlashAttribute("message", "Xóa suất chiếu thành công");
-		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("message", "Thất bại! Suất chiếu hiện đã được đặt vé");
-		}
+	public String deleteShowtime(@RequestParam String showtimeId,@RequestParam String showtimeState, Model model, RedirectAttributes redirectAttributes) {
+//		try {
+//			showtimeService.deleteST2(Arrays.asList(showtimeId));
+//			redirectAttributes.addFlashAttribute("message", "Xóa suất chiếu thành công");
+//		} catch (Exception e) {
+//			redirectAttributes.addFlashAttribute("message", "Thất bại! Suất chiếu hiện đã được đặt vé");
+//		}
+		Showtime showtime = showtimeService.findById(showtimeId);
+		if(showtimeState.equals("1")) showtime.setShowtimeState("2");
+		else showtime.setShowtimeState("1");
+		showtimeService.save(showtime);
 		return "redirect:/admin/quanLySuatChieu";
 	}
 

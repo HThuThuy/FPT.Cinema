@@ -57,7 +57,7 @@
 							<th class="d-none" style="background-color: #e75e8d; color: white;">Thời lượng</th>
 							<th style="background-color: #e75e8d; color: white;">Poster</th>
 							<th style="background-color: #e75e8d; color: white;">Chi tiết</th>
-							<th style="background-color: #e75e8d; color: white;">Xóa</th>
+							<th style="background-color: #e75e8d; color: white;">Trạng thái</th>
 						</tr>						
 					</thead>
 					<tbody>
@@ -84,9 +84,14 @@
 								<td>
 									<button type="button" class="btn btn-outline-secondary"
 										data-bs-toggle="modal" data-bs-target="#exampleModal"
-										onclick="showModalDelete('${item.movieId}', '${item.movieName}')">
-										<i class="fa-solid fa-trash"></i>
-										
+										onclick="showModalDelete('${item.movieId}', '${item.movieName}','${item.movieState}')">
+										<c:if test="${item.movieState.equals('1')}">
+											<i class="fa-solid fa-unlock"></i>
+										</c:if>
+										<c:if test="${!item.movieState.equals('1')}">
+											<i class="fa-solid fa-lock"></i>
+										</c:if>
+
 									</button>
 								</td>
 							</tr>
@@ -145,12 +150,13 @@
 						<h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>						
 					</div>
 					<div class="modal-body container-fluid">
-						Chắn chắc xóa phim <span id="delete_modal"></span> 
-						<input hidden="true" id="sendId" name="movieId"><span>?</span>
+						Chắn chắc <span id="delete_modal2" style="color: red;"></span> phim <span id="delete_modal"></span> <span>?</span>
+						<input hidden="true" id="sendId" name="movieId">
+						<input hidden="true" id="sendId2" name="movieState">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-						<button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xóa</button>
+						<button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Xác nhận</button>
 					</div>
 				</div>
 			</form>
@@ -192,9 +198,14 @@
 	</script>
 
 	<script>
-		function showModalDelete(a, b) {
+		function showModalDelete(a, b, c) {
 			/* alert("Ha ha "+a) */
 			document.getElementById("delete_modal").innerText = b;
+			
+			if(c=="1") document.getElementById("delete_modal2").innerText = 'khóa';
+			else document.getElementById("delete_modal2").innerText = 'mở khóa';
+			
 			document.getElementById("sendId").value = a; 
+			document.getElementById("sendId2").value = c;
 		}
 	</script>

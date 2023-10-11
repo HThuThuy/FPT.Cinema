@@ -154,15 +154,19 @@ public class AdminTheaterController {
 	 * @return
 	 */
 	@PostMapping("/deleteRap")
-	public String deleteTheater(@RequestParam String theaterId,  Model model, RedirectAttributes redirectAttributes) {
+	public String deleteTheater(@RequestParam String theaterId,@RequestParam String theaterState,  Model model, RedirectAttributes redirectAttributes) {
 		
-		try {
-			roomService.deleteRoom(Arrays.asList(theaterId+"A",theaterId+"B"));
-			theaterService.deleteTT(Arrays.asList(theaterId));
-			redirectAttributes.addFlashAttribute("message", "Xóa rạp thành công");
-		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("message", "Thất bại! Xóa suất chiếu có rạp trước");
-		}
+//		try {
+//			roomService.deleteRoom(Arrays.asList(theaterId+"A",theaterId+"B"));
+//			theaterService.deleteTT(Arrays.asList(theaterId));
+//			redirectAttributes.addFlashAttribute("message", "Xóa rạp thành công");
+//		} catch (Exception e) {
+//			redirectAttributes.addFlashAttribute("message", "Thất bại! Xóa suất chiếu có rạp trước");
+//		}
+		Theater theater = theaterService.findById(theaterId);
+		if(theaterState.equals("1")) theater.setTheaterState("2");
+		else theater.setTheaterState("1");
+		theaterService.save(theater);
 		
 		return "redirect:/admin/quanLyRap";
 	}	

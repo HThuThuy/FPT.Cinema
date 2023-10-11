@@ -66,6 +66,8 @@ public class Movie {
 	
 	String movieStatus;
 	
+	String movieState = "1";
+	
 	@OneToMany(mappedBy = "movie",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	Set<Showtime> showtimeList;
 

@@ -56,7 +56,10 @@ public class Theater {
 
 	@JsonBackReference
 	@OneToMany(mappedBy = "theater",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	Set<Room> roomList;			
+	Set<Room> roomList;	
+	
+	
+	String theaterState = "1";
 
 	@Override
 	public String toString() {

@@ -13,7 +13,7 @@ import fa.training.model.Showtime;
 @Repository
 public interface ShowtimeRepository extends JpaRepository<Showtime, String> {
 	
-	String sql1 = "select s.showtimeId, s.roomId, s.startTime, s.movieId from SHOWTIME s join ROOM r on s.roomId = r.roomId join THEATER t  on t.theaterId = r.theaterId order by t.theaterName, r.roomName, s.startTime offset :start ROWS FETCH FIRST :recordsPerPage ROWS ONLY";
+	String sql1 = "select s.showtimeId, s.roomId, s.startTime, s.movieId, s.showtimeState from SHOWTIME s join ROOM r on s.roomId = r.roomId join THEATER t  on t.theaterId = r.theaterId order by t.theaterName, r.roomName, s.startTime offset :start ROWS FETCH FIRST :recordsPerPage ROWS ONLY";
 	String oldsql = "select * from SHOWTIME order by showtimeId offset :start ROWS FETCH FIRST :recordsPerPage ROWS ONLY;";
 	
 	/**
